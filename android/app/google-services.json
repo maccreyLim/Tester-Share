@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647763543576",
+    "project_id": "testershare-dfcda",
+    "storage_bucket": "testershare-dfcda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647763543576:android:6ecabb776f52f51ad1656d",
+        "android_client_info": {
+          "package_name": "com.example.tester_share_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAczroEmMdl79IhHm89Bo8jJWmE4P8Hfzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
