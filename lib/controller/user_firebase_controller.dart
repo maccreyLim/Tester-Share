@@ -72,7 +72,7 @@ class UserFirebaseController {
           );
     } catch (e) {
       print('Error streaming user: $e');
-      return Stream.empty();
+      return const Stream.empty();
     }
   }
 }

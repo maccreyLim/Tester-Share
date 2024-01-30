@@ -1,0 +1,249 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
+import 'package:tester_share_app/scr/find_password_secreen.dart';
+import 'package:tester_share_app/scr/join_screen.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  LoginScreenState createState() => LoginScreenState();
+}
+
+class LoginScreenState extends State<LoginScreen> {
+  final AuthController _authController = AuthController();
+  final ColorsCollection colors = ColorsCollection();
+  final FontSizeCollection fontsize = FontSizeCollection();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: colors.background,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+      backgroundColor: colors.background,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                EmailInput(controller: _emailController, colors: colors),
+                const SizedBox(height: 20),
+                PasswordInput(controller: _passwordController, colors: colors),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: colors.textColor,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        //Todo: 파이어베이스 Password찾기 구현
+                        Get.to(() => const FindPasswordScreen());
+                      },
+                      child: const Text(
+                        'Find Your Password',
+                        style: TextStyle(color: Colors.white54),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 220),
+                LogInButton(
+                  onPressed: () async {
+                    // 로그아웃 및 로그인 페이지로 이동
+                    if (_formKey.currentState!.validate()) {
+                      await _authController.signIn(
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                      print(_authController.userData);
+                    }
+                  },
+                  colors: colors,
+                  fontsize: fontsize,
+                ),
+                const SizedBox(height: 6),
+                CreateButton(
+                  onPressed: () {
+                    // 로그인
+                    Get.to(() => const JoinScreen());
+                  },
+                  colors: colors,
+                  fontsize: fontsize,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class EmailInput extends StatelessWidget {
+  final TextEditingController controller;
+  final ColorsCollection colors;
+
+  const EmailInput({super.key, required this.controller, required this.colors});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        icon: const Icon(Icons.email),
+        labelText: 'Google Play Store ID',
+        hintText: 'Please enter your Google Play Store ID',
+        labelStyle: TextStyle(color: colors.textColor),
+      ),
+      style: TextStyle(color: colors.iconColor),
+      validator: (value) {
+        return null;
+      },
+    );
+  }
+}
+
+class PasswordInput extends StatefulWidget {
+  final TextEditingController controller;
+  final ColorsCollection colors;
+
+  const PasswordInput(
+      {Key? key, required this.controller, required this.colors})
+      : super(key: key);
+
+  @override
+  _PasswordInputState createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<PasswordInput> {
+  bool _obscureText = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      keyboardType: TextInputType.text,
+      obscureText: _obscureText,
+      decoration: InputDecoration(
+        icon: const Icon(Icons.password),
+        labelText: 'Password',
+        hintText: 'Please enter your Password',
+        suffixIcon: Semantics(
+          label: _obscureText ? 'Show password' : 'Covering the password',
+          child: IconButton(
+            icon: Icon(
+              _obscureText
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: widget.colors.textColor,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          ),
+        ),
+        labelStyle: TextStyle(color: widget.colors.textColor),
+      ),
+      style: TextStyle(color: widget.colors.iconColor),
+      validator: (value) {
+        return null;
+      },
+    );
+  }
+}
+
+class LogInButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final ColorsCollection colors;
+  final FontSizeCollection fontsize;
+
+  const LogInButton(
+      {super.key,
+      required this.onPressed,
+      required this.colors,
+      required this.fontsize});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color?>(Colors.blue),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          'LogIn',
+          style: TextStyle(
+            color: colors.iconColor,
+            fontSize: fontsize.buttonFontSize,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CreateButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final ColorsCollection colors;
+  final FontSizeCollection fontsize;
+
+  const CreateButton(
+      {super.key,
+      required this.onPressed,
+      required this.colors,
+      required this.fontsize});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          'Create an Account',
+          style: TextStyle(
+            color: colors.iconColor,
+            fontSize: fontsize.buttonFontSize,
+          ),
+        ),
+      ),
+    );
+  }
+}

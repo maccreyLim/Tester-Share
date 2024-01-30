@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
+import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailBoardScreen extends StatelessWidget {
-  final List<BoardFirebaseModel> boards;
+  final BoardFirebaseModel
+      boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
   final ColorsCollection colors = ColorsCollection();
 
   // Use 'final' for the constructor parameter, and fix the constructor name
@@ -18,11 +20,12 @@ class DetailBoardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: colors.background,
         actions: [
           IconButton(
             onPressed: () {
-              Get.back();
+              Get.off(() => HomeScreen());
             },
             icon: Icon(
               Icons.close,
@@ -33,32 +36,158 @@ class DetailBoardScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             Row(
               children: [
                 Image.network(
-                  boards.first.iconImageUrl,
+                  boards.iconImageUrl,
                   width: 120,
                   height: 120,
                 ),
                 const SizedBox(width: 20),
-                cardText(boards.first.title),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    cardText(boards.title, 20),
+                    cardText(
+                        '[${boards.testerRequest}/${boards.testerParticipation}]',
+                        16),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '작성일: ${_formattedDate(boards.createAt)}',
+                    style: TextStyle(fontSize: 14, color: colors.textColor),
+                  ),
+                  if (boards.updateAt != null)
+                    Text(
+                      '수정일: ${_formattedDate(boards.updateAt!)}',
+                      style: TextStyle(fontSize: 14, color: colors.textColor),
+                    )
+                ],
+              ),
+            ),
+            const SizedBox(height: 50),
+            Column(
+              children: [
+                const Text(
+                  '-  Test App 주소  -',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final _url = Uri.tryParse(boards.appSetupUrl);
+                    if (_url != null) {
+                      launchUrl(_url);
+                    } else {
+                      // Handle the case when the URL is invalid or null
+                      print('Invalid URL: ${boards.appSetupUrl}');
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black, // Set button color to black
+                    elevation: 8, // Add some elevation for a raised appearance
+                  ),
+                  child: cardText(boards.appSetupUrl, 20),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '-  Supported Languages  -',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ],
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: boards.language!.length,
+              itemBuilder: (context, index) => Container(
+                margin: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.task_alt,
+                      color: colors.iconColor,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 20),
+                    cardText(
+                      boards.language![index],
+                      20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+            Column(
+              children: [
+                const Text(
+                  '-  Github 주소  -',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final url = Uri.tryParse(boards.githubUrl);
+                    if (url != null) {
+                      launchUrl(url);
+                    } else {
+                      // Handle the case when the URL is invalid or null
+                      print('Invalid URL: ${boards.githubUrl}');
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black, // Set button color to black
+                    elevation: 8, // Add some elevation for a raised appearance
+                  ),
+                  child: cardText(boards.githubUrl, 20),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '-  App Image  -',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ],
             ),
             const SizedBox(height: 10),
-            Text(
-              '작성일: ${_formattedDate(boards.first.createAt)}',
-              style: TextStyle(fontSize: 16, color: colors.textColor),
-            ),
-            if (boards.first.updateAt != null)
-              Text(
-                '수정일: ${_formattedDate(boards.first.updateAt)}',
-                style: TextStyle(fontSize: 16, color: colors.textColor),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: SizedBox(
+                height: 300,
+                width: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: boards.imageUrl.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(boards.imageUrl[index],
+                          width: 150, height: 300, fit: BoxFit.fill),
+                    );
+                  },
+                ),
               ),
+            ),
             const SizedBox(height: 40),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -67,18 +196,32 @@ class DetailBoardScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            cardText(boards.first.introductionText),
+            const SizedBox(height: 10),
+            cardText(boards.introductionText, 20),
+            const SizedBox(height: 50),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                Get.to(() => ProjectJoinScreen());
+              },
+              child: Text(
+                '참여하기',
+                style: TextStyle(fontSize: 20, color: colors.iconColor),
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
 
-  Widget cardText(String text) {
+  Widget cardText(String text, double size) {
     return Text(
       text,
-      style: TextStyle(color: colors.textColor, fontSize: 20),
+      style: TextStyle(color: colors.textColor, fontSize: size),
     );
   }
 

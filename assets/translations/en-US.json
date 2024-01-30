@@ -1,0 +1,16 @@
+{
+    "hello": "hello",
+    "name": "name",
+    "clear": "clear",
+    "english": "English",
+    "korean": "한국어",
+    "chandongi": "chandongi",
+    "myNameIs": "My Name is {}",
+    "namedArgs": "Named Args {name}",
+    "argsWithNamedArgs": "args: {}, {}, Named Args {name}",
+    "mode":{
+        "mode1":"With {}.",
+        "mode2":"leave with a {}.",
+        "mode3":"cheer for {}."
+    }
+}

@@ -2,13 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 
 class BoardFirebaseController {
-  // Create (추가)
-  Future<void> addBoard(BoardFirebaseModel board) async {
+  CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('boards');
+
+// Create (추가)
+  Future<void> addBoard(BoardFirebaseModel newPost) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('boards')
-          .doc(board.docid)
-          .set(board.toMap());
+      DocumentReference documentRef = await collectionRef.add(newPost.toMap());
+
+      // 문서 ID를 얻어옴
+      String docId = documentRef.id;
+
+      // 얻어온 ID를 해당 문서에 업데이트
+      await documentRef.update({'docUid': docId});
+
+      print('Board added with ID: $docId');
     } catch (e) {
       print('Error adding board: $e');
     }
@@ -75,7 +83,7 @@ class BoardFirebaseController {
       });
     } catch (e) {
       print('Error streaming boards: $e');
-      return Stream.empty();
+      return const Stream.empty();
     }
   }
 }

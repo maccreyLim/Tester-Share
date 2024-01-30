@@ -13,4 +13,6 @@ class ColorsCollection {
   Color get textColor => Colors.white60;
   Color get iconColor => Colors.white;
   Color get cardColor => Colors.white12;
+  Color get stateIsIng => Colors.blue;
+  Color get stateIsClose => Colors.red;
 }

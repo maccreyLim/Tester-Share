@@ -1,0 +1,45 @@
+{
+  
+  "Find Your Password": "패스워드찾기",
+  "Google Play Store ID": "구글 플레이스토어 ID",
+  "Please enter your Google Play Store ID":"Google Play Store ID를 입력해 주세요",
+  "Password" : "비밀번호",
+  "Please enter your Password" : "비밀번호를 입력해주세요",
+  "Show password" : "비밀번호 표시",
+  "Covering the password" : "비밀번호 숨김",
+  "LogIn" : "로그인",
+  "Create an Account" : "회원가입",
+
+  "Please enter the app launch count in the correct format" : "앱 출시 횟수를 올바른 형식으로 입력하세요",
+  "Profile Name" : "프로필이름",
+  "Please enter Profile Name" : "프로필 이름을 입력해 주세요",
+  "Number of App Launch Experiences" : "App출시 경험횟수",
+  "Please enter the number of experiences when launching the app" : "App출시 경험횟수를 입력해 주세요",
+  "Sign Up": "회원가입",
+  "Supported Languages": "지원되는 언어",
+  "Title": "제목",
+  "Please write the title": "제목을 입력해 주세요",
+  "Title is required": "제목은 필수 입력 항목입니다",
+
+  "Introduction Text": "소개글",
+  "Please write the introduction text": "소개글을 입력해 주세요",
+  "Introduction text is required": "소개글은 필수 입력 항목입니다",
+  "Number of testers to request": "요청할 테스터 인원",
+  "Please enter the number of testers required": "필요한 테스터 인원를 입력해 주세요",
+  "Please enter a valid number": "올바른 숫자를 입력해 주세요",
+  "Number of participants as testers": "테스터로 참여한 수",
+  "Please enter the number of participants as a tester": "테스터로 참여한 수를 입력해 주세요",
+  "GitHub URL": "GitHub URL",
+  "GitHub repository URL": "GitHub URL을 입력해 주세요",
+  "TestApp Address" : "테스트 앱 다운로드 주소",
+  "Please enter the download address of the Test App" : "Test App 다운로드 주소를 입력해 주세요",
+  "Please register the app image" : "App 이미지를 등록해주세요",
+  "Create Post": "게시물 작성",
+
+  
+  "Tester Request Profile": "테스터 요청 프로필",
+  "Tester profile information": "테스터 프로필 정보를 입력해 주세요.",
+  "Comma-separated languages": "쉼표로 구분된 언어를 입력해 주세요."
+  
+  }
+  
