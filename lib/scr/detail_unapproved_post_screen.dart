@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,13 +8,20 @@ import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailBoardScreen extends StatelessWidget {
-  final BoardFirebaseModel
-      boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
-  final ColorsCollection colors = ColorsCollection();
+class DetailUnapprovedPostScreen extends StatefulWidget {
+  final BoardFirebaseModel boards;
+  DetailUnapprovedPostScreen({Key? key, required this.boards})
+      : super(key: key);
 
-  // Use 'final' for the constructor parameter, and fix the constructor name
-  DetailBoardScreen({Key? key, required this.boards}) : super(key: key);
+  @override
+  State<DetailUnapprovedPostScreen> createState() =>
+      _DetailUnapprovedPostScreenState();
+}
+
+class _DetailUnapprovedPostScreenState
+    extends State<DetailUnapprovedPostScreen> {
+  // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
+  final ColorsCollection colors = ColorsCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,7 @@ class DetailBoardScreen extends StatelessWidget {
             Row(
               children: [
                 Image.network(
-                  boards.iconImageUrl,
+                  widget.boards.iconImageUrl,
                   width: 120,
                   height: 120,
                 ),
@@ -49,9 +57,9 @@ class DetailBoardScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    cardText(boards.title, 20),
+                    cardText(widget.boards.title, 20),
                     cardText(
-                        '[${boards.testerRequest}/${boards.testerParticipation}]',
+                        '[${widget.boards.testerRequest}/${widget.boards.testerParticipation}]',
                         16),
                     const SizedBox(height: 10),
                   ],
@@ -64,12 +72,12 @@ class DetailBoardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Creation date: ${_formattedDate(boards.createAt)}',
+                    'Creation date: ${_formattedDate(widget.boards.createAt)}',
                     style: TextStyle(fontSize: 14, color: colors.textColor),
                   ),
-                  if (boards.updateAt != null)
+                  if (widget.boards.updateAt != null)
                     Text(
-                      'Modification date: ${_formattedDate(boards.updateAt!)}',
+                      'Modification date: ${_formattedDate(widget.boards.updateAt!)}',
                       style: TextStyle(fontSize: 14, color: colors.textColor),
                     )
                 ],
@@ -91,7 +99,7 @@ class DetailBoardScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
-                        cardText(boards.developer, 20),
+                        cardText(widget.boards.developer, 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -122,12 +130,12 @@ class DetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final _url = Uri.tryParse(boards.appSetupUrl);
+                        final _url = Uri.tryParse(widget.boards.appSetupUrl);
                         if (_url != null) {
                           launchUrl(_url);
                         } else {
                           // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.appSetupUrl}');
+                          print('Invalid URL: ${widget.boards.appSetupUrl}');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -136,7 +144,7 @@ class DetailBoardScreen extends StatelessWidget {
                         elevation:
                             8, // Add some elevation for a raised appearance
                       ),
-                      child: cardText(boards.appSetupUrl, 20),
+                      child: cardText(widget.boards.appSetupUrl, 20),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -161,7 +169,7 @@ class DetailBoardScreen extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: boards.language!.length,
+                  itemCount: widget.boards.language!.length,
                   itemBuilder: (context, index) => Container(
                     margin: const EdgeInsets.fromLTRB(20, 2, 20, 2),
                     child: Row(
@@ -173,7 +181,7 @@ class DetailBoardScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 20),
                         cardText(
-                          boards.language![index],
+                          widget.boards.language![index],
                           20,
                         ),
                       ],
@@ -195,12 +203,12 @@ class DetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final url = Uri.tryParse(boards.githubUrl);
+                        final url = Uri.tryParse(widget.boards.githubUrl);
                         if (url != null) {
                           launchUrl(url);
                         } else {
                           // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.githubUrl}');
+                          print('Invalid URL: ${widget.boards.githubUrl}');
                         }
                       },
                       style: TextButton.styleFrom(
@@ -209,7 +217,7 @@ class DetailBoardScreen extends StatelessWidget {
                         elevation:
                             8, // Add some elevation for a raised appearance
                       ),
-                      child: cardText(boards.githubUrl, 20),
+                      child: cardText(widget.boards.githubUrl, 20),
                     ),
                   ),
                 ),
@@ -233,11 +241,11 @@ class DetailBoardScreen extends StatelessWidget {
                 width: 150,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: boards.imageUrl.length,
+                  itemCount: widget.boards.imageUrl.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(boards.imageUrl[index],
+                      child: Image.network(widget.boards.imageUrl[index],
                           width: 150, height: 300, fit: BoxFit.fill),
                     );
                   },
@@ -259,21 +267,26 @@ class DetailBoardScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Container(
                   color: colors.boxColor,
-                  child: cardText(boards.introductionText, 16)),
+                  child: cardText(widget.boards.introductionText, 16)),
             ),
             const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                  backgroundColor: widget.boards.isApproval
+                      ? MaterialStateProperty.all<Color>(Colors.grey)
+                      : MaterialStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () {
-                  Get.to(() => ProjectJoinScreen());
+                  //Todo : firebase isApproval = true;
+                  widget.boards.isApproval
+                      ? updateBoard(widget.boards, false)
+                      : updateBoard(widget.boards, true);
+                  Get.back();
                 },
                 child: Text(
-                  'Apply to be a Tester',
+                  widget.boards.isApproval ? 'Unapproval' : 'Approval',
                   style: TextStyle(fontSize: 20, color: colors.iconColor),
                 ),
               ),
@@ -295,5 +308,16 @@ class DetailBoardScreen extends StatelessWidget {
   // DateFormat 함수 추가
   String _formattedDate(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+  }
+
+  Future<void> updateBoard(BoardFirebaseModel board, bool isApproval) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('boards')
+          .doc(board.docid)
+          .update({'isApproval': isApproval});
+    } catch (e) {
+      print('Error updating board: $e');
+    }
   }
 }

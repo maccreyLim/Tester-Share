@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserFirebaseModel {
   String? uid; //uid
   String email; //email
-  String password; //password
+  bool isAdmin; //관리자 여부
   String profileName; //프로필 이름
   String? profileImageUrl; //프로필 사진 주소
   int deployed; // APP출시 횟수
@@ -15,7 +15,7 @@ class UserFirebaseModel {
   UserFirebaseModel({
     this.uid,
     required this.email,
-    required this.password,
+    required this.isAdmin,
     required this.profileName,
     this.profileImageUrl,
     required this.deployed,
@@ -30,7 +30,7 @@ class UserFirebaseModel {
     return UserFirebaseModel(
       uid: doc.id,
       email: data['email'] ?? '',
-      password: data['password'] ?? '',
+      isAdmin: data['isApproval'] ?? false,
       profileName: data['profileName'] ?? '',
       deployed: data['deployed'] ?? 0,
       testerParticipation: data['testerParticipation'] ?? 0,
@@ -43,7 +43,7 @@ class UserFirebaseModel {
   Map<String, dynamic> toMap() {
     return {
       'email': email,
-      'password': password,
+      'isAdmin': isAdmin,
       'profileName': profileName,
       'deployed': deployed,
       'testerParticipation': testerParticipation,

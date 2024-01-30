@@ -41,6 +41,26 @@ class BoardFirebaseController {
     }
   }
 
+  // Stream - isApproval이 true인 게시물만 감시(HomeScreen사용)
+  Stream<List<BoardFirebaseModel>> streamApprovedBoards() {
+    try {
+      return FirebaseFirestore.instance
+          .collection('boards')
+          .where('isApproval', isEqualTo: true)
+          .snapshots()
+          .map((querySnapshot) {
+        List<BoardFirebaseModel> boards = querySnapshot.docs
+            .map((doc) => BoardFirebaseModel.fromFirestore(doc))
+            .toList();
+
+        return boards;
+      });
+    } catch (e) {
+      print('Error streaming approved boards: $e');
+      return Stream.value([]);
+    }
+  }
+
   // Update (수정)
   Future<void> updateBoard(BoardFirebaseModel board) async {
     try {

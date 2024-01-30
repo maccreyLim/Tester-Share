@@ -106,6 +106,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       // BoardFirebaseModel을 활용하여 새로운 게시물을 생성
       BoardFirebaseModel newPost = BoardFirebaseModel(
         docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
+        isApproval: false,
         createUid: userUid.toString(), // 현재 사용자의 UID로 설정
         developer: _authController.userData?['profileName'],
         createAt: DateTime.now(),
@@ -118,7 +119,6 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         iconImageUrl: downloadUrl,
         githubUrl: githubUrlController.text,
         appSetupUrl: appSetupUrlController.text,
-        // 테스트를 신청한 사람 리스트
         testerRequestProfile: {
           'tester_name': [],
         },

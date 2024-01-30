@@ -15,4 +15,6 @@ class ColorsCollection {
   Color get cardColor => Colors.white12;
   Color get stateIsIng => Colors.blue;
   Color get stateIsClose => Colors.red;
+  Color get importantMessage => Colors.red;
+  Color get boxColor => Color.fromARGB(221, 31, 30, 30);
 }

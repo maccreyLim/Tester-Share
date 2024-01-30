@@ -100,6 +100,7 @@ class AuthController extends GetxController {
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user?.uid,
         'email': email,
+        'isAdmin': false,
         'profileName': profileName,
         'ProfileImageUrl': null,
         'deployed': deployed,

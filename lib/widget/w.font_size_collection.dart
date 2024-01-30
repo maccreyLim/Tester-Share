@@ -8,4 +8,5 @@ class FontSizeCollection {
   FontSizeCollection._internal();
 
   double get buttonFontSize => 18.0;
+  double get SettinFontSize => 18.0;
 }

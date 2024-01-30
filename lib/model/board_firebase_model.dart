@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BoardFirebaseModel {
   String docid; // 문서 Doc 명
+  bool isApproval; // 승인 여부
   String createUid; // 작성자 uid
   String developer; // 개발자 프로필
   DateTime createAt; // 작성일자
@@ -13,13 +14,14 @@ class BoardFirebaseModel {
   List<String> imageUrl; // App 이미지
   String iconImageUrl; // AppIcon 이미지
   String githubUrl; // github 주소
-  String appSetupUrl; //app설치 주소
+  String appSetupUrl; // app 설치 주소
   Map<String, dynamic> testerRequestProfile; // 테스터 참여자 이름
   List<dynamic>? language; // 사용 가능 언어 (nullable로 변경)
 
   // 생성자 추가
   BoardFirebaseModel({
     required this.docid,
+    required this.isApproval,
     required this.createUid,
     required this.developer,
     required this.createAt,
@@ -38,24 +40,26 @@ class BoardFirebaseModel {
 
   // fromFirestore 메서드 수정
   factory BoardFirebaseModel.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
     return BoardFirebaseModel(
       docid: doc.id,
-      createUid: data['createUid'] ?? '',
-      developer: data['developer'] ?? '',
-      createAt: (data['createAt'] as Timestamp).toDate(),
-      updateAt: (data['updateAt'] as Timestamp?)?.toDate(), // nullable로 변경
-      title: data['title'] ?? '',
-      introductionText: data['introductionText'] ?? '',
-      testerRequest: data['testerRequest'] ?? 0,
-      testerParticipation: data['testerParticipation'] ?? 0,
-      imageUrl: List<String>.from(data['imageUrl'] ?? []),
-      iconImageUrl: data['iconImageUrl'] ?? '',
-      githubUrl: data['githubUrl'] ?? '',
-      appSetupUrl: data['appSetupUrl'] ?? '',
+      isApproval: data?['isApproval'] ?? false,
+      createUid: data?['createUid'] ?? '',
+      developer: data?['developer'] ?? '',
+      createAt: (data?['createAt'] as Timestamp).toDate(),
+      updateAt: (data?['updateAt'] as Timestamp?)?.toDate(), // nullable로 변경
+      title: data?['title'] ?? '',
+      introductionText: data?['introductionText'] ?? '',
+      testerRequest: data?['testerRequest'] ?? 0,
+      testerParticipation: data?['testerParticipation'] ?? 0,
+      imageUrl: List<String>.from(data?['imageUrl'] ?? []),
+      iconImageUrl: data?['iconImageUrl'] ?? '',
+      githubUrl: data?['githubUrl'] ?? '',
+      appSetupUrl: data?['appSetupUrl'] ?? '',
       testerRequestProfile:
-          Map<String, dynamic>.from(data['testerRequestProfile'] ?? {}),
-      language: List<dynamic>.from(data['language'] ?? []),
+          Map<String, dynamic>.from(data?['testerRequestProfile'] ?? {}),
+      language: List<dynamic>.from(data?['language'] ?? []),
     );
   }
 
@@ -63,6 +67,7 @@ class BoardFirebaseModel {
   Map<String, dynamic> toMap() {
     return {
       'docUid': docid,
+      'isApproval': isApproval,
       'createUid': createUid,
       'developer': developer,
       'createAt': createAt,

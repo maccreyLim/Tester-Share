@@ -39,7 +39,25 @@
   
   "Tester Request Profile": "테스터 요청 프로필",
   "Tester profile information": "테스터 프로필 정보를 입력해 주세요.",
-  "Comma-separated languages": "쉼표로 구분된 언어를 입력해 주세요."
-  
+  "Comma-separated languages": "쉼표로 구분된 언어를 입력해 주세요.",
+  "In progress" : " 진 행 중",
+  "Completed" : "완   료",
+  "Creation date" : "작성일",
+  "Modification date" : "수정일",
+  "My Page" : "마이페이지",
+  "My Tester Request Post":"나의 테스터 요청 게시물",
+  "Notice": "공지사항",
+  "Inquiries and Partnerships": "문의 및 제휴",
+  "Terms and Privacy" : "약관 및 개인 정보 보호",
+  "Apply to be a Tester": "테스터 신청",
+  "-  Test App URL  -" : "-  테스트 앱 주소  -",
+  "-  Supported Languages  -" : "-  지원하는 언어  -",
+  "-  Github URL  -" : "-  깃허브 주소  -",
+  "-  App Image  -" : "- 앱 이미지  -",
+  "-  Introduction  -" :"-  소 개  -",
+  "-  Developer  -" : "-  Developer  -",
+  "Send a message to the developer" : "개발자에게 메시지 보내기"
+
+
   }
   

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
@@ -8,13 +9,14 @@ import 'package:tester_share_app/scr/detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:intl/intl.dart'; // intl 패키지 추가
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
-class HomeScreen extends StatelessWidget {
+class MyTesterRequestPostScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
-  final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
-  HomeScreen({Key? key}) : super(key: key);
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+  final BoardFirebaseController _board = BoardFirebaseController();
+  MyTesterRequestPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            "Wellcome to ${_authController.userData?['profileName']}",
+            "My Tester Request Post",
             style: TextStyle(color: colors.textColor, fontSize: 16),
           ),
         ),
@@ -31,22 +33,21 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: colors.background,
         actions: [
           IconButton(
-              onPressed: () {
-                Get.to(() => SettingScreen());
-              },
-              icon: const Icon(Icons.settings)),
-          IconButton(
-              onPressed: () {
-                _authController.signOut();
-              },
-              icon: const Icon(Icons.logout_outlined)),
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.close,
+              color: colors.iconColor,
+            ),
+          )
         ],
       ),
       backgroundColor: colors.background,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<List<BoardFirebaseModel>>(
-          stream: _board.streamApprovedBoards(),
+          stream: _board.boardStream(),
           builder: (context, AsyncSnapshot<List<BoardFirebaseModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

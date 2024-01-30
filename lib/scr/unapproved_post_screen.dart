@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
+import 'package:tester_share_app/scr/detail_unapproved_post_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:intl/intl.dart'; // intl 패키지 추가
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
-class HomeScreen extends StatelessWidget {
+class UnapprovedPostScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
-  final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
-  HomeScreen({Key? key}) : super(key: key);
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+  final BoardFirebaseController _board = BoardFirebaseController();
+  UnapprovedPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            "Wellcome to ${_authController.userData?['profileName']}",
+            "Unapproved post",
             style: TextStyle(color: colors.textColor, fontSize: 16),
           ),
         ),
@@ -31,22 +34,21 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: colors.background,
         actions: [
           IconButton(
-              onPressed: () {
-                Get.to(() => SettingScreen());
-              },
-              icon: const Icon(Icons.settings)),
-          IconButton(
-              onPressed: () {
-                _authController.signOut();
-              },
-              icon: const Icon(Icons.logout_outlined)),
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.close,
+              color: colors.iconColor,
+            ),
+          )
         ],
       ),
       backgroundColor: colors.background,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<List<BoardFirebaseModel>>(
-          stream: _board.streamApprovedBoards(),
+          stream: _board.boardStream(),
           builder: (context, AsyncSnapshot<List<BoardFirebaseModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -74,7 +76,8 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(() => DetailBoardScreen(boards: boards[index]));
+                    Get.to(() =>
+                        DetailUnapprovedPostScreen(boards: boards[index]));
                   },
                   child: Card(
                     color: colors.cardColor,
@@ -144,9 +147,7 @@ class HomeScreen extends StatelessWidget {
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
-                                          if (boards[index].testerRequest >
-                                              boards[index]
-                                                  .testerParticipation) {
+                                          if (boards[index].isApproval) {
                                             return colors
                                                 .stateIsIng; // 상태가 "진행중"일 때의 배경색
                                           } else {
@@ -160,10 +161,9 @@ class HomeScreen extends StatelessWidget {
                                       Get.to(() => ProjectJoinScreen());
                                     },
                                     child: Text(
-                                      boards[index].testerRequest >
-                                              boards[index].testerParticipation
-                                          ? 'In progress'
-                                          : "Completed",
+                                      boards[index].isApproval
+                                          ? 'Approval'
+                                          : "Unapproval",
                                       style: TextStyle(
                                           color: colors.iconColor,
                                           fontSize: 12,
@@ -184,13 +184,13 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // 테스터 쉐어 추가
-          Get.to(() => const CreateBoardScreen());
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // 테스터 쉐어 추가
+      //     Get.to(() => const CreateBoardScreen());
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 
