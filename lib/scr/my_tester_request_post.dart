@@ -3,19 +3,24 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
+import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
+import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
-import 'package:tester_share_app/scr/detail_board_screen.dart';
+import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
-import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class MyTesterRequestPostScreen extends StatelessWidget {
-  final ColorsCollection colors = ColorsCollection();
-  final AuthController _authController = AuthController.instance;
+  final ColorsCollection _colors = ColorsCollection();
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+  final AuthController _authController = AuthController.instance;
   final BoardFirebaseController _board = BoardFirebaseController();
+  final MultiImageFirebaseController _multiImageFirebaseController =
+      MultiImageFirebaseController();
+  final SingleImageFirebaseController _singleImageFirebaseController =
+      SingleImageFirebaseController();
   MyTesterRequestPostScreen({super.key});
 
   @override
@@ -26,11 +31,11 @@ class MyTesterRequestPostScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Text(
             "My Tester Request Post",
-            style: TextStyle(color: colors.textColor, fontSize: 16),
+            style: TextStyle(color: _colors.textColor, fontSize: 16),
           ),
         ),
         automaticallyImplyLeading: false,
-        backgroundColor: colors.background,
+        backgroundColor: _colors.background,
         actions: [
           IconButton(
             onPressed: () {
@@ -38,12 +43,12 @@ class MyTesterRequestPostScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.close,
-              color: colors.iconColor,
+              color: _colors.iconColor,
             ),
           )
         ],
       ),
-      backgroundColor: colors.background,
+      backgroundColor: _colors.background,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<List<BoardFirebaseModel>>(
@@ -60,7 +65,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
               return Center(
                 child: Text(
                   '게시물이 존재하지 않습니다.',
-                  style: TextStyle(color: colors.textColor, fontSize: 22),
+                  style: TextStyle(color: _colors.textColor, fontSize: 22),
                 ),
               );
             }
@@ -75,10 +80,11 @@ class MyTesterRequestPostScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(() => DetailBoardScreen(boards: boards[index]));
+                    Get.to(
+                        () => MyTestDetailBoardScreen(boards: boards[index]));
                   },
                   child: Card(
-                    color: colors.cardColor,
+                    color: _colors.cardColor,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -112,13 +118,13 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                 Text(
                                   'Creation date: ${_formattedDate(boards[index].createAt)}',
                                   style: TextStyle(
-                                      fontSize: 14, color: colors.textColor),
+                                      fontSize: 14, color: _colors.textColor),
                                 ),
                                 if (boards[index].updateAt != null)
                                   Text(
                                     'Modification date: ${_formattedDate(boards[index].updateAt!)}',
                                     style: TextStyle(
-                                        fontSize: 14, color: colors.textColor),
+                                        fontSize: 14, color: _colors.textColor),
                                   )
                               ],
                             ),
@@ -129,7 +135,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis, // 초과되면 생략 부호 표시
                               maxLines: 1,
                               style: TextStyle(
-                                  color: colors.textColor,
+                                  color: _colors.textColor,
                                   fontSize: 20)), // 표시할 최대 라인 수),
                           const SizedBox(height: 10),
                           Row(
@@ -148,11 +154,11 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                           if (boards[index].testerRequest >
                                               boards[index]
                                                   .testerParticipation) {
-                                            return colors
+                                            return _colors
                                                 .stateIsIng; // 상태가 "진행중"일 때의 배경색
                                           } else {
                                             // 다른 상태에는 기본 배경색을 설정합니다.
-                                            return colors.stateIsClose;
+                                            return _colors.stateIsClose;
                                           }
                                         },
                                       ),
@@ -166,7 +172,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                           ? 'In progress'
                                           : "Completed",
                                       style: TextStyle(
-                                          color: colors.iconColor,
+                                          color: _colors.iconColor,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     )),
@@ -175,6 +181,42 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                   'Developer: ${boards[index].developer}', 14),
                             ],
                           ),
+                          // SizedBox(height: 20),
+                          Divider(),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 140,
+                                height: 30,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.red),
+                                  ),
+                                  onPressed: () {
+                                    //image삭제
+                                    _multiImageFirebaseController
+                                        .deleteImagesFromStorage(
+                                            boards.first.appImagesUrl);
+                                    //삭제 구현
+                                    _board.deleteBoard(boards.first.docid);
+                                  },
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(
+                                      color: _colors.iconColor,
+                                      fontSize:
+                                          _fontSizeCollection.buttonFontSize,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -203,7 +245,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
   Widget cardText(String text, double size) {
     return Text(
       text,
-      style: TextStyle(color: colors.textColor, fontSize: size),
+      style: TextStyle(color: _colors.textColor, fontSize: size),
     );
   }
 }

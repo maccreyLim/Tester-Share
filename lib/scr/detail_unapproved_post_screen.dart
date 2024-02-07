@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailUnapprovedPostScreen extends StatefulWidget {
@@ -241,11 +243,11 @@ class _DetailUnapprovedPostScreenState
                 width: 150,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: widget.boards.imageUrl.length,
+                  itemCount: widget.boards.appImagesUrl.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(widget.boards.imageUrl[index],
+                      child: Image.network(widget.boards.appImagesUrl[index],
                           width: 150, height: 300, fit: BoxFit.fill),
                     );
                   },
@@ -270,6 +272,11 @@ class _DetailUnapprovedPostScreenState
                   child: cardText(widget.boards.introductionText, 16)),
             ),
             const SizedBox(height: 50),
+            SizedBox(height: 20),
+            Divider(),
+            SizedBox(height: 20),
+            SizedBox(width: double.infinity, child: BannerAdExample()),
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
@@ -279,6 +286,7 @@ class _DetailUnapprovedPostScreenState
                       : MaterialStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () {
+                  InterstitialAdExample();
                   //Todo : firebase isApproval = true;
                   widget.boards.isApproval
                       ? updateBoard(widget.boards, false)

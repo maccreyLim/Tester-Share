@@ -10,19 +10,19 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
 
-class CreateBoardScreen extends StatefulWidget {
-  const CreateBoardScreen({super.key});
+class UpdateBoardScreen extends StatefulWidget {
+  final BoardFirebaseModel boards;
+  const UpdateBoardScreen({Key? key, required this.boards}) : super(key: key);
 
   @override
-  _CreateBoardScreenState createState() => _CreateBoardScreenState();
+  _UpdateBoardScreenState createState() => _UpdateBoardScreenState();
 }
 
-class _CreateBoardScreenState extends State<CreateBoardScreen> {
-  //Property
+class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
+  // Property
   final AuthController _authController = AuthController.instance;
   final ColorsCollection colors = ColorsCollection();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,13 +35,9 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController introductionTextController = TextEditingController();
   TextEditingController testerRequestController = TextEditingController();
-  // TextEditingController testerParticipationController = TextEditingController();
-  // TextEditingController imageUrlController = TextEditingController();
-  // TextEditingController iconImageUrlController = TextEditingController();
   TextEditingController githubUrlController = TextEditingController();
   TextEditingController testerRequestProfileController =
       TextEditingController();
-  // TextEditingController languageController = TextEditingController();
   TextEditingController appSetupUrlController = TextEditingController();
   List<String> availableLanguages = [
     "English",
@@ -53,8 +49,17 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     "German"
   ];
   List<String> selectedLanguages = [];
-  File? pickedImage; //이미지를 담는 변수
-  List<XFile?> pickedImages = []; // 이미지 File을 저장할 리스트
+  File? pickedImage;
+  String? pickedImageUrl;
+  List<XFile?> pickedimages = []; // List to store image files
+
+  void _pickImage() async {
+    XFile? pickedImageFile =
+        await _singleImageFirebaseController.pickSingleImage();
+    setState(() {
+      pickedImage = pickedImageFile != null ? File(pickedImageFile.path) : null;
+    });
+  }
 
   @override
   void dispose() {
@@ -66,44 +71,88 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     testerRequestProfileController.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _initializeForm();
+    selectedLanguages = widget.boards.language!.whereType<String>().toList();
+
+    pickedImageUrl = widget.boards.iconImageUrl;
+
+    pickedimages = widget.boards.appImagesUrl
+        .map((path) => XFile(path))
+        .toList(growable: true);
+
+    // Set up listeners for controllers
+    titleController.addListener(() {
+      setState(() {
+        widget.boards.title = titleController.text;
+      });
+    });
+    introductionTextController.addListener(() {
+      setState(() {
+        widget.boards.introductionText = introductionTextController.text;
+      });
+    });
+    testerRequestController.addListener(() {
+      setState(() {
+        widget.boards.testerRequest = int.parse(testerRequestController.text);
+      });
+    });
+    appSetupUrlController.addListener(() {
+      setState(() {
+        widget.boards.appSetupUrl = appSetupUrlController.text;
+      });
+    });
+  }
+
+  void _initializeForm() {
+    titleController.text = widget.boards.title;
+    introductionTextController.text = widget.boards.introductionText;
+    testerRequestController.text = widget.boards.testerRequest.toString();
+    githubUrlController.text = widget.boards.githubUrl;
+    appSetupUrlController.text = widget.boards.appSetupUrl;
+  }
+
   void _savePost() async {
     if (_authController.currentUser?.uid == null) {
-      // 사용자 데이터가 없으면 예외 처리 또는 다른 조치를 취할 수 있습니다.
-      print('Error: 유저데이타가 없습니다.');
+      print('Error: User data not available.');
       return;
     }
 
     List<String> appImagesUrl = [];
-    String iconImageUrl = "";
+    String downloadUrl = "";
     String? userUid = _authController.currentUser!.uid;
-    print("저장할 uid : userUid");
-
-    if (pickedImage != null) {
-      iconImageUrl = await _singleImageFirebaseController.uploadSingleImage(
-              pickedImage != null ? XFile(pickedImage!.path) : null) ??
-          "";
-    }
-    if (pickedImages.isNotEmpty) {
+    print("UID to save: $userUid");
+    // 이미지 목록이 비어 있지 않고 파일이 존재하는지 확인한 후 업로드
+    if (pickedimages.isNotEmpty &&
+        pickedimages.every(
+            (file) => file?.path != null && File(file!.path).existsSync())) {
       appImagesUrl =
-          await _multiImageFirebaseController.uploadMultiImages(pickedImages);
+          await _multiImageFirebaseController.uploadMultiImages(pickedimages);
     }
+
+    if (pickedImage != null && pickedImage!.existsSync()) {
+      downloadUrl = (await _singleImageFirebaseController
+          .uploadSingleImage(XFile(pickedImage!.path)))!;
+    }
+    print(appImagesUrl);
+    print(pickedImage);
 
     if (_formKey.currentState!.validate()) {
-      // 게시물 저장 로직을 여기에 추가
-      // BoardFirebaseModel을 활용하여 새로운 게시물을 생성
       BoardFirebaseModel newPost = BoardFirebaseModel(
-        docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
+        docid: '',
         isApproval: false,
-        createUid: userUid.toString(), // 현재 사용자의 UID로 설정
+        createUid: userUid.toString(),
         developer: _authController.userData?['profileName'],
         createAt: DateTime.now(),
-        updateAt: null, // 처음 생성이므로 null로 설정
+        updateAt: null,
         title: titleController.text,
         introductionText: introductionTextController.text,
         testerRequest: int.parse(testerRequestController.text),
         testerParticipation: 0,
         appImagesUrl: appImagesUrl,
-        iconImageUrl: iconImageUrl,
+        iconImageUrl: downloadUrl,
         githubUrl: githubUrlController.text,
         appSetupUrl: appSetupUrlController.text,
         testerRequestProfile: {
@@ -111,15 +160,10 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         },
         language: selectedLanguages,
       );
-      try {
-        await _boardFirebaseController.addBoard(newPost);
 
-        // 저장이 완료되면 홈 화면으로 이동
-        Get.off(() => HomeScreen());
-      } catch (e) {
-        print("Post 저장에 실패 : $e");
-      }
-      // Firestore에 게시물 추가
+      await _boardFirebaseController.updateBoard(newPost);
+
+      Get.off(() => HomeScreen());
     }
   }
 
@@ -152,43 +196,41 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 84,
-                    height: 84,
-                    color: Colors.white12,
-                    child: Column(
-                      children: [
-                        pickedImage == null
-                            ? IconButton(
-                                onPressed: () async {
-                                  XFile? pickedXFile =
-                                      await _singleImageFirebaseController
-                                          .pickSingleImage();
-                                  setState(() {
-                                    pickedImage = pickedXFile != null
-                                        ? File(pickedXFile.path)
-                                        : null;
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.camera_alt,
-                                  size: 46,
-                                  color: colors.textColor,
-                                ),
-                              )
-                            : Image.file(
-                                pickedImage!,
-                                width: 84,
-                                height: 84,
-                              ),
-                        if (pickedImage == null)
-                          Text('Logo Image',
-                              style: TextStyle(color: colors.textColor)),
-                      ],
-                    ),
+                  Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        width: 84,
+                        height: 84,
+                        color: Colors.white12,
+                        child: Column(
+                          children: [
+                            Image.network(
+                              pickedImageUrl!,
+                              width: 84,
+                              height: 84,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          setState(() async {
+                            XFile? xFile = await _singleImageFirebaseController
+                                .pickSingleImage();
+                            pickedImage =
+                                xFile != null ? File(xFile.path) : null;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.camera_alt,
+                          size: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 30), // 간격 조절을 위한 SizedBox 추가
-                  // Expanded 제거
+                  const SizedBox(width: 30),
                   Expanded(
                     child: TextFormField(
                       controller: titleController,
@@ -210,15 +252,19 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 ],
               ),
               ExpansionTile(
-                title: Text("Supported Languages",
-                    style: TextStyle(color: colors.textColor)),
+                title: Text(
+                  "Supported Languages",
+                  style: TextStyle(color: colors.textColor),
+                ),
                 children: [
                   Column(
                     children: availableLanguages.map((language) {
                       bool isSelected = selectedLanguages.contains(language);
                       return CheckboxListTile(
-                        title: Text(language,
-                            style: TextStyle(color: colors.textColor)),
+                        title: Text(
+                          language,
+                          style: TextStyle(color: colors.textColor),
+                        ),
                         value: isSelected,
                         onChanged: (value) {
                           setState(() {
@@ -271,26 +317,6 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   return null;
                 },
               ),
-              // TextFormField(
-              //   controller: testerParticipationController,
-              //   keyboardType: TextInputType.number,
-              //   decoration: InputDecoration(
-              //     icon: const Icon(Icons.people),
-              //     labelText: 'Number of participants as testers',
-              //     hintText:
-              //         'Please enter the number of participants as a tester',
-              //     labelStyle: TextStyle(color: colors.textColor),
-              //   ),
-              //   style: const TextStyle(color: Colors.white),
-              //   validator: (value) {
-              //     if (value == null ||
-              //         value.isEmpty ||
-              //         int.tryParse(value) == null) {
-              //       return 'Please enter a valid number';
-              //     }
-              //     return null;
-              //   },
-              // ),
               TextFormField(
                 controller: githubUrlController,
                 decoration: InputDecoration(
@@ -328,9 +354,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                     height: 80,
                     child: IconButton(
                       onPressed: () async {
-                        // 이미지 가져오기
                         await _multiImageFirebaseController
-                            .pickMultiImage(pickedImages);
+                            .pickMultiImage(pickedimages);
                         setState(() {});
                       },
                       icon: Icon(
@@ -342,7 +367,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   ),
                   const SizedBox(width: 20),
                   Text(
-                    " App 이미지를 등록해주세요",
+                    "Please register App images",
                     style: TextStyle(
                       color: colors.textColor,
                     ),
@@ -350,18 +375,15 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              pickedImages.isEmpty ? Container() : multiImageListView(),
+              pickedimages.isEmpty ? Container() : multiImageListView(),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.blue),
                 ),
-                onPressed: () {
-                  InterstitialAdExample();
-                  _savePost;
-                },
+                onPressed: _savePost,
                 child: Text(
-                  'Create Post',
+                  'Update Post',
                   style: TextStyle(fontSize: 20, color: colors.iconColor),
                 ),
               ),
@@ -378,32 +400,36 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: pickedImages.length,
+        itemCount: pickedimages.length,
         itemBuilder: (context, index) {
           return Row(
             children: [
-              // 이미지 표시 부분
               Column(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: Image.file(
-                      File(pickedImages[index]!.path),
-                      height: 150,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
+                    child: pickedimages[index]!.path.startsWith('http')
+                        ? Image.network(
+                            pickedimages[index]!.path,
+                            height: 150,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(pickedimages[index]!.path),
+                            height: 150,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
                   ),
-                  // List에서 이미지 삭제 버튼
                   Container(
                     margin: const EdgeInsets.only(left: 10),
-                    width: 20, // 조절 가능한 너비
+                    width: 20,
                     height: 20,
                     child: IconButton(
-                      onPressed: () async {
-                        // 이미지파일 삭제
+                      onPressed: () {
                         _multiImageFirebaseController.deleteImageList(
-                            index, pickedImages);
+                            index, pickedimages);
                         setState(() {});
                       },
                       icon: Icon(

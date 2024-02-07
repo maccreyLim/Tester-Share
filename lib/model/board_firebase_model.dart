@@ -11,7 +11,7 @@ class BoardFirebaseModel {
   String introductionText; // App 소개글
   int testerRequest; // 테스터에 필요한 요청수
   int testerParticipation; // 테스터 참여자 수
-  List<String> imageUrl; // App 이미지
+  List<String> appImagesUrl; // App 이미지
   String iconImageUrl; // AppIcon 이미지
   String githubUrl; // github 주소
   String appSetupUrl; // app 설치 주소
@@ -30,7 +30,7 @@ class BoardFirebaseModel {
     required this.introductionText,
     required this.testerRequest,
     required this.testerParticipation,
-    required this.imageUrl,
+    required this.appImagesUrl,
     required this.iconImageUrl,
     required this.githubUrl,
     required this.appSetupUrl,
@@ -53,7 +53,7 @@ class BoardFirebaseModel {
       introductionText: data?['introductionText'] ?? '',
       testerRequest: data?['testerRequest'] ?? 0,
       testerParticipation: data?['testerParticipation'] ?? 0,
-      imageUrl: List<String>.from(data?['imageUrl'] ?? []),
+      appImagesUrl: List<String>.from(data?['appImagesUrl'] ?? []),
       iconImageUrl: data?['iconImageUrl'] ?? '',
       githubUrl: data?['githubUrl'] ?? '',
       appSetupUrl: data?['appSetupUrl'] ?? '',
@@ -76,7 +76,7 @@ class BoardFirebaseModel {
       'introductionText': introductionText,
       'testerRequest': testerRequest,
       'testerParticipation': testerParticipation,
-      'imageUrl': imageUrl,
+      'appImagesUrl': appImagesUrl,
       'iconImageUrl': iconImageUrl,
       'githubUrl': githubUrl,
       'appSetupUrl': appSetupUrl,

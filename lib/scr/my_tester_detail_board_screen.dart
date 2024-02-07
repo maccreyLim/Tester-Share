@@ -3,18 +3,19 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:tester_share_app/scr/project_join_screen.dart';
+import 'package:tester_share_app/scr/update_board_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailBoardScreen extends StatelessWidget {
+class MyTestDetailBoardScreen extends StatelessWidget {
   final BoardFirebaseModel
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
   final ColorsCollection colors = ColorsCollection();
-
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   // Use 'final' for the constructor parameter, and fix the constructor name
-  DetailBoardScreen({Key? key, required this.boards}) : super(key: key);
+  MyTestDetailBoardScreen({Key? key, required this.boards}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,11 +276,13 @@ class DetailBoardScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.blue),
                 ),
                 onPressed: () {
-                  Get.to(() => ProjectJoinScreen());
+                  Get.to(() => UpdateBoardScreen(boards: boards));
                 },
                 child: Text(
-                  'Apply to be a Tester',
-                  style: TextStyle(fontSize: 20, color: colors.iconColor),
+                  'Update',
+                  style: TextStyle(
+                      fontSize: _fontSizeCollection.buttonFontSize,
+                      color: colors.iconColor),
                 ),
               ),
             ),

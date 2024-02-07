@@ -7,6 +7,7 @@ import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart'; // intl 패키지 추가
 
@@ -174,6 +175,10 @@ class HomeScreen extends StatelessWidget {
                                   'Developer: ${boards[index].developer}', 14),
                             ],
                           ),
+                          Divider(),
+                          SizedBox(height: 10),
+                          SizedBox(
+                              width: double.infinity, child: BannerAdExample()),
                         ],
                       ),
                     ),

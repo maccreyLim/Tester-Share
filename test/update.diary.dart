@@ -582,4 +582,15 @@ class _UpdateDiaryScreenState extends State<UpdateDiaryScreen> {
       }
     }
   }
+
+  // String extractPathFromUrl(String imageUrl) {
+  //   // 이미지 URL에서 파일 경로 추출
+  //   Uri uri = Uri.parse(imageUrl);
+  //   String path = uri.path;
+  //   // token 제거
+  //   path = path.split('?').first;
+  //   // URL 디코딩
+  //   path = Uri.decodeFull(path);
+  //   return path;
+  // }
 }

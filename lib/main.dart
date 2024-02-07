@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/firebase_options.dart';
 import 'package:tester_share_app/scr/login_screen.dart';
@@ -9,7 +10,7 @@ import 'package:tester_share_app/scr/login_screen.dart';
 void main() async {
   // Firebase 초기화
   WidgetsFlutterBinding.ensureInitialized();
-  // MobileAds.instance.initialize();
+  MobileAds.instance.initialize();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

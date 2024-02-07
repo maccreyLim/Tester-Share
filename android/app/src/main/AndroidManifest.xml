@@ -43,11 +43,14 @@
             </intent-filter>
         </activity>
 
-        <!-- 추가적인 앱 설정 및 구성을 필요에 따라 정의할 수 있음 -->
-                <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
-        <!-- <meta-data
-            android:name="ca-app-pub-9128371394963939~8724134378"
-            android:value="ca-app-pub-3940256099942544~3347511713"/> -->
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <!-- 출시전 변경 
+         android:value="ca-app-pub-9128371394963939~8724134378"/>
+        -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            
 
     </application>
 </manifest>

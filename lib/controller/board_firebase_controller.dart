@@ -74,12 +74,9 @@ class BoardFirebaseController {
   }
 
   // Delete (삭제)
-  Future<void> deleteBoard(String boardId) async {
+  Future<void> deleteBoard(String docId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('boards')
-          .doc(boardId)
-          .delete();
+      await FirebaseFirestore.instance.collection('boards').doc(docId).delete();
     } catch (e) {
       print('Error deleting board: $e');
     }
