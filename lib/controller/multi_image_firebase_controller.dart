@@ -11,7 +11,7 @@ class MultiImageFirebaseController {
   // ImagePicker
 
   /// ImagePicker를 사용하여 갤러리에서 다중 이미지 선택하고 이미지 XFile리스트에 추가하는 메서드
-  Future<void> pickMultiImage(List<XFile?> pickedImages) async {
+  Future<List<XFile?>> pickMultiImage(List<XFile?> pickedImages) async {
     List<XFile?> newPickedImages = await ImagePicker().pickMultiImage(
       imageQuality: 50,
       maxHeight: 300,
@@ -21,6 +21,8 @@ class MultiImageFirebaseController {
     if (newPickedImages.isNotEmpty) {
       pickedImages.addAll(newPickedImages);
     }
+
+    return pickedImages; // 수정: 이미지 목록을 반환
   }
 
   // 이미지 XFile리스트에서 특정 인덱스의 이미지를 삭제하는 메서드
@@ -93,7 +95,7 @@ class MultiImageFirebaseController {
       List<XFile?> pickedImages, List<String> existingImageUrls) async {
     try {
       // 이미지 업로드 전에 기존 이미지 삭제
-      await deleteImagesFromStorage(existingImageUrls);
+      await deleteImagesUrlFromStorage(existingImageUrls);
 
       List<String> newImageUrls = [];
 
@@ -129,7 +131,7 @@ class MultiImageFirebaseController {
   // Storage Delete
 
   /// 이미지를 imageUrls 리스트로 Firebase Storage에서 이미지 파일을 삭제하는 메서드
-  Future<void> deleteImagesFromStorage(List<String> appImagesUrls) async {
+  Future<void> deleteImagesUrlFromStorage(List<String> appImagesUrls) async {
     try {
       for (String imageUrl in appImagesUrls) {
         // 이미지 URL에서 gs:// 형태의 Bucket 이름과 Path 추출
@@ -147,7 +149,7 @@ class MultiImageFirebaseController {
           // Firebase Storage에서 이미지 삭제
           await imageRef.delete();
         } else {
-          print('이미지 URL 형식이 잘못되었습니다.');
+          print('이미지 URL 형식이 잘못되었습니다: $imageUrl');
         }
       }
     } catch (e) {

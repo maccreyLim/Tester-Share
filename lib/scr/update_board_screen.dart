@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -10,8 +11,11 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateBoardScreen extends StatefulWidget {
   final BoardFirebaseModel boards;
@@ -22,8 +26,8 @@ class UpdateBoardScreen extends StatefulWidget {
 }
 
 class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
-  // Property
   final AuthController _authController = AuthController.instance;
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MultiImageFirebaseController _multiImageFirebaseController =
@@ -50,60 +54,19 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
   ];
   List<String> selectedLanguages = [];
   File? pickedImage;
-  String? pickedImageUrl;
-  List<XFile?> pickedimages = []; // List to store image files
-
-  void _pickImage() async {
-    XFile? pickedImageFile =
-        await _singleImageFirebaseController.pickSingleImage();
-    setState(() {
-      pickedImage = pickedImageFile != null ? File(pickedImageFile.path) : null;
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    titleController.dispose();
-    introductionTextController.dispose();
-    testerRequestController.dispose();
-    githubUrlController.dispose();
-    testerRequestProfileController.dispose();
-  }
+  List<XFile?> pickedImages = [];
 
   @override
   void initState() {
-    super.initState();
-    _initializeForm();
-    selectedLanguages = widget.boards.language!.whereType<String>().toList();
-
-    pickedImageUrl = widget.boards.iconImageUrl;
-
-    pickedimages = widget.boards.appImagesUrl
-        .map((path) => XFile(path))
-        .toList(growable: true);
-
-    // Set up listeners for controllers
-    titleController.addListener(() {
-      setState(() {
-        widget.boards.title = titleController.text;
-      });
-    });
-    introductionTextController.addListener(() {
-      setState(() {
-        widget.boards.introductionText = introductionTextController.text;
-      });
-    });
-    testerRequestController.addListener(() {
-      setState(() {
-        widget.boards.testerRequest = int.parse(testerRequestController.text);
-      });
-    });
-    appSetupUrlController.addListener(() {
-      setState(() {
-        widget.boards.appSetupUrl = appSetupUrlController.text;
-      });
-    });
+    try {
+      super.initState();
+      pickedImages = widget.boards.appImagesUrl
+          .map((path) => XFile(path))
+          .toList(growable: true);
+      _initializeForm();
+    } catch (e, stackTrace) {
+      print('Error in initState: $e\n$stackTrace');
+    }
   }
 
   void _initializeForm() {
@@ -112,58 +75,92 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
     testerRequestController.text = widget.boards.testerRequest.toString();
     githubUrlController.text = widget.boards.githubUrl;
     appSetupUrlController.text = widget.boards.appSetupUrl;
+    selectedLanguages = widget.boards.language!.whereType<String>().toList();
+    pickedImage = File(widget.boards.iconImageUrl);
+  }
+
+  void _pickImages() async {
+    try {
+      List<XFile?> pickedImageFiles =
+          await _multiImageFirebaseController.pickMultiImage(pickedImages);
+      setState(() {
+        pickedImages = pickedImageFiles;
+      });
+    } catch (e) {
+      print('Error picking images: $e');
+    }
   }
 
   void _savePost() async {
-    if (_authController.currentUser?.uid == null) {
-      print('Error: User data not available.');
-      return;
+    try {
+      // 현재 사용자의 UID가 없으면 에러 출력 후 함수 종료
+      if (_authController.currentUser?.uid == null) {
+        print('오류: 사용자 데이터를 가져올 수 없습니다.');
+        return;
+      }
+
+      List<String> appImagesUrl = [];
+      String iconImageUrl = "";
+      String? userUid = _authController.currentUser!.uid;
+
+      // 선택된 이미지들이 유효한지 검사
+      if (_validatePickedImages()) {
+        // 다중 이미지 업데이트
+        List<String> urls = await _multiImageFirebaseController
+            .updateMultiImages(pickedImages, widget.boards.appImagesUrl);
+        appImagesUrl.addAll(urls);
+      }
+
+      // 폼 검증
+      if (_formKey.currentState!.validate()) {
+        // 새로운 게시물 모델 생성
+        BoardFirebaseModel newPost = BoardFirebaseModel(
+          docid: '',
+          isApproval: false,
+          createUid: userUid.toString(),
+          developer: _authController.userData?['profileName'],
+          createAt: DateTime.now(),
+          updateAt: null,
+          title: titleController.text,
+          introductionText: introductionTextController.text,
+          testerRequest: int.parse(testerRequestController.text),
+          testerParticipation: 0,
+          appImagesUrl: appImagesUrl,
+          iconImageUrl: iconImageUrl,
+          githubUrl: githubUrlController.text,
+          appSetupUrl: appSetupUrlController.text,
+          testerRequestProfile: {
+            'tester_name': [],
+          },
+          language: selectedLanguages,
+        );
+
+        // 게시물 업데이트
+        await _boardFirebaseController.updateBoard(newPost);
+
+        // 홈 화면으로 이동
+        Get.off(() => HomeScreen());
+      }
+    } catch (e, stackTrace) {
+      // 예외 발생 시 에러 출력 및 필요한 경우 사용자에게 메시지 표시
+      print('오류 in _savePost: $e\n$stackTrace');
+      // 에러 처리를 위한 추가적인 동작 수행
     }
+  }
 
-    List<String> appImagesUrl = [];
-    String downloadUrl = "";
-    String? userUid = _authController.currentUser!.uid;
-    print("UID to save: $userUid");
-    // 이미지 목록이 비어 있지 않고 파일이 존재하는지 확인한 후 업로드
-    if (pickedimages.isNotEmpty &&
-        pickedimages.every(
-            (file) => file?.path != null && File(file!.path).existsSync())) {
-      appImagesUrl =
-          await _multiImageFirebaseController.uploadMultiImages(pickedimages);
-    }
-
-    if (pickedImage != null && pickedImage!.existsSync()) {
-      downloadUrl = (await _singleImageFirebaseController
-          .uploadSingleImage(XFile(pickedImage!.path)))!;
-    }
-    print(appImagesUrl);
-    print(pickedImage);
-
-    if (_formKey.currentState!.validate()) {
-      BoardFirebaseModel newPost = BoardFirebaseModel(
-        docid: '',
-        isApproval: false,
-        createUid: userUid.toString(),
-        developer: _authController.userData?['profileName'],
-        createAt: DateTime.now(),
-        updateAt: null,
-        title: titleController.text,
-        introductionText: introductionTextController.text,
-        testerRequest: int.parse(testerRequestController.text),
-        testerParticipation: 0,
-        appImagesUrl: appImagesUrl,
-        iconImageUrl: downloadUrl,
-        githubUrl: githubUrlController.text,
-        appSetupUrl: appSetupUrlController.text,
-        testerRequestProfile: {
-          'tester_name': [],
-        },
-        language: selectedLanguages,
-      );
-
-      await _boardFirebaseController.updateBoard(newPost);
-
-      Get.off(() => HomeScreen());
+// 선택된 이미지들이 유효한지 검증하는 함수
+  bool _validatePickedImages() {
+    if (pickedImages.every(
+      (file) =>
+          file != null &&
+          (file.path.startsWith('http') || File(file.path).existsSync()),
+    )) {
+      return true;
+    } else {
+      // 선택된 이미지가 유효하지 않을 경우 에러 출력
+      print('오류: 선택된 이미지가 올바르지 않습니다.');
+      // 에러 처리를 위한 추가적인 동작 수행
+      return false; // 또는 예외를 throw하여 프로세스를 중지할 수 있음
     }
   }
 
@@ -196,39 +193,40 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        width: 84,
-                        height: 84,
-                        color: Colors.white12,
-                        child: Column(
-                          children: [
-                            Image.network(
-                              pickedImageUrl!,
-                              width: 84,
-                              height: 84,
-                              fit: BoxFit.cover,
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          setState(() async {
-                            XFile? xFile = await _singleImageFirebaseController
-                                .pickSingleImage();
-                            pickedImage =
-                                xFile != null ? File(xFile.path) : null;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.camera_alt,
-                          size: 20,
-                        ),
-                      ),
-                    ],
+                  Container(
+                    width: 84,
+                    height: 84,
+                    color: Colors.white12,
+                    child: Column(
+                      children: [
+                        pickedImage == null
+                            ? IconButton(
+                                onPressed: () async {
+                                  XFile? pickedXFile =
+                                      await _singleImageFirebaseController
+                                          .pickSingleImage();
+                                  setState(() {
+                                    pickedImage = pickedXFile != null
+                                        ? File(pickedXFile.path)
+                                        : null;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.camera_alt,
+                                  size: 46,
+                                  color: colors.textColor,
+                                ),
+                              )
+                            : Image.file(
+                                pickedImage!,
+                                width: 84,
+                                height: 84,
+                              ),
+                        if (pickedImage == null)
+                          Text('Logo Image',
+                              style: TextStyle(color: colors.textColor)),
+                      ],
+                    ),
                   ),
                   const SizedBox(width: 30),
                   Expanded(
@@ -252,19 +250,15 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 ],
               ),
               ExpansionTile(
-                title: Text(
-                  "Supported Languages",
-                  style: TextStyle(color: colors.textColor),
-                ),
+                title: Text("Supported Languages",
+                    style: TextStyle(color: colors.textColor)),
                 children: [
                   Column(
                     children: availableLanguages.map((language) {
                       bool isSelected = selectedLanguages.contains(language);
                       return CheckboxListTile(
-                        title: Text(
-                          language,
-                          style: TextStyle(color: colors.textColor),
-                        ),
+                        title: Text(language,
+                            style: TextStyle(color: colors.textColor)),
                         value: isSelected,
                         onChanged: (value) {
                           setState(() {
@@ -284,6 +278,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
               ),
               TextFormField(
                 controller: introductionTextController,
+                maxLines: 3,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.text_fields),
                   labelText: 'Introduction Text',
@@ -307,6 +302,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   hintText: 'Please enter the number of testers required',
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 style: const TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null ||
@@ -318,33 +314,39 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 },
               ),
               TextFormField(
-                controller: githubUrlController,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.link),
-                  labelText: 'GitHub URL',
-                  hintText: 'GitHub repository URL',
-                  labelStyle: TextStyle(color: colors.textColor),
-                ),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  return null;
-                },
-              ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: githubUrlController,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.link),
+                    labelText: 'GitHub URL',
+                    hintText: 'GitHub repository URL',
+                    labelStyle: TextStyle(color: colors.textColor),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter GitHub repository URL';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               TextFormField(
-                controller: appSetupUrlController,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.link),
-                  labelText: 'Test App Download Address',
-                  hintText:
-                      'Please enter the download address of the Test App.',
-                  labelStyle: TextStyle(color: colors.textColor),
-                ),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  return null;
-                },
-              ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: appSetupUrlController,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.link),
+                    labelText: 'Test App Download Address',
+                    hintText:
+                        'Please enter the download address of the Test App.',
+                    labelStyle: TextStyle(color: colors.textColor),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the download address of the Test App.';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -353,11 +355,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     width: 80,
                     height: 80,
                     child: IconButton(
-                      onPressed: () async {
-                        await _multiImageFirebaseController
-                            .pickMultiImage(pickedimages);
-                        setState(() {});
-                      },
+                      onPressed: _pickImages,
                       icon: Icon(
                         Icons.camera_alt,
                         size: 60,
@@ -375,22 +373,16 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              pickedimages.isEmpty ? Container() : multiImageListView(),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: _savePost,
-                child: Text(
-                  'Update Post',
-                  style: TextStyle(fontSize: 20, color: colors.iconColor),
-                ),
-              ),
-              const SizedBox(height: 10),
+              pickedImages.isEmpty ? Container() : multiImageListView(),
+              Expanded(child: SizedBox()),
+              Align(alignment: Alignment.bottomCenter, child: _saveButton()),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAdExample(),
       ),
     );
   }
@@ -400,7 +392,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: pickedimages.length,
+        itemCount: pickedImages.length,
         itemBuilder: (context, index) {
           return Row(
             children: [
@@ -408,15 +400,15 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: pickedimages[index]!.path.startsWith('http')
+                    child: pickedImages[index]!.path.startsWith('http')
                         ? Image.network(
-                            pickedimages[index]!.path,
+                            pickedImages[index]!.path,
                             height: 150,
                             width: 100,
                             fit: BoxFit.cover,
                           )
                         : Image.file(
-                            File(pickedimages[index]!.path),
+                            File(pickedImages[index]!.path),
                             height: 150,
                             width: 100,
                             fit: BoxFit.cover,
@@ -428,9 +420,10 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     height: 20,
                     child: IconButton(
                       onPressed: () {
-                        _multiImageFirebaseController.deleteImageList(
-                            index, pickedimages);
-                        setState(() {});
+                        setState(() {
+                          _multiImageFirebaseController.deleteImageList(
+                              index, pickedImages);
+                        });
                       },
                       icon: Icon(
                         Icons.close,
@@ -445,6 +438,28 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _saveButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: _fontSizeCollection.buttonSize,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+        ),
+        onPressed: () {
+          InterstitialAdExample();
+          _savePost();
+        },
+        child: Text(
+          'Update Post',
+          style: TextStyle(
+              fontSize: _fontSizeCollection.buttonFontSize,
+              color: colors.iconColor),
+        ),
       ),
     );
   }

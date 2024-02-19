@@ -4,11 +4,11 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
-class MypageScreen extends StatelessWidget {
+class DetailNoticeScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
-  final AuthController _authController = AuthController.instance;
+  final AuthController authController = AuthController.instance;
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
-  MypageScreen({super.key});
+  DetailNoticeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +29,18 @@ class MypageScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Text(
-            "Mypage",
-            style: TextStyle(
-                fontSize: _fontSizeCollection.SettinFontSize,
-                color: colors.textColor),
-          )
-        ],
+      body: Container(
+        height: double.infinity,
+        child: Column(
+          children: [
+            Text(
+              "SampleScreen",
+              style: TextStyle(
+                  fontSize: _fontSizeCollection.subjectFontSize,
+                  color: colors.textColor),
+            ),
+          ],
+        ),
       ),
     );
   }

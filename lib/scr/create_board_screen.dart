@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -10,8 +11,10 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
 
 class CreateBoardScreen extends StatefulWidget {
@@ -24,6 +27,7 @@ class CreateBoardScreen extends StatefulWidget {
 class _CreateBoardScreenState extends State<CreateBoardScreen> {
   //Property
   final AuthController _authController = AuthController.instance;
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MultiImageFirebaseController _multiImageFirebaseController =
@@ -112,6 +116,9 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         language: selectedLanguages,
       );
       try {
+        print("Before saving post: pickedImage: $pickedImage");
+        print("Before saving post: appImagesUrl: $appImagesUrl");
+        print("Before saving post: newPost: $newPost");
         await _boardFirebaseController.addBoard(newPost);
 
         // 저장이 완료되면 홈 화면으로 이동
@@ -238,6 +245,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               ),
               TextFormField(
                 controller: introductionTextController,
+                maxLines: 3,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.text_fields),
                   labelText: 'Introduction Text',
@@ -261,6 +269,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   hintText: 'Please enter the number of testers required',
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 style: const TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null ||
@@ -271,54 +280,40 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   return null;
                 },
               ),
-              // TextFormField(
-              //   controller: testerParticipationController,
-              //   keyboardType: TextInputType.number,
-              //   decoration: InputDecoration(
-              //     icon: const Icon(Icons.people),
-              //     labelText: 'Number of participants as testers',
-              //     hintText:
-              //         'Please enter the number of participants as a tester',
-              //     labelStyle: TextStyle(color: colors.textColor),
-              //   ),
-              //   style: const TextStyle(color: Colors.white),
-              //   validator: (value) {
-              //     if (value == null ||
-              //         value.isEmpty ||
-              //         int.tryParse(value) == null) {
-              //       return 'Please enter a valid number';
-              //     }
-              //     return null;
-              //   },
-              // ),
               TextFormField(
-                controller: githubUrlController,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.link),
-                  labelText: 'GitHub URL',
-                  hintText: 'GitHub repository URL',
-                  labelStyle: TextStyle(color: colors.textColor),
-                ),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  return null;
-                },
-              ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: githubUrlController,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.link),
+                    labelText: 'GitHub URL',
+                    hintText: 'GitHub repository URL',
+                    labelStyle: TextStyle(color: colors.textColor),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter GitHub repository URL';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               TextFormField(
-                controller: appSetupUrlController,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.link),
-                  labelText: 'Test App Download Address',
-                  hintText:
-                      'Please enter the download address of the Test App.',
-                  labelStyle: TextStyle(color: colors.textColor),
-                ),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  return null;
-                },
-              ),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: appSetupUrlController,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.link),
+                    labelText: 'Test App Download Address',
+                    hintText:
+                        'Please enter the download address of the Test App.',
+                    labelStyle: TextStyle(color: colors.textColor),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the download address of the Test App.';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -351,24 +346,15 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               ),
               const SizedBox(height: 20),
               pickedImages.isEmpty ? Container() : multiImageListView(),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: () {
-                  InterstitialAdExample();
-                  _savePost;
-                },
-                child: Text(
-                  'Create Post',
-                  style: TextStyle(fontSize: 20, color: colors.iconColor),
-                ),
-              ),
-              const SizedBox(height: 10),
+              Expanded(child: SizedBox()),
+              Align(alignment: Alignment.bottomCenter, child: _saveButton()),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAdExample(),
       ),
     );
   }
@@ -402,9 +388,10 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                     child: IconButton(
                       onPressed: () async {
                         // 이미지파일 삭제
-                        _multiImageFirebaseController.deleteImageList(
-                            index, pickedImages);
-                        setState(() {});
+                        setState(() {
+                          _multiImageFirebaseController.deleteImageList(
+                              index, pickedImages);
+                        });
                       },
                       icon: Icon(
                         Icons.close,
@@ -419,6 +406,27 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _saveButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+        ),
+        onPressed: () {
+          InterstitialAdExample();
+          _savePost();
+        },
+        child: Text(
+          'Create Post',
+          style: TextStyle(
+              fontSize: _fontSizeCollection.buttonFontSize,
+              color: colors.iconColor),
+        ),
       ),
     );
   }

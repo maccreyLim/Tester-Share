@@ -158,7 +158,9 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: () {
-                                      Get.to(() => ProjectJoinScreen());
+                                      Get.to(() => DetailBoardScreen(
+                                            boards: boards[index],
+                                          ));
                                     },
                                     child: Text(
                                       boards[index].testerRequest >
@@ -195,6 +197,10 @@ class HomeScreen extends StatelessWidget {
           Get.to(() => const CreateBoardScreen());
         },
         child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAdExample(),
       ),
     );
   }

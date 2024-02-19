@@ -58,4 +58,14 @@ class SingleImageFirebaseController {
       }
     }
   }
+// Url로 Firebase Storage에서 선택한 단일 이미지 삭제
+  Future<void> deleteImageByUrl(String iconImageUrl) async {
+  try {
+    // Firebase Storage에서 이미지 삭제
+    await FirebaseStorage.instance.refFromURL(iconImageUrl).delete();
+  } catch (e) {
+    print('이미지 삭제 오류: $e');
+    // 예외 처리를 위한 추가적인 동작 수행
+  }
+}
 }

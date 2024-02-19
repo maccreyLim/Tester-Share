@@ -9,6 +9,7 @@ import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad_example.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -196,11 +197,15 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                         MaterialStateProperty.all<Color>(
                                             Colors.red),
                                   ),
-                                  onPressed: () {
-                                    //image삭제
-                                    _multiImageFirebaseController
-                                        .deleteImagesFromStorage(
+                                  onPressed: () async {
+                                    //Multi image삭제
+                                    await _multiImageFirebaseController
+                                        .deleteImagesUrlFromStorage(
                                             boards.first.appImagesUrl);
+                                    //Single image삭제
+                                    await _singleImageFirebaseController
+                                        .deleteImageByUrl(
+                                            boards.first.iconImageUrl);
                                     //삭제 구현
                                     _board.deleteBoard(boards.first.docid);
                                   },
@@ -216,7 +221,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -227,12 +232,19 @@ class MyTesterRequestPostScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // 테스터 쉐어 추가
-          Get.to(() => const CreateBoardScreen());
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
+        child: FloatingActionButton(
+          onPressed: () {
+            // 테스터 쉐어 추가
+            Get.to(() => const CreateBoardScreen());
+          },
+          child: const Icon(Icons.add),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAdExample(),
       ),
     );
   }
