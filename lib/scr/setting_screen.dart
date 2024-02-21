@@ -6,10 +6,10 @@ import 'package:tester_share_app/scr/myinformation_screen.dart';
 import 'package:tester_share_app/scr/notice_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class SettingScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Get.off(() => HomeScreen());
+                Get.back();
               },
               icon: Icon(
                 Icons.close,
@@ -193,7 +193,7 @@ class SettingScreen extends StatelessWidget {
         ),
         bottomNavigationBar: SizedBox(
           width: double.infinity,
-          child: BannerAdExample(),
+          child: BannerAD(),
         ));
   }
 

@@ -69,7 +69,7 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
         },
       )
       ..loadRequest(Uri.parse(
-          'https://plip.kr/pcc/a09d61de-0b0f-4823-88cb-3718704594f1/privacy/1.html'));
+          'https://plip.kr/pcc/16703898-5dde-4455-a4b2-48b4cd47a11c/privacy/1.html'));
 
     if (controller.platform is AndroidWebViewController) {
       AndroidWebViewController.enableDebugging(true);

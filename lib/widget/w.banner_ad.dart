@@ -1,14 +1,12 @@
-// banner_ad_example.dart
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class BannerAdExample extends StatefulWidget {
+class BannerAD extends StatefulWidget {
   @override
-  State<BannerAdExample> createState() => _BannerAdExampleState();
+  State<BannerAD> createState() => _BannerADState();
 }
 
-class _BannerAdExampleState extends State<BannerAdExample> {
+class _BannerADState extends State<BannerAD> {
   BannerAd? _bannerAd;
 
   @override
@@ -19,9 +17,9 @@ class _BannerAdExampleState extends State<BannerAdExample> {
 
   void loadBannerAd() {
     _bannerAd = BannerAd(
-      //테스트 ID
+      // 테스트 ID
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-      //실제 ID
+      // 실제 ID
       // adUnitId: 'ca-app-pub-9128371394963939/1280574841',
       size: AdSize.banner,
       request: AdRequest(),

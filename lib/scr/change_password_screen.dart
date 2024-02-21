@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -61,44 +61,45 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     color: _colors.textColor),
               ),
               Form(
+                  key: _formKey,
                   child: Column(
-                children: [
-                  TextFormField(
-                    controller: _currentPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      icon: const Icon(Icons.title),
-                      labelText: 'Current Password',
-                      hintText: 'Please write the Current Password',
-                      labelStyle: TextStyle(color: _colors.textColor),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Current Password is required';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _newPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      icon: const Icon(Icons.title),
-                      labelText: 'New Password',
-                      hintText: 'Please write the New Password',
-                      labelStyle: TextStyle(color: _colors.textColor),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'New Password is required';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              )),
+                    children: [
+                      TextFormField(
+                        controller: _currentPassword,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.title),
+                          labelText: 'Current Password',
+                          hintText: 'Please write the Current Password',
+                          labelStyle: TextStyle(color: _colors.textColor),
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Current Password is required';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _newPassword,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.title),
+                          labelText: 'New Password',
+                          hintText: 'Please write the New Password',
+                          labelStyle: TextStyle(color: _colors.textColor),
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'New Password is required';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  )),
               Expanded(child: Container()),
               ChangePasswordConfirmButton(),
             ],
@@ -107,7 +108,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
-        child: BannerAdExample(),
+        child: BannerAD(),
       ),
     );
   }

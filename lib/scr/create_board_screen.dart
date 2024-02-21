@@ -11,11 +11,11 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class CreateBoardScreen extends StatefulWidget {
   const CreateBoardScreen({super.key});
@@ -140,7 +140,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.off(() => HomeScreen());
+              Get.back();
             },
             icon: Icon(
               Icons.close,
@@ -354,7 +354,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       ),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
-        child: BannerAdExample(),
+        child: BannerAD(),
       ),
     );
   }
@@ -418,7 +418,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          InterstitialAdExample();
+          InterstitialAd();
           _savePost();
         },
         child: Text(

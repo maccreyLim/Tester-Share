@@ -5,9 +5,9 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
-import 'package:tester_share_app/scr/project_join_screen.dart';
+import 'package:tester_share_app/scr/door_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart'; // intl 패키지 추가
 
@@ -31,6 +31,16 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: colors.background,
         actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(DoorScreen());
+              },
+              icon: const Icon(Icons.question_mark)),
+          IconButton(
+              onPressed: () {
+                Get.to(DoorScreen());
+              },
+              icon: const Icon(Icons.message)),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());
@@ -59,7 +69,7 @@ class HomeScreen extends StatelessWidget {
               print('Data from Firestore: ${snapshot.data}');
               return Center(
                 child: Text(
-                  '게시물이 존재하지 않습니다.',
+                  'The post does not exist',
                   style: TextStyle(color: colors.textColor, fontSize: 22),
                 ),
               );
@@ -179,8 +189,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Divider(),
                           SizedBox(height: 10),
-                          SizedBox(
-                              width: double.infinity, child: BannerAdExample()),
+                          SizedBox(width: double.infinity, child: BannerAD()),
                         ],
                       ),
                     ),
@@ -200,7 +209,7 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
-        child: BannerAdExample(),
+        child: BannerAD(),
       ),
     );
   }

@@ -11,10 +11,10 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateBoardScreen extends StatefulWidget {
@@ -139,7 +139,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         await _boardFirebaseController.updateBoard(newPost);
 
         // 홈 화면으로 이동
-        Get.off(() => HomeScreen());
+        Get.back();
       }
     } catch (e, stackTrace) {
       // 예외 발생 시 에러 출력 및 필요한 경우 사용자에게 메시지 표시
@@ -382,7 +382,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       ),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
-        child: BannerAdExample(),
+        child: BannerAD(),
       ),
     );
   }
@@ -451,7 +451,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          InterstitialAdExample();
+          InterstitialAd();
           _savePost();
         },
         child: Text(

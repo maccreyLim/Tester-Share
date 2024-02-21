@@ -5,15 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/create_board_screen.dart';
-import 'package:tester_share_app/scr/detail_board_screen.dart';
 import 'package:tester_share_app/scr/detail_unapproved_post_screen.dart';
-import 'package:tester_share_app/scr/project_join_screen.dart';
-import 'package:tester_share_app/scr/setting_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UnapprovedPostScreen extends StatefulWidget {
   UnapprovedPostScreen({super.key});
@@ -173,7 +169,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        InterstitialAdExample();
+                                        InterstitialAd();
                                         //Todo : firebase isApproval = true;
                                         boards[index].isApproval
                                             ? updateBoard(boards[index], false)
@@ -208,7 +204,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
         ),
         bottomNavigationBar: SizedBox(
           width: double.infinity,
-          child: BannerAdExample(),
+          child: BannerAD(),
         ));
   }
 

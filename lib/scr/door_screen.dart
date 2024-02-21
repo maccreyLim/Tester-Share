@@ -10,35 +10,39 @@ class DoorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.background,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: colors.background,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: colors.background,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.off(() => HomeScreen());
-              },
-              icon: Icon(
-                Icons.close,
-                color: colors.iconColor,
-              ),
-            )
-          ],
-        ),
-        body: Column(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.off(() => HomeScreen());
+            },
+            icon: Icon(
+              Icons.close,
+              color: colors.iconColor,
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             const SizedBox(height: 100),
             createText(
-                '신규 개발자들이 2023년 11월 13일 이후 Google Play에 앱을 등록하기 위해서는 20명 이상의 테스터가 14일 동안 참여해야 하는 정책이 시행되었습니다. '),
+                "Starting from November 13, 2023, new developers are required to have at least 20 testers participate for a duration of 14 days to register an app on Google Play. This policy has been implemented."),
             createText(
-                '이에 대응하여, 테스터 수를 모으기 어려운 상황에서 개발자들은 상호 보안적인 관계를 맺고 Tester Share를 통해 서로의 앱을 테스트하며 협력하고 있습니다.'),
+                "In response to this, developers, facing difficulties in gathering a sufficient number of testers, are forming mutually beneficial relationships and collaborating through Tester Share to test each other's apps."),
             createText(
-                '이는 Google Play의 정책을 준수하면서도 개발자들이 앱을 성공적으로 등록할 수 있는 방법을 모색하는 시도입니다.'),
-            const SizedBox(height: 80),
-            createText('[플러터 개발자] Maccrey'),
+                "This is an effort to explore ways for developers to successfully register their apps while complying with Google Play policies."),
+            const SizedBox(height: 40),
+            createText("[Flutter developer] Maccrey"),
+            const SizedBox(height: 40),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   Widget createText(String testMassage) {

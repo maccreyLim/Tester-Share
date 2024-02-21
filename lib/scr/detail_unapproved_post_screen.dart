@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad_example.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailUnapprovedPostScreen extends StatefulWidget {
@@ -34,7 +34,7 @@ class _DetailUnapprovedPostScreenState
         actions: [
           IconButton(
             onPressed: () {
-              Get.off(() => HomeScreen());
+              Get.back();
             },
             icon: Icon(
               Icons.close,
@@ -274,7 +274,7 @@ class _DetailUnapprovedPostScreenState
             SizedBox(height: 20),
             Divider(),
             SizedBox(height: 20),
-            SizedBox(width: double.infinity, child: BannerAdExample()),
+            SizedBox(width: double.infinity, child: BannerAD()),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -285,7 +285,7 @@ class _DetailUnapprovedPostScreenState
                       : MaterialStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () {
-                  InterstitialAdExample();
+                  InterstitialAd();
                   //Todo : firebase isApproval = true;
                   widget.boards.isApproval
                       ? updateBoard(widget.boards, false)

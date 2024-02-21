@@ -5,7 +5,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/notice_firebase_model.dart';
 import 'package:tester_share_app/scr/create_notice_screen.dart';
 import 'package:tester_share_app/scr/detail_notice_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -56,7 +56,7 @@ class NoticeScreen extends StatelessWidget {
               child: createFloatingButton(),
             ),
             SizedBox(height: 10),
-            SizedBox(width: double.infinity, child: BannerAdExample()),
+            SizedBox(width: double.infinity, child: BannerAD()),
           ],
         ),
       ),

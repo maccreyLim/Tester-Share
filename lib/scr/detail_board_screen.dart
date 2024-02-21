@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,7 +26,7 @@ class DetailBoardScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.off(() => HomeScreen());
+              Get.back();
             },
             icon: Icon(
               Icons.close,
@@ -265,7 +265,6 @@ class DetailBoardScreen extends StatelessWidget {
             SizedBox(height: 20),
             Divider(),
             SizedBox(height: 20),
-            SizedBox(width: double.infinity, child: BannerAdExample()),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -283,7 +282,7 @@ class DetailBoardScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(width: double.infinity, child: BannerAD()),
           ],
         ),
       ),

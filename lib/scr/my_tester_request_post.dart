@@ -9,7 +9,7 @@ import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
-import 'package:tester_share_app/widget/w.banner_ad_example.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -152,13 +152,16 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
-                                          if (boards[index].testerRequest >
+                                          if (!boards[index].isApproval) {
+                                            return _colors.stateIsClose;
+                                          } else if (boards[index]
+                                                  .testerRequest >
                                               boards[index]
                                                   .testerParticipation) {
                                             return _colors
-                                                .stateIsIng; // 상태가 "진행중"일 때의 배경색
+                                                .stateIsIng; // Background color when the state is "In Progress"
                                           } else {
-                                            // 다른 상태에는 기본 배경색을 설정합니다.
+                                            // Default background color for other states
                                             return _colors.stateIsClose;
                                           }
                                         },
@@ -168,10 +171,13 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                       Get.to(() => ProjectJoinScreen());
                                     },
                                     child: Text(
-                                      boards[index].testerRequest >
-                                              boards[index].testerParticipation
-                                          ? 'In progress'
-                                          : "Completed",
+                                      boards[index].isApproval == false
+                                          ? 'Unapporoval'
+                                          : boards[index].testerRequest >
+                                                  boards[index]
+                                                      .testerParticipation
+                                              ? 'In progress'
+                                              : "Completed",
                                       style: TextStyle(
                                           color: _colors.iconColor,
                                           fontSize: 12,
@@ -188,40 +194,52 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 140,
-                                height: 30,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.red),
-                                  ),
-                                  onPressed: () async {
-                                    //Multi image삭제
-                                    await _multiImageFirebaseController
-                                        .deleteImagesUrlFromStorage(
-                                            boards.first.appImagesUrl);
-                                    //Single image삭제
-                                    await _singleImageFirebaseController
-                                        .deleteImageByUrl(
-                                            boards.first.iconImageUrl);
-                                    //삭제 구현
-                                    _board.deleteBoard(boards.first.docid);
-                                  },
-                                  child: Text(
-                                    "Delete",
-                                    style: TextStyle(
-                                      color: _colors.iconColor,
-                                      fontSize:
-                                          _fontSizeCollection.buttonFontSize,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: SizedBox(
+                                  width: 310,
+                                  height: 26,
+                                  child: !(boards[index].isApproval)
+                                      ? ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.red),
+                                          ),
+                                          onPressed: () async {
+                                            // Multi image 삭제
+                                            await _multiImageFirebaseController
+                                                .deleteImagesUrlFromStorage(
+                                                    boards.first.appImagesUrl);
+                                            // Single image 삭제
+                                            await _singleImageFirebaseController
+                                                .deleteImageByUrl(
+                                                    boards.first.iconImageUrl);
+                                            // 삭제 구현
+                                            _board.deleteBoard(
+                                                boards.first.docid);
+                                          },
+                                          child: Text(
+                                            "Delete",
+                                            style: TextStyle(
+                                              color: _colors.iconColor,
+                                              fontSize: _fontSizeCollection
+                                                  .buttonFontSize,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        )
+                                      : Text(
+                                          "Inapproved projects cannot be deleted or modified.",
+                                          style: TextStyle(
+                                              color: _colors.textColor,
+                                              fontSize: 10),
+                                        ),
                                 ),
                               ),
                             ],
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -244,7 +262,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
-        child: BannerAdExample(),
+        child: BannerAD(),
       ),
     );
   }
