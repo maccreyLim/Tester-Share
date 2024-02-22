@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,6 +19,9 @@ class SingleImageFirebaseController {
 
   // 선택한 단일 이미지를 Firebase Storage에 업로드
   Future<String?> uploadSingleImage(XFile? pickedImage) async {
+    //기존 이미지 삭제 2/22추가
+    deleteSingleImage(pickedImage);
+
     if (pickedImage != null) {
       try {
         // Firebase Storage 참조
@@ -58,14 +60,15 @@ class SingleImageFirebaseController {
       }
     }
   }
+
 // Url로 Firebase Storage에서 선택한 단일 이미지 삭제
-  Future<void> deleteImageByUrl(String iconImageUrl) async {
-  try {
-    // Firebase Storage에서 이미지 삭제
-    await FirebaseStorage.instance.refFromURL(iconImageUrl).delete();
-  } catch (e) {
-    print('이미지 삭제 오류: $e');
-    // 예외 처리를 위한 추가적인 동작 수행
+  Future<void> deleteImageUrl(String iconImageUrl) async {
+    try {
+      // Firebase Storage에서 이미지 삭제
+      await FirebaseStorage.instance.refFromURL(iconImageUrl).delete();
+    } catch (e) {
+      print('이미지 삭제 오류: $e');
+      // 예외 처리를 위한 추가적인 동작 수행
+    }
   }
-}
 }

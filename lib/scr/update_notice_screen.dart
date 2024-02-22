@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/notice_controller.dart';
-import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/notice_firebase_model.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -22,7 +21,6 @@ class _UpdateNoticeScreenState extends State<UpdateNoticeScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentsController = TextEditingController();
   final ColorsCollection _colors = ColorsCollection();
-  final AuthController _authController = AuthController.instance;
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
 
   @override

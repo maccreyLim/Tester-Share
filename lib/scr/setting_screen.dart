@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tester_share_app/scr/home_screen.dart';
 import 'package:tester_share_app/scr/my_tester_request_post.dart';
 import 'package:tester_share_app/scr/myinformation_screen.dart';
 import 'package:tester_share_app/scr/notice_screen.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
@@ -16,7 +15,6 @@ import 'package:tester_share_app/widget/w.font_size_collection.dart';
 class MyTesterRequestPostScreen extends StatelessWidget {
   final ColorsCollection _colors = ColorsCollection();
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
-  final AuthController _authController = AuthController.instance;
   final BoardFirebaseController _board = BoardFirebaseController();
   final MultiImageFirebaseController _multiImageFirebaseController =
       MultiImageFirebaseController();
@@ -214,7 +212,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                                     boards.first.appImagesUrl);
                                             // Single image 삭제
                                             await _singleImageFirebaseController
-                                                .deleteImageByUrl(
+                                                .deleteImageUrl(
                                                     boards.first.iconImageUrl);
                                             // 삭제 구현
                                             _board.deleteBoard(

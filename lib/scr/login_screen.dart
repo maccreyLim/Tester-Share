@@ -35,14 +35,14 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: colors.background,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.close),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       Get.back();
+        //     },
+        //     icon: const Icon(Icons.close),
+        //   ),
+        // ],
       ),
       backgroundColor: colors.background,
       body: Center(

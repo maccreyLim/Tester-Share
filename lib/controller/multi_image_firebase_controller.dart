@@ -8,7 +8,7 @@ class MultiImageFirebaseController {
   final CollectionReference boardImagesCollection =
       FirebaseFirestore.instance.collection('boardImages');
 
-  // ImagePicker
+  // ImagePicke
 
   /// ImagePicker를 사용하여 갤러리에서 다중 이미지 선택하고 이미지 XFile리스트에 추가하는 메서드
   Future<List<XFile?>> pickMultiImage(List<XFile?> pickedImages) async {
@@ -143,8 +143,8 @@ class MultiImageFirebaseController {
           String path = match.group(2)!;
 
           // Firebase Storage에서 해당 이미지의 참조를 얻어옴
-          Reference imageRef =
-              FirebaseStorage.instance.ref().child(bucket).child(path);
+          Reference imageRef = FirebaseStorage.instance.ref().child(bucket)
+            ..child('boards_Images').child(path);
 
           // Firebase Storage에서 이미지 삭제
           await imageRef.delete();
@@ -154,6 +154,38 @@ class MultiImageFirebaseController {
       }
     } catch (e) {
       print('Firebase Storage에서 이미지 삭제 오류: $e');
+    }
+  }
+
+// 이미지 수정삭제
+  Future<List<String>> deleteUpdateImage(
+      int index, List<String> existingImageUrls) async {
+    try {
+      // index가 existingImageUrls 리스트의 범위 내에 있는지 확인
+      if (index >= 0 && index < existingImageUrls.length) {
+        // Firebase Storage 참조
+        Reference imageRef =
+            FirebaseStorage.instance.refFromURL(existingImageUrls[index]);
+
+        print("삭제 주소: $imageRef");
+
+        // Firebase Storage에서 이미지 삭제
+        await imageRef.delete();
+
+        // 리스트에서 이미지 제거
+        existingImageUrls.removeAt(index);
+
+        // 수정된 리스트 반환 (이미 삭제된 이미지는 제외)
+        return existingImageUrls;
+      } else {
+        print('인덱스가 existingImageUrls 리스트의 범위를 벗어납니다.');
+        // 오류가 발생한 경우 원래 리스트를 그대로 반환
+        return existingImageUrls;
+      }
+    } catch (error) {
+      print('이미지 삭제 오류: $error');
+      // 오류가 발생한 경우 원래 리스트를 그대로 반환
+      return existingImageUrls;
     }
   }
 }

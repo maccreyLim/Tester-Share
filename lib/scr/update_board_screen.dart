@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -174,7 +175,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.off(() => HomeScreen());
+              Get.back();
             },
             icon: Icon(
               Icons.close,
@@ -217,8 +218,8 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                                   color: colors.textColor,
                                 ),
                               )
-                            : Image.file(
-                                pickedImage!,
+                            : Image.network(
+                                widget.boards.iconImageUrl,
                                 width: 84,
                                 height: 84,
                               ),
@@ -249,30 +250,35 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   ),
                 ],
               ),
-              ExpansionTile(
-                title: Text("Supported Languages",
-                    style: TextStyle(color: colors.textColor)),
+              Column(
                 children: [
-                  Column(
-                    children: availableLanguages.map((language) {
-                      bool isSelected = selectedLanguages.contains(language);
-                      return CheckboxListTile(
-                        title: Text(language,
-                            style: TextStyle(color: colors.textColor)),
-                        value: isSelected,
-                        onChanged: (value) {
-                          setState(() {
-                            if (value!) {
-                              selectedLanguages.add(language);
-                            } else {
-                              selectedLanguages.remove(language);
-                            }
-                          });
-                        },
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                      );
-                    }).toList(),
+                  ExpansionTile(
+                    title: Text("Supported Languages",
+                        style: TextStyle(color: colors.textColor)),
+                    children: [
+                      Column(
+                        children: availableLanguages.map((language) {
+                          bool isSelected =
+                              selectedLanguages.contains(language);
+                          return CheckboxListTile(
+                            title: Text(language,
+                                style: TextStyle(color: colors.textColor)),
+                            value: isSelected,
+                            onChanged: (value) {
+                              setState(() {
+                                if (value!) {
+                                  selectedLanguages.add(language);
+                                } else {
+                                  selectedLanguages.remove(language);
+                                }
+                              });
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -421,8 +427,10 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          _multiImageFirebaseController.deleteImageList(
-                              index, pickedImages);
+                          _multiImageFirebaseController
+                              .deleteUpdateImage(
+                                  index, widget.boards.appImagesUrl)
+                              .then((value) => setState(() {}));
                         });
                       },
                       icon: Icon(

@@ -209,10 +209,11 @@ class HomeScreen extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: SizedBox(
-        width: double.infinity,
-        child: BannerAD(),
-      ),
+      //아래배너광고
+      // bottomNavigationBar: SizedBox(
+      //   width: double.infinity,
+      //   child: BannerAD(),
+      // ),
     );
   }
 

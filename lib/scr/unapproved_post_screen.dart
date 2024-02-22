@@ -2,13 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/detail_unapproved_post_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UnapprovedPostScreen extends StatefulWidget {
@@ -20,11 +18,6 @@ class UnapprovedPostScreen extends StatefulWidget {
 
 class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
   final ColorsCollection colors = ColorsCollection();
-
-  final AuthController _authController = AuthController.instance;
-
-  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
-
   final BoardFirebaseController _board = BoardFirebaseController();
 
   @override
