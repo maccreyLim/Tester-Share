@@ -1,17 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/home_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
