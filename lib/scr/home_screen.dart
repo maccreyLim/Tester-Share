@@ -9,12 +9,14 @@ import 'package:tester_share_app/scr/door_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:intl/intl.dart'; // intl 패키지 추가
+import 'package:intl/intl.dart';
+import 'package:tester_share_app/widget/w.notification.dart'; // intl 패키지 추가
 
 class HomeScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
+  final CustomNotification customNotification = CustomNotification();
   HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.question_mark)),
           IconButton(
               onPressed: () {
-                Get.to(DoorScreen());
+                customNotification.showPushAlarm();
               },
               icon: const Icon(Icons.message)),
           IconButton(

@@ -1,10 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ester_share_app">
+    package="com.example.tester_share_app">
 
     <!-- 필요한 권한 정의 -->
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.google.android.gms.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <!-- queries 설정 -->
     <queries>
         <intent>
@@ -17,9 +20,9 @@
         android:label="tester_share_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-    <meta-data
-        android:name="flutterEmbedding"
-        android:value="2" />
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
 
         <!-- 액티비티 정의 -->
         <activity
@@ -29,7 +32,9 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true">
 
             <!-- 액티비티 관련 설정 및 테마 설정 -->
             <meta-data
@@ -49,8 +54,19 @@
         -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
-            
+            android:value="ca-app-pub-3940256099942544~3347511713" />
 
+<receiver
+    android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+    </intent-filter>
+</receiver>
+<receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+    android:exported="false" />
     </application>
 </manifest>
