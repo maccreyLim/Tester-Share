@@ -96,11 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
-                Get.to(DoorScreen());
-              },
-              icon: const Icon(Icons.question_mark)),
-          IconButton(
-              onPressed: () {
                 customNotification.showPushAlarm();
               },
               icon: const Icon(Icons.message)),

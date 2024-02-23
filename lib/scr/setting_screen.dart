@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/scr/door_screen.dart';
 import 'package:tester_share_app/scr/my_tester_request_post.dart';
 import 'package:tester_share_app/scr/myinformation_screen.dart';
 import 'package:tester_share_app/scr/notice_screen.dart';
@@ -49,6 +50,25 @@ class SettingScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
+              Row(
+                children: [
+                  Icon(
+                    Icons.question_mark,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(DoorScreen());
+                      },
+                      child: Text(
+                        "Tester Share is?",
+                        style: TextStyle(
+                            color: colors.textColor,
+                            fontSize: _fontSizeCollection.settinFontSize),
+                      )),
+                ],
+              ),
               Row(
                 children: [
                   Icon(
