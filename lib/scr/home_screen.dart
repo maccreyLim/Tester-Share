@@ -1,23 +1,73 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
+import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
 import 'package:tester_share_app/scr/door_screen.dart';
+import 'package:tester_share_app/scr/message_state_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/widget/w.notification.dart'; // intl 패키지 추가
+import 'package:icon_badge/icon_badge.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final ColorsCollection colors = ColorsCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
   final CustomNotification customNotification = CustomNotification();
-  HomeScreen({Key? key}) : super(key: key);
+  final ControllerGetX controller = Get.put(ControllerGetX());
+
+  @override
+  void initState() {
+    super.initState();
+    if (controller.isLogin) {
+      _getUnreadMessageCount();
+    }
+  }
+
+  Future<void> _getUnreadMessageCount() async {
+    await for (int count in getUnreadMessageCountStream()) {
+      if (mounted) {
+        setState(() {
+          controller.setMessageCount(count);
+        });
+      }
+    }
+  }
+
+  //메시지 갯수를 스트림으로 확인
+  Stream<int> getUnreadMessageCountStream() {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    try {
+      Stream<QuerySnapshot> snapshots = _firestore
+          .collection('messages')
+          .where('isRead', isEqualTo: false)
+          .where('receiverUid', isEqualTo: controller.userUid)
+          .snapshots();
+
+      return snapshots.map((QuerySnapshot querySnapshot) {
+        return querySnapshot.size;
+      });
+    } catch (e) {
+      print('오류 발생: $e');
+      // 오류 처리 코드를 추가하거나 throw로 예외를 다시 던질 수 있습니다.
+      throw e;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +83,17 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: colors.background,
         actions: [
+          Obx(() => IconBadge(
+                icon: const Icon(Icons.notifications, color: Colors.lightBlue),
+                itemCount: controller.messageCount.value, // itemCount를 변수로 설정
+                badgeColor: Colors.redAccent,
+                itemColor: Colors.white,
+                maxCount: 99,
+                hideZero: true,
+                onTap: () {
+                  Get.to(const MessageStateScreen());
+                },
+              )),
           IconButton(
               onPressed: () {
                 Get.to(DoorScreen());

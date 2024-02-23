@@ -50,6 +50,7 @@ dependencies:
   webview_flutter_wkwebview: ^3.11.0 # 웹뷰패키지
   flutter_email_sender: ^6.0.2 # 이메일 보내기 패키지
   flutter_local_notifications: ^16.3.2
+  icon_badge: ^1.0.0
 
 
 dev_dependencies:
