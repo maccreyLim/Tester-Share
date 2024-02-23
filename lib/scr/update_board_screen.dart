@@ -9,6 +9,8 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
+import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
+import 'package:tester_share_app/scr/my_tester_request_post.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -137,7 +139,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         await _boardFirebaseController.updateBoard(newPost);
 
         // 홈 화면으로 이동
-        Get.back();
+        Get.to(() => MyTesterRequestPostScreen());
       }
     } catch (e, stackTrace) {
       // 예외 발생 시 에러 출력 및 필요한 경우 사용자에게 메시지 표시
