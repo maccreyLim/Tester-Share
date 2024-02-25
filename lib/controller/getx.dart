@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class ControllerGetX extends GetxController {
   //Property
-  RxInt messageCount = 0.obs;
+  // RxInt messageCount = 0.obs;
   // bool darkModeSwitch = false; //Dark테마를 위한 스위치 설정
   // RxBool adminModeSwich = false.obs; //관리자모드를 위한 스위치 설정
   // bool isLogin = false; //로그인 상태 확인
@@ -23,9 +23,9 @@ class ControllerGetX extends GetxController {
 //     update();
 //   }
 //message Count
-  void setMessageCount(int count) {
-    messageCount.value = count;
-  }
+  // void setMessageCount(int count) {
+  //   messageCount.value = count;
+  // }
 
   // // 사용자 데이터를 Firestore에서 업데이트
   // Future<void> userGetX(String userUid) async {

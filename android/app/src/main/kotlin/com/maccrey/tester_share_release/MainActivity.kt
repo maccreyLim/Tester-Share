@@ -1,4 +1,4 @@
-package com.example.tester_share_app
+package com.maccrey.tester_share_release
 
 import io.flutter.embedding.android.FlutterActivity
 
