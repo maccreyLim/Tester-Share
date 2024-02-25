@@ -7,7 +7,6 @@ import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
-import 'package:tester_share_app/scr/door_screen.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
 import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';

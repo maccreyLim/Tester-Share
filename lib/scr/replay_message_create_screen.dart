@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
 
 class ReplayMessageCreateScreen extends StatefulWidget {
-  final Message message;
+  final MessageModel message;
 
   ReplayMessageCreateScreen({required this.message});
 

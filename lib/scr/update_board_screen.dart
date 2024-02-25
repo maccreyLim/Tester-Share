@@ -9,7 +9,6 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
 import 'package:tester_share_app/scr/my_tester_request_post.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
