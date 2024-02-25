@@ -5,14 +5,14 @@ import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/send_message_detail.dart';
 
-class SendScreen extends StatefulWidget {
-  const SendScreen({super.key});
+class SendMessageScreen extends StatefulWidget {
+  const SendMessageScreen({super.key});
 
   @override
-  State<SendScreen> createState() => _SendScreen();
+  State<SendMessageScreen> createState() => _SendMessageScreen();
 }
 
-class _SendScreen extends State<SendScreen> {
+class _SendMessageScreen extends State<SendMessageScreen> {
   // Property
   final controller = Get.put(ControllerGetX());
 
@@ -33,12 +33,12 @@ class _SendScreen extends State<SendScreen> {
   Future<String> getSenderNickname(String senderUid) async {
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .doc(senderUid)
           .get();
 
       if (userSnapshot.exists) {
-        return userSnapshot['nickName'] ?? 'Unknown';
+        return userSnapshot['profileName'] ?? 'Unknown';
       } else {
         return 'Unknown';
       }
@@ -52,12 +52,12 @@ class _SendScreen extends State<SendScreen> {
   Future<String> getReceiverNickname(String receiverUid) async {
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .doc(receiverUid)
           .get();
 
       if (userSnapshot.exists) {
-        return userSnapshot['nickName'] ?? 'Unknown';
+        return userSnapshot['profileName'] ?? 'Unknown';
       } else {
         return 'Unknown';
       }

@@ -61,29 +61,6 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                     )),
               ),
               SizedBox(height: 50),
-              // ElevatedButton.icon(
-              //     onPressed: () {
-              //       //firebase에서 답장
-              //     },
-              //     label: Padding(
-              //         padding: const EdgeInsets.symmetric(horizontal: 20),
-              //         child: Text(
-              //           'Replay',
-              //           style: TextStyle(
-              //               fontSize: 20,
-              //               fontWeight: FontWeight.bold,
-              //               color: Colors.blueAccent),
-              //         )),
-              //     icon: Padding(
-              //         padding: const EdgeInsets.symmetric(horizontal: 20),
-              //         child: Icon(
-              //           Icons.send,
-              //           color: Colors.blueAccent,
-              //         )),
-              //     style: ElevatedButton.styleFrom(
-              //         backgroundColor: Colors.white,
-              //         minimumSize:
-              //             Size(MediaQuery.of(context).size.width * 1, 48))),
               SizedBox(
                 height: 16,
               ),

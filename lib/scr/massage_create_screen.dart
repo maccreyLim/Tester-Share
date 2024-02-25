@@ -68,7 +68,7 @@ class _MessageCreateScrrenState extends State<MessageCreateScrren> {
                       final user = searchResults.keys.elementAt(index);
                       final userData = searchResults[user];
 
-                      final nickname = userData['nickname'] as String;
+                      final nickname = userData['profileName'] as String;
 
                       return ListTile(
                           title: Text(nickname),

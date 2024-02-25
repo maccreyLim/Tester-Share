@@ -4,18 +4,20 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/receive_messager_detail.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
-class ReceivedScreen extends StatefulWidget {
-  const ReceivedScreen({super.key});
+class ReceivedMessageScreen extends StatefulWidget {
+  const ReceivedMessageScreen({super.key});
 
   @override
-  State<ReceivedScreen> createState() => _ReceivedScreenState();
+  State<ReceivedMessageScreen> createState() => _ReceivedMessageScreen();
 }
 
-class _ReceivedScreenState extends State<ReceivedScreen> {
+class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   // Property
   final controller = Get.put(ControllerGetX());
+  final ColorsCollection _color = ColorsCollection();
 
 //파이어베이스 읽음 변경
   Future<void> updateisReadMessage(MessageModel message) async {
@@ -46,12 +48,12 @@ class _ReceivedScreenState extends State<ReceivedScreen> {
   Future<String> getSenderNickname(String senderUid) async {
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .doc(senderUid)
           .get();
 
       if (userSnapshot.exists) {
-        return userSnapshot['nickName'] ?? 'Unknown';
+        return userSnapshot['profileName'] ?? 'Unknown';
       } else {
         return 'Unknown';
       }
@@ -65,17 +67,17 @@ class _ReceivedScreenState extends State<ReceivedScreen> {
   Future<String> getReceiverNickname(String receiverUid) async {
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .doc(receiverUid)
           .get();
 
       if (userSnapshot.exists) {
-        return userSnapshot['nickName'] ?? 'Unknown';
+        return userSnapshot['profileName'] ?? 'Unknown';
       } else {
         return 'Unknown';
       }
     } catch (e) {
-      print('Error fetching sender nickName: $e');
+      print('Error fetching sender profileName: $e');
       return 'Unknown';
     }
   }
@@ -138,7 +140,7 @@ class _ReceivedScreenState extends State<ReceivedScreen> {
           child: ListView.separated(
             itemCount: messages.length,
             separatorBuilder: (context, index) => Divider(
-              color: Colors.grey,
+              color: _color.iconColor,
               thickness: 1.0,
             ),
             itemBuilder: (context, index) {

@@ -93,11 +93,11 @@ class MassageFirebaseController {
   Future<Map<String, Map<String, dynamic>>> getUserByNickname(
       String partialNickname) async {
     CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('Users');
+        FirebaseFirestore.instance.collection('users');
     try {
       final querySnapshot = await usersCollection
-          .where('nickName', isGreaterThanOrEqualTo: partialNickname)
-          .where('nickName', isLessThan: partialNickname + 'z')
+          .where('profileName', isGreaterThanOrEqualTo: partialNickname)
+          .where('profileName', isLessThan: partialNickname + 'z')
           .get();
 
       final userData = <String, Map<String, dynamic>>{};
@@ -105,15 +105,15 @@ class MassageFirebaseController {
       for (final document in querySnapshot.docs) {
         final userDataFromDoc = document.data() as Map<String, dynamic>;
         final uid = userDataFromDoc['uid'];
-        final nickname = userDataFromDoc['nickName'];
+        final profileName = userDataFromDoc['profileName'];
         final occupation = userDataFromDoc['occupation'];
         final workspace = userDataFromDoc['workspace'];
         final photoUrl = userDataFromDoc['photoUrl'];
         final parters = userDataFromDoc['parters'];
 
-        if (uid != null && nickname != null) {
+        if (uid != null && profileName != null) {
           userData[uid] = {
-            'nickname': nickname,
+            'profileName': profileName,
             'photoUrl': photoUrl,
             'uid': uid,
             'occupation': occupation,
