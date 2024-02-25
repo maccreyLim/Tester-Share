@@ -34,7 +34,8 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
             android:showWhenLocked="true"
-            android:turnScreenOn="true">
+            android:turnScreenOn="true"
+            android:enableOnBackInvokedCallback="true">
 
             <!-- 액티비티 관련 설정 및 테마 설정 -->
             <meta-data

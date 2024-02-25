@@ -11,6 +11,7 @@ class ColorsCollection {
 
   Color get background => Colors.black;
   Color get textColor => Colors.white60;
+  Color get buttonColor => Colors.blue;
   Color get iconColor => Colors.white;
   Color get cardColor => Colors.white12;
   Color get stateIsIng => Colors.blue;

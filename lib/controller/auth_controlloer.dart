@@ -143,6 +143,7 @@ class AuthController extends GetxController {
 
         if (userData != null) {
           // 사용자 정보가 존재하는 경우
+          loginChange();
           _userData.value = userData;
           // 사용자 정보가 로드되면 홈 화면으로 이동
           Get.offAll(() => HomeScreen());
@@ -206,6 +207,7 @@ class AuthController extends GetxController {
       _userData.value = null;
 
       // 로그아웃 성공 시 추가적인 작업이 필요하다면 여기에 추가
+      loginChange();
     } catch (e) {
       // 로그아웃 중 에러 발생 시
       print('로그아웃 중 오류 발생: $e');
@@ -341,5 +343,12 @@ class AuthController extends GetxController {
   //message Count
   void setMessageCount(int count) {
     messageCount.value = count;
+  }
+
+  // //Login 및 로그아웃 변경을 위한 스위칭
+  void loginChange() {
+    isLogin = !isLogin;
+
+    update();
   }
 }

@@ -5,6 +5,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/send_message_detail.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 
 class SendMessageScreen extends StatefulWidget {
   const SendMessageScreen({super.key});
@@ -104,74 +105,84 @@ class _SendMessageScreen extends State<SendMessageScreen> {
   @override
   Widget build(BuildContext context) {
     // Todo: 보낸 쪽지함 화면 구현
-    return StreamBuilder<List<MessageModel>>(
-      stream: getSendMessagesStream(_authController.userData!['uid']),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('메시지 가져오기 오류: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('메시지가 없습니다.');
-        }
-
-        List<MessageModel> messages = snapshot.data!;
-
-        // 여기에서 메시지 목록을 사용하여 UI 업데이트 또는 다른 작업 수행
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView.separated(
-            itemCount: messages.length,
-            separatorBuilder: (context, index) => Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-            ),
-            itemBuilder: (context, index) {
-              MessageModel message = messages[index];
-              //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
-              final now = DateTime.now();
-              final DateTime created = message.timestamp;
-              final Duration difference = now.difference(created);
-
-              String formattedDate;
-
-              if (difference.inHours > 0) {
-                formattedDate = '${difference.inHours}시간 전';
-              } else if (difference.inMinutes > 0) {
-                formattedDate = '${difference.inMinutes}분 전';
-              } else {
-                formattedDate = '방금 전';
+    return Column(
+      children: [
+        Container(
+          height: 594,
+          child: StreamBuilder<List<MessageModel>>(
+            stream: getSendMessagesStream(_authController.userData!['uid']),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('메시지 가져오기 오류: ${snapshot.error}');
               }
-              return ListTile(
-                title: message.isRead
-                    ? Text(
-                        'To : ${message.receiverNickname}   ($formattedDate)\n Read : 읽음',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      )
-                    : Text(
-                        'To : ${message.receiverNickname}   ($formattedDate)',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Text('메시지가 없습니다.');
+              }
+
+              List<MessageModel> messages = snapshot.data!;
+
+              // 여기에서 메시지 목록을 사용하여 UI 업데이트 또는 다른 작업 수행
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ListView.separated(
+                  itemCount: messages.length,
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.grey,
+                    thickness: 1.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    MessageModel message = messages[index];
+                    //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
+                    final now = DateTime.now();
+                    final DateTime created = message.timestamp;
+                    final Duration difference = now.difference(created);
+
+                    String formattedDate;
+
+                    if (difference.inHours > 0) {
+                      formattedDate = '${difference.inHours}시간 전';
+                    } else if (difference.inMinutes > 0) {
+                      formattedDate = '${difference.inMinutes}분 전';
+                    } else {
+                      formattedDate = '방금 전';
+                    }
+                    return ListTile(
+                      title: message.isRead
+                          ? Text(
+                              'To : ${message.receiverNickname}   ($formattedDate)\n Read : 읽음',
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
+                            )
+                          : Text(
+                              'To : ${message.receiverNickname}   ($formattedDate)',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
+                            ),
+                      subtitle: Text(
+                        message.contents,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                subtitle: Text(
-                  message.contents,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                      onTap: () {
+                        Get.to(
+                            SendMessageDetail(message: message, isSend: false));
+                      },
+                    );
+                  },
                 ),
-                onTap: () {
-                  Get.to(SendMessageDetail(message: message, isSend: false));
-                },
               );
             },
           ),
-        );
-      },
+        ),
+        BannerAD()
+      ],
     );
   }
 }

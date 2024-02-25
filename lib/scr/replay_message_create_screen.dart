@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class ReplayMessageCreateScreen extends StatefulWidget {
   final MessageModel message;
@@ -18,7 +21,8 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   MassageFirebaseController messageService = MassageFirebaseController();
-
+  final ColorsCollection _colors = ColorsCollection();
+  final FontSizeCollection _fonts = FontSizeCollection();
   @override
   void dispose() {
     super.dispose();
@@ -28,8 +32,21 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _colors.background,
       appBar: AppBar(
-        title: Text('Replay Message'),
+        automaticallyImplyLeading: false,
+        backgroundColor: _colors.background,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.close,
+              color: _colors.iconColor,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -62,7 +79,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                 ),
                 SizedBox(height: 60),
                 TextFormField(
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: _colors.textColor),
                   cursorHeight: 20,
                   maxLines: 10,
                   maxLength: 100,
@@ -72,6 +89,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     labelText: "답장 내용",
+                    labelStyle: TextStyle(color: Colors.white),
                   ),
                   keyboardType: TextInputType.multiline,
                   validator: (value) {
@@ -81,7 +99,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 80),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -94,18 +112,25 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                       // MessageFirebase에서 답장 메시지 등록
                       MassageFirebaseController().createMessage(
                           replyMessage, widget.message.receiverNickname);
-                      Get.off(MessageStateScreen());
+                      Get.off(const MessageStateScreen());
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: _colors.buttonColor,
                     minimumSize: Size(
-                      MediaQuery.of(context).size.width * 1,
-                      48,
+                      double.infinity,
+                      _fonts.buttonSize,
                     ),
                   ),
-                  child: Text('답장 보내기'),
+                  child: Text(
+                    'To send a reply',
+                    style: TextStyle(
+                        fontSize: _fonts.buttonFontSize,
+                        color: _colors.iconColor),
+                  ),
                 ),
+                SizedBox(height: 10),
+                SizedBox(width: double.infinity, child: BannerAD()),
               ],
             ),
           ),

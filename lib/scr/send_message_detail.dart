@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
 class SendMessageDetail extends StatefulWidget {
@@ -16,13 +18,27 @@ class SendMessageDetail extends StatefulWidget {
 
 class _SendMessageDetailState extends State<SendMessageDetail> {
   final bool isSend = false;
+  ColorsCollection _colors = ColorsCollection();
   // bool isLongPressed = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _colors.background,
       appBar: AppBar(
-        title: Text('Sended Message Detail'),
+        automaticallyImplyLeading: false,
+        backgroundColor: _colors.background,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.close,
+              color: _colors.iconColor,
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -49,20 +65,20 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               SingleChildScrollView(
                 child: Container(
-                    color: Colors.grey[100],
+                    color: _colors.background,
                     height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.height * 1,
                     child: Text(
                       widget.message.contents,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: _colors.textColor),
                     )),
               ),
               SizedBox(height: 50),
               SizedBox(
-                height: 16,
+                height: 40,
               ),
               ElevatedButton.icon(
                   onPressed: () async {
@@ -93,7 +109,9 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       minimumSize:
-                          Size(MediaQuery.of(context).size.width * 1, 48)))
+                          Size(MediaQuery.of(context).size.width * 1, 48))),
+              SizedBox(height: 10),
+              SizedBox(width: double.infinity, child: BannerAD()),
             ],
           ),
         ),

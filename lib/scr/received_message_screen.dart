@@ -5,6 +5,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/receive_messager_detail.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
@@ -119,87 +120,97 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   @override
   Widget build(BuildContext context) {
     // Todo: 받은 쪽지함 화면 구현
-    return StreamBuilder<List<MessageModel>>(
-      stream: getMessagesStream(_authController.userData!['uid']),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('메시지 가져오기 오류: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text(
-            '메시지가 없습니다.',
-            style: TextStyle(color: _color.iconColor),
-          );
-        }
-
-        List<MessageModel> messages = snapshot.data!;
-
-        // 여기에서 메시지 목록을 사용하여 UI 업데이트 또는 다른 작업 수행
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView.separated(
-            itemCount: messages.length,
-            separatorBuilder: (context, index) => Divider(
-              color: _color.iconColor,
-              thickness: 1.0,
-            ),
-            itemBuilder: (context, index) {
-              MessageModel message = messages[index];
-
-              //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
-              final now = DateTime.now();
-              final DateTime created = message.timestamp;
-              final Duration difference = now.difference(created);
-
-              String formattedDate;
-
-              if (difference.inHours > 0) {
-                formattedDate = '${difference.inHours}시간 전';
-              } else if (difference.inMinutes > 0) {
-                formattedDate = '${difference.inMinutes}분 전';
-              } else {
-                formattedDate = '방금 전';
+    return Column(
+      children: [
+        SizedBox(
+          height: 594,
+          child: StreamBuilder<List<MessageModel>>(
+            stream: getMessagesStream(_authController.userData!['uid']),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('메시지 가져오기 오류: ${snapshot.error}');
               }
-              return ListTile(
-                title: message.isRead
-                    ? Text(
-                        'From: ${message.senderNickname}   ($formattedDate)\n Read : 읽음',
-                        style: TextStyle(fontSize: 11, color: Colors.grey),
-                      )
-                    : Text(
-                        'From: ${message.senderNickname}   ($formattedDate)',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Text(
+                  '메시지가 없습니다.',
+                  style: TextStyle(color: _color.iconColor),
+                );
+              }
+
+              List<MessageModel> messages = snapshot.data!;
+
+              // 여기에서 메시지 목록을 사용하여 UI 업데이트 또는 다른 작업 수행
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ListView.separated(
+                  itemCount: messages.length,
+                  separatorBuilder: (context, index) => Divider(
+                    color: _color.iconColor,
+                    thickness: 1.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    MessageModel message = messages[index];
+
+                    //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
+                    final now = DateTime.now();
+                    final DateTime created = message.timestamp;
+                    final Duration difference = now.difference(created);
+
+                    String formattedDate;
+
+                    if (difference.inHours > 0) {
+                      formattedDate = '${difference.inHours}시간 전';
+                    } else if (difference.inMinutes > 0) {
+                      formattedDate = '${difference.inMinutes}분 전';
+                    } else {
+                      formattedDate = '방금 전';
+                    }
+                    return ListTile(
+                      title: message.isRead
+                          ? Text(
+                              'From: ${message.senderNickname}   ($formattedDate)\n Read : 읽음',
+                              style:
+                                  TextStyle(fontSize: 11, color: Colors.grey),
+                            )
+                          : Text(
+                              'From: ${message.senderNickname}   ($formattedDate)',
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                      subtitle: Text(
+                        message.contents,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white),
+                      ), // 최대 줄 수를 3로 설정),
+                      trailing: IconButton(
+                        onPressed: () async {
+                          await _deleteMessage(message.id);
+                          showToast('메시지가 삭제되었습니다.', 1);
+                        },
+                        icon: Icon(Icons.delete),
                       ),
-                subtitle: Text(
-                  message.contents,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.white),
-                ), // 최대 줄 수를 3로 설정),
-                trailing: IconButton(
-                  onPressed: () async {
-                    await _deleteMessage(message.id);
-                    showToast('메시지가 삭제되었습니다.', 1);
+                      onTap: () {
+                        Get.to(ReceiveMessageDetail(
+                            message: message, isSend: false));
+                        updateisReadMessage(message);
+                      },
+                    );
                   },
-                  icon: Icon(Icons.delete),
                 ),
-                onTap: () {
-                  Get.to(ReceiveMessageDetail(message: message, isSend: false));
-                  updateisReadMessage(message);
-                },
               );
             },
           ),
-        );
-      },
+        ),
+        BannerAD()
+      ],
     );
   }
 }

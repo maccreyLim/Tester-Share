@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/message_state_screen.dart';
 import 'package:tester_share_app/scr/replay_message_create_screen.dart';
-import 'package:tester_share_app/widget/w.show_toast.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 class ReceiveMessageDetail extends StatefulWidget {
   const ReceiveMessageDetail({Key? key, required this.message, required isSend})
@@ -18,12 +18,26 @@ class ReceiveMessageDetail extends StatefulWidget {
 class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
   final bool isSend = false;
   bool isLongPressed = true;
+  final ColorsCollection _colors = ColorsCollection();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _colors.background,
       appBar: AppBar(
-        title: const Text('Received Message Detail'),
+        automaticallyImplyLeading: false,
+        backgroundColor: _colors.background,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.close,
+              color: _colors.iconColor,
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -50,18 +64,20 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               SingleChildScrollView(
                 child: Container(
-                    color: Colors.grey[100],
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    width: MediaQuery.of(context).size.height * 1,
-                    child: Text(
-                      widget.message.contents,
-                      style: const TextStyle(fontSize: 20),
-                    )),
+                  color: _colors.background,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.height * 1,
+                  child: Text(widget.message.contents,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: _colors.textColor,
+                      )),
+                ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 80),
               ElevatedButton.icon(
                   onPressed: () {
                     //firebase에서 답장
@@ -101,47 +117,49 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                       backgroundColor: Colors.white,
                       minimumSize:
                           Size(MediaQuery.of(context).size.width * 1, 48))),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton.icon(
-                  onPressed: () {
-                    setState(() {
-                      isLongPressed = !isLongPressed;
-                      print(isLongPressed);
-                    });
-                  },
-                  onLongPress: () async {
-                    //firebase에서 삭제
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // ElevatedButton.icon(
+              //     onPressed: () {
+              //       setState(() {
+              //         isLongPressed = !isLongPressed;
+              //         print(isLongPressed);
+              //       });
+              //     },
+              //     onLongPress: () async {
+              //       //firebase에서 삭제
 
-                    await _deleteMessage(widget.message.id);
-                    showToast('메시지가 삭제되었습니다.', 1);
-                    Get.to(const MessageStateScreen());
-                  },
-                  label: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: isLongPressed
-                        ? const Text(
-                            'Delete',
-                            style: TextStyle(fontSize: 20, color: Colors.grey),
-                          )
-                        : const Text(
-                            '길게 누르세요',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.redAccent),
-                          ),
-                  ),
-                  icon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Icon(Icons.delete,
-                        color: isLongPressed ? Colors.grey : Colors.redAccent),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width * 1, 48)))
+              //       await _deleteMessage(widget.message.id);
+              //       showToast('메시지가 삭제되었습니다.', 1);
+              //       Get.to(const MessageStateScreen());
+              //     },
+              //     label: Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 20),
+              //       child: isLongPressed
+              //           ? const Text(
+              //               'Delete',
+              //               style: TextStyle(fontSize: 20, color: Colors.grey),
+              //             )
+              //           : const Text(
+              //               '길게 누르세요',
+              //               style: TextStyle(
+              //                   fontSize: 20,
+              //                   fontWeight: FontWeight.bold,
+              //                   color: Colors.redAccent),
+              //             ),
+              //     ),
+              //     icon: Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 20),
+              //       child: Icon(Icons.delete,
+              //           color: isLongPressed ? Colors.grey : Colors.redAccent),
+              //     ),
+              //     style: ElevatedButton.styleFrom(
+              //         backgroundColor: Colors.white,
+              //         minimumSize:
+              //             Size(MediaQuery.of(context).size.width * 1, 48))),
+              SizedBox(height: 10),
+              SizedBox(width: double.infinity, child: BannerAD()),
             ],
           ),
         ),
