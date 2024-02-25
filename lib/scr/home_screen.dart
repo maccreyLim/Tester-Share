@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -30,9 +32,43 @@ class _HomeScreenState extends State<HomeScreen> {
   final ControllerGetX controller = Get.put(ControllerGetX());
   final MassageFirebaseController _massageFirebaseController =
       MassageFirebaseController();
+  var messageString = "";
+
+  void getMyDeviceToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+
+    print("내 디바이스 토큰: $token");
+  }
 
   @override
   void initState() {
+    getMyDeviceToken();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      RemoteNotification? notification = message.notification;
+
+      if (notification != null) {
+        FlutterLocalNotificationsPlugin().show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel',
+              'high_importance_notification',
+              importance: Importance.max,
+            ),
+          ),
+        );
+
+        setState(() {
+          messageString = message.notification!.body!;
+
+          print("Foreground 메시지 수신: $messageString");
+        });
+      }
+    });
+
     super.initState();
     if (_authController.isLogin) {
       _getUnreadMessageCount();
@@ -57,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            "Wellcome to ${_authController.userData?['profileName']}",
+            "메시지 내용: $messageString",
+            // "Wellcome to ${_authController.userData?['profileName']}",
             style: TextStyle(color: colors.textColor, fontSize: 16),
           ),
         ),
@@ -78,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
-                customNotification.showPushAlarm();
+                customNotification.showPushAlarm("title", "안녕하세요");
               },
               icon: const Icon(Icons.message)),
           IconButton(

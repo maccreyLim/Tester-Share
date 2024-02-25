@@ -1,5 +1,3 @@
-// notification.dart
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class ConcreteNotificationDetails extends NotificationDetails {
@@ -19,7 +17,7 @@ class CustomNotification {
     ),
   );
 
-  Future<void> showPushAlarm() async {
+  Future<void> showPushAlarm(title, Contents) async {
     FlutterLocalNotificationsPlugin _localNotification =
         FlutterLocalNotificationsPlugin();
 
@@ -28,12 +26,15 @@ class CustomNotification {
       await _localNotification.show(
         0,
         //메시지 title
-        '신규프로젝트 알림',
+        title,
         //메시지 Contents
-        'NAVI Diary가 신규 프로젝트로 등록되었습니다.',
+        Contents,
         _details,
         payload: 'deepLink',
       );
     });
   }
 }
+
+//사용법
+// customNotification.showPushAlarm()
