@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
@@ -21,6 +22,7 @@ class _MessageCreateScrrenState extends State<MessageCreateScrren> {
   final MassageFirebaseController _mfirebase =
       MassageFirebaseController(); // MessageFirebase 클래스의 인스턴스 생성
   Map<String, dynamic> searchResults = {}; // 검색 결과를 저장할 변수
+  final AuthController _authController = AuthController.instance;
   final controller = Get.put(ControllerGetX());
 
   @override
@@ -135,7 +137,7 @@ class _MessageCreateScrrenState extends State<MessageCreateScrren> {
                       //  Todo: MessageFirebase에서 메시지 등록
                       if (_formkey.currentState!.validate()) {
                         MessageModel message = MessageModel(
-                            senderUid: controller.userUid,
+                            senderUid: _authController.userData!['uid'],
                             receiverUid: receiverUid,
                             contents: messageController.text,
                             timestamp: DateTime.now());

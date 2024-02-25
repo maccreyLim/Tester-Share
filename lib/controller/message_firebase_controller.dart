@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
 class MassageFirebaseController {
   CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
+  final AuthController _authController = AuthController.instance;
 
 //Create
   Future<String> createMessage(MessageModel message, String nickname) async {
@@ -126,6 +128,27 @@ class MassageFirebaseController {
     } catch (e) {
       print('사용자 검색 중 오류 발생: $e');
       return {}; // 예외 발생 시 빈 맵 반환
+    }
+  }
+
+  //메시지 갯수를 스트림으로 확인
+  Stream<int> getUnreadMessageCountStream() {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    try {
+      Stream<QuerySnapshot> snapshots = _firestore
+          .collection('messages')
+          .where('isRead', isEqualTo: false)
+          .where('receiverUid', isEqualTo: _authController.userData!['uid'])
+          .snapshots();
+
+      return snapshots.map((QuerySnapshot querySnapshot) {
+        return querySnapshot.size;
+      });
+    } catch (e) {
+      print('오류 발생: $e');
+      // 오류 처리 코드를 추가하거나 throw로 예외를 다시 던질 수 있습니다.
+      throw e;
     }
   }
 }

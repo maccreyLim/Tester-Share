@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/receive_messager_detail.dart';
@@ -16,6 +17,7 @@ class ReceivedMessageScreen extends StatefulWidget {
 
 class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   // Property
+  final AuthController _authController = AuthController.instance;
   final controller = Get.put(ControllerGetX());
   final ColorsCollection _color = ColorsCollection();
 
@@ -118,7 +120,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   Widget build(BuildContext context) {
     // Todo: 받은 쪽지함 화면 구현
     return StreamBuilder<List<MessageModel>>(
-      stream: getMessagesStream(controller.userUid),
+      stream: getMessagesStream(_authController.userData!['uid']),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('메시지 가져오기 오류: ${snapshot.error}');
@@ -129,7 +131,10 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('메시지가 없습니다.');
+          return Text(
+            '메시지가 없습니다.',
+            style: TextStyle(color: _color.iconColor),
+          );
         }
 
         List<MessageModel> messages = snapshot.data!;
@@ -157,13 +162,8 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
                 formattedDate = '${difference.inHours}시간 전';
               } else if (difference.inMinutes > 0) {
                 formattedDate = '${difference.inMinutes}분 전';
-                // FlutterLocalNotification.showNotification(
-                //     "${message.senderNickname}로 부터 쪽지가 왔습니다.",
-                //     '1분이상 지났습니다.확인해주세요');
               } else {
                 formattedDate = '방금 전';
-                // FlutterLocalNotification.showNotification(
-                //     "${message.senderNickname}로 부터 쪽지가 왔습니다.", '확인해주세요');
               }
               return ListTile(
                 title: message.isRead
@@ -182,6 +182,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
                   message.contents,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.white),
                 ), // 최대 줄 수를 3로 설정),
                 trailing: IconButton(
                   onPressed: () async {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/send_message_detail.dart';
@@ -15,6 +16,7 @@ class SendMessageScreen extends StatefulWidget {
 class _SendMessageScreen extends State<SendMessageScreen> {
   // Property
   final controller = Get.put(ControllerGetX());
+  final AuthController _authController = AuthController.instance;
 
 //파이어베이스 삭제
   Future<void> _deleteMessage(String messageId) async {
@@ -68,7 +70,6 @@ class _SendMessageScreen extends State<SendMessageScreen> {
   }
 
 //파이어베이스에서 받은메시지 검색
-//파이어베이스에서 받은메시지 검색
   Stream<List<MessageModel>> getSendMessagesStream(String senderUid) {
     CollectionReference messagesCollection =
         FirebaseFirestore.instance.collection('messages');
@@ -104,7 +105,7 @@ class _SendMessageScreen extends State<SendMessageScreen> {
   Widget build(BuildContext context) {
     // Todo: 보낸 쪽지함 화면 구현
     return StreamBuilder<List<MessageModel>>(
-      stream: getSendMessagesStream(controller.userUid),
+      stream: getSendMessagesStream(_authController.userData!['uid']),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('메시지 가져오기 오류: ${snapshot.error}');

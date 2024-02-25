@@ -15,6 +15,10 @@ class AuthController extends GetxController {
   // GetX 전역 함수로 사용하기 위한 인스턴스
   static AuthController instance = Get.find();
 
+  RxInt messageCount = 0.obs;
+  bool isLogin = false; //로그인 상태 확인
+  bool isInput = false; // E-Mail 검증 완료여부
+
   late Rx<User?> _user;
   late Rx<Map<String, dynamic>?> _userData;
 
@@ -332,5 +336,10 @@ class AuthController extends GetxController {
     } catch (e) {
       print('비밀번호 변경 중 오류 발생: $e');
     }
+  }
+
+  //message Count
+  void setMessageCount(int count) {
+    messageCount.value = count;
   }
 }

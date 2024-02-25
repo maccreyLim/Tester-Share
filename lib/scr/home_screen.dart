@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/getx.dart';
+import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
 import 'package:tester_share_app/scr/detail_board_screen.dart';
@@ -28,43 +29,25 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = AuthController.instance;
   final CustomNotification customNotification = CustomNotification();
   final ControllerGetX controller = Get.put(ControllerGetX());
+  final MassageFirebaseController _massageFirebaseController =
+      MassageFirebaseController();
 
   @override
   void initState() {
     super.initState();
-    if (controller.isLogin) {
+    if (_authController.isLogin) {
       _getUnreadMessageCount();
     }
   }
 
   Future<void> _getUnreadMessageCount() async {
-    await for (int count in getUnreadMessageCountStream()) {
+    await for (int count
+        in _massageFirebaseController.getUnreadMessageCountStream()) {
       if (mounted) {
         setState(() {
-          controller.setMessageCount(count);
+          _authController.setMessageCount(count);
         });
       }
-    }
-  }
-
-  //메시지 갯수를 스트림으로 확인
-  Stream<int> getUnreadMessageCountStream() {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    try {
-      Stream<QuerySnapshot> snapshots = _firestore
-          .collection('messages')
-          .where('isRead', isEqualTo: false)
-          .where('receiverUid', isEqualTo: controller.userUid)
-          .snapshots();
-
-      return snapshots.map((QuerySnapshot querySnapshot) {
-        return querySnapshot.size;
-      });
-    } catch (e) {
-      print('오류 발생: $e');
-      // 오류 처리 코드를 추가하거나 throw로 예외를 다시 던질 수 있습니다.
-      throw e;
     }
   }
 
@@ -84,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Obx(() => IconBadge(
                 icon: const Icon(Icons.notifications, color: Colors.lightBlue),
-                itemCount: controller.messageCount.value, // itemCount를 변수로 설정
+                itemCount:
+                    _authController.messageCount.value, // itemCount를 변수로 설정
                 badgeColor: Colors.redAccent,
                 itemColor: Colors.white,
                 maxCount: 99,
