@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
-import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/receive_messager_detail.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -19,7 +18,6 @@ class ReceivedMessageScreen extends StatefulWidget {
 class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   // Property
   final AuthController _authController = AuthController.instance;
-  final controller = Get.put(ControllerGetX());
   final ColorsCollection _color = ColorsCollection();
 
 //파이어베이스 읽음 변경

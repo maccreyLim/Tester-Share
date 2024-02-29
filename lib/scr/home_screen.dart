@@ -4,7 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
-import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
@@ -29,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
   final CustomNotification customNotification = CustomNotification();
-  final ControllerGetX controller = Get.put(ControllerGetX());
   final MassageFirebaseController _massageFirebaseController =
       MassageFirebaseController();
   var messageString = "";
@@ -69,16 +67,18 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
 
-    super.initState();
     if (_authController.isLogin) {
       _getUnreadMessageCount();
     }
+    super.initState();
   }
 
+//읽지 않은 메시지를 받아오기
   Future<void> _getUnreadMessageCount() async {
     await for (int count
         in _massageFirebaseController.getUnreadMessageCountStream()) {
       if (mounted) {
+        print('메시지 카운트 :$count');
         setState(() {
           _authController.setMessageCount(count);
         });
@@ -105,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.notifications, color: Colors.lightBlue),
                 itemCount:
                     _authController.messageCount.value, // itemCount를 변수로 설정
+
                 badgeColor: Colors.redAccent,
                 itemColor: Colors.white,
                 maxCount: 99,

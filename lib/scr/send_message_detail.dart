@@ -5,6 +5,7 @@ import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
 class SendMessageDetail extends StatefulWidget {
@@ -19,6 +20,7 @@ class SendMessageDetail extends StatefulWidget {
 class _SendMessageDetailState extends State<SendMessageDetail> {
   final bool isSend = false;
   ColorsCollection _colors = ColorsCollection();
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   // bool isLongPressed = true;
 
   @override
@@ -90,27 +92,27 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                   label: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: widget.message.isRead
-                        ? Text(
+                        ? const Text(
                             'Delete',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.redAccent),
                           )
-                        : Text(
+                        : const Text(
                             '아직 읽지않은 메시지',
                             style: TextStyle(fontSize: 20, color: Colors.grey),
                           ),
                   ),
-                  icon: Padding(
+                  icon: const Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Icon(Icons.delete, color: Colors.redAccent),
                   ),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width * 1, 48))),
-              SizedBox(height: 10),
+                      backgroundColor: _colors.buttonColor,
+                      minimumSize: Size(MediaQuery.of(context).size.width * 1,
+                          _fontSizeCollection.buttonSize))),
+              const SizedBox(height: 10),
               SizedBox(width: double.infinity, child: BannerAD()),
             ],
           ),

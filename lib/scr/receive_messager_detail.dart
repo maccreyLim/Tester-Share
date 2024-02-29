@@ -69,7 +69,7 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                 child: Container(
                   color: _colors.background,
                   height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.height * 1,
+                  width: double.infinity,
                   child: Text(widget.message.contents,
                       style: TextStyle(
                         fontSize: 20,
@@ -77,7 +77,7 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                       )),
                 ),
               ),
-              SizedBox(height: 80),
+              const SizedBox(height: 80),
               ElevatedButton.icon(
                   onPressed: () {
                     //firebase에서 답장
@@ -91,74 +91,33 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                           ? const Text(
                               'Replay',
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.blueAccent),
+                                  color: Colors.white),
                             )
                           : const Text(
                               'Replay',
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey),
                             )),
                   icon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: isLongPressed
-                          ? const Icon(
+                          ? Icon(
                               Icons.send,
-                              color: Colors.blueAccent,
+                              color: _colors.iconColor,
                             )
                           : const Icon(
                               Icons.send,
                               color: Colors.grey,
                             )),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: _colors.buttonColor,
                       minimumSize:
                           Size(MediaQuery.of(context).size.width * 1, 48))),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // ElevatedButton.icon(
-              //     onPressed: () {
-              //       setState(() {
-              //         isLongPressed = !isLongPressed;
-              //         print(isLongPressed);
-              //       });
-              //     },
-              //     onLongPress: () async {
-              //       //firebase에서 삭제
-
-              //       await _deleteMessage(widget.message.id);
-              //       showToast('메시지가 삭제되었습니다.', 1);
-              //       Get.to(const MessageStateScreen());
-              //     },
-              //     label: Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 20),
-              //       child: isLongPressed
-              //           ? const Text(
-              //               'Delete',
-              //               style: TextStyle(fontSize: 20, color: Colors.grey),
-              //             )
-              //           : const Text(
-              //               '길게 누르세요',
-              //               style: TextStyle(
-              //                   fontSize: 20,
-              //                   fontWeight: FontWeight.bold,
-              //                   color: Colors.redAccent),
-              //             ),
-              //     ),
-              //     icon: Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 20),
-              //       child: Icon(Icons.delete,
-              //           color: isLongPressed ? Colors.grey : Colors.redAccent),
-              //     ),
-              //     style: ElevatedButton.styleFrom(
-              //         backgroundColor: Colors.white,
-              //         minimumSize:
-              //             Size(MediaQuery.of(context).size.width * 1, 48))),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(width: double.infinity, child: BannerAD()),
             ],
           ),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
-import 'package:tester_share_app/controller/getx.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/send_message_detail.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -16,7 +15,6 @@ class SendMessageScreen extends StatefulWidget {
 
 class _SendMessageScreen extends State<SendMessageScreen> {
   // Property
-  final controller = Get.put(ControllerGetX());
   final AuthController _authController = AuthController.instance;
 
 //파이어베이스 삭제
