@@ -210,13 +210,16 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                             await _multiImageFirebaseController
                                                 .deleteImagesUrlFromStorage(
                                                     boards.first.appImagesUrl);
+                                            print("멀티이미지가 삭제되었습니다.");
                                             // Single image 삭제
                                             await _singleImageFirebaseController
                                                 .deleteImageUrl(
                                                     boards.first.iconImageUrl);
+                                            print("싱글이미지가 삭제되었습니다.");
                                             // 삭제 구현
                                             _board.deleteBoard(
                                                 boards.first.docid);
+                                            print("게시판데이타가 삭제되었습니다.");
                                           },
                                           child: Text(
                                             "Delete",

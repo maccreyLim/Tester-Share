@@ -36,6 +36,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       SingleImageFirebaseController();
   final BoardFirebaseController _boardFirebaseController =
       BoardFirebaseController();
+  final InterstitialAdController adController = InterstitialAdController();
   TextEditingController titleController = TextEditingController();
   TextEditingController introductionTextController = TextEditingController();
   TextEditingController testerRequestController = TextEditingController();
@@ -418,7 +419,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          InterstitialAd();
+          adController.loadAndShowAd();
           _savePost();
         },
         child: Text(

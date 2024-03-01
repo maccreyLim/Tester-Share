@@ -13,7 +13,7 @@ class MultiImageFirebaseController {
   /// ImagePicker를 사용하여 갤러리에서 다중 이미지 선택하고 이미지 XFile리스트에 추가하는 메서드
   Future<List<XFile?>> pickMultiImage(List<XFile?> pickedImages) async {
     List<XFile?> newPickedImages = await ImagePicker().pickMultiImage(
-      imageQuality: 50,
+      imageQuality: 80,
       maxHeight: 300,
       maxWidth: 150,
     );
@@ -128,28 +128,24 @@ class MultiImageFirebaseController {
     }
   }
 
-  // Storage Delete
-
-  /// 이미지를 imageUrls 리스트로 Firebase Storage에서 이미지 파일을 삭제하는 메서드
+// Storage Delete
+//리스트에 있는 주소로 모든 파일을 삭제
   Future<void> deleteImagesUrlFromStorage(List<String> appImagesUrls) async {
     try {
       for (String imageUrl in appImagesUrls) {
-        // 이미지 URL에서 gs:// 형태의 Bucket 이름과 Path 추출
-        RegExp regex = RegExp(r'gs://([^/]+)/(.*?)\?.*');
-        Match? match = regex.firstMatch(imageUrl);
-
-        if (match != null && match.groupCount == 2) {
-          String bucket = match.group(1)!;
-          String path = match.group(2)!;
-
+        try {
           // Firebase Storage에서 해당 이미지의 참조를 얻어옴
-          Reference imageRef = FirebaseStorage.instance.ref().child(bucket)
-            ..child('boards_Images').child(path);
+          Reference imageRef = FirebaseStorage.instance.refFromURL(imageUrl);
+
+          // 이미지가 존재하는지 확인
+          await imageRef.getDownloadURL();
 
           // Firebase Storage에서 이미지 삭제
           await imageRef.delete();
-        } else {
-          print('이미지 URL 형식이 잘못되었습니다: $imageUrl');
+          print('이미지 삭제 성공: $imageUrl');
+        } catch (e) {
+          // 이미지가 존재하지 않는 경우
+          print('이미지 삭제 실패 - 이미지가 존재하지 않습니다: $imageUrl');
         }
       }
     } catch (e) {

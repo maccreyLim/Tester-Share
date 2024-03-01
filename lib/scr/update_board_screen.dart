@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+//기존이미지 삭제수정은 됨. 기존이미지에서 추가를 하면 이미지파일은 올라가는데 appImageUrl에는 주소가 리스트에 기족이 안됨
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -13,8 +13,8 @@ import 'package:tester_share_app/scr/my_tester_request_post.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UpdateBoardScreen extends StatefulWidget {
   final BoardFirebaseModel boards;
@@ -35,6 +35,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       SingleImageFirebaseController();
   final BoardFirebaseController _boardFirebaseController =
       BoardFirebaseController();
+  final InterstitialAdController adController = InterstitialAdController();
   TextEditingController titleController = TextEditingController();
   TextEditingController introductionTextController = TextEditingController();
   TextEditingController testerRequestController = TextEditingController();
@@ -58,7 +59,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
   @override
   void initState() {
     try {
-      super.initState();
+      //초기화 함수 호출
       pickedImages = widget.boards.appImagesUrl
           .map((path) => XFile(path))
           .toList(growable: true);
@@ -66,8 +67,10 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
     } catch (e, stackTrace) {
       print('Error in initState: $e\n$stackTrace');
     }
+    super.initState();
   }
 
+//폼 초기화 함수
   void _initializeForm() {
     titleController.text = widget.boards.title;
     introductionTextController.text = widget.boards.introductionText;
@@ -78,13 +81,16 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
     pickedImage = File(widget.boards.iconImageUrl);
   }
 
+//이미지 선택 함수
   void _pickImages() async {
     try {
       List<XFile?> pickedImageFiles =
           await _multiImageFirebaseController.pickMultiImage(pickedImages);
-      setState(() {
-        pickedImages = pickedImageFiles;
-      });
+      if (pickedImageFiles.isNotEmpty) {
+        setState(() {
+          pickedImages.addAll(pickedImageFiles);
+        });
+      }
     } catch (e) {
       print('Error picking images: $e');
     }
@@ -97,7 +103,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         print('오류: 사용자 데이터를 가져올 수 없습니다.');
         return;
       }
-
+//삭제된 이미지 리스트를 받아와야 함
       List<String> appImagesUrl = [];
       String iconImageUrl = "";
       String? userUid = _authController.currentUser!.uid;
@@ -114,23 +120,21 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       if (_formKey.currentState!.validate()) {
         // 새로운 게시물 모델 생성
         BoardFirebaseModel newPost = BoardFirebaseModel(
-          docid: '',
-          isApproval: false,
+          docid: widget.boards.docid,
+          isApproval: widget.boards.isApproval,
           createUid: userUid.toString(),
           developer: _authController.userData?['profileName'],
-          createAt: DateTime.now(),
-          updateAt: null,
+          createAt: widget.boards.createAt,
+          updateAt: DateTime.now(),
           title: titleController.text,
           introductionText: introductionTextController.text,
           testerRequest: int.parse(testerRequestController.text),
-          testerParticipation: 0,
+          testerParticipation: widget.boards.testerParticipation,
           appImagesUrl: appImagesUrl,
           iconImageUrl: iconImageUrl,
           githubUrl: githubUrlController.text,
           appSetupUrl: appSetupUrlController.text,
-          testerRequestProfile: {
-            'tester_name': [],
-          },
+          testerRequestProfile: widget.boards.testerRequestProfile,
           language: selectedLanguages,
         );
 
@@ -359,7 +363,9 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     width: 80,
                     height: 80,
                     child: IconButton(
-                      onPressed: _pickImages,
+                      onPressed: () {
+                        _pickImages();
+                      },
                       icon: Icon(
                         Icons.camera_alt,
                         size: 60,
@@ -423,12 +429,16 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     width: 20,
                     height: 20,
                     child: IconButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // 기존 이미지를 삭제하고 리스트에서도 제거
+                        List<String> updatedImageUrls =
+                            await _multiImageFirebaseController
+                                .deleteUpdateImage(
+                                    index, widget.boards.appImagesUrl);
+
                         setState(() {
-                          _multiImageFirebaseController
-                              .deleteUpdateImage(
-                                  index, widget.boards.appImagesUrl)
-                              .then((value) => setState(() {}));
+                          pickedImages.removeAt(index);
+                          widget.boards.appImagesUrl = updatedImageUrls;
                         });
                       },
                       icon: Icon(
@@ -457,7 +467,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          InterstitialAd();
+          adController.loadAndShowAd();
           _savePost();
         },
         child: Text(

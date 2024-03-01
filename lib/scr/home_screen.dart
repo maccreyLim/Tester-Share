@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -38,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     //출시시 시간을 1분으로 수정 필요
     if (_authController.isLogin) {
-      Timer.periodic(Duration(minutes: 60), (Timer timer) {
+      _getUnreadMessageCount();
+      Timer.periodic(Duration(minutes: 5), (Timer timer) {
         _getUnreadMessageCount();
       });
     }
@@ -52,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         setState(() {
           _authController.setMessageCount(count);
+          print(count);
         });
 
         if (count != previousCount) {

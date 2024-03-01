@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class RewardAd {
+class RewardAdManager {
   AdRequest _adRequest = AdRequest();
 
   String getAdUnitId() {
     // 플랫폼에 따라 광고 단위 ID를 반환
     return Platform.isAndroid
-        ? 'ca-app-pub-3940256099942544/5354046379'
+        ? 'your_android_ad_unit_id'
         : 'your_ios_ad_unit_id';
   }
 

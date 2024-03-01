@@ -19,6 +19,7 @@ class UnapprovedPostScreen extends StatefulWidget {
 class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
   final ColorsCollection colors = ColorsCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
+  final InterstitialAdController adController = InterstitialAdController();
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +163,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        InterstitialAd();
+                                        adController.loadAndShowAd();
                                         //Todo : firebase isApproval = true;
                                         boards[index].isApproval
                                             ? updateBoard(boards[index], false)

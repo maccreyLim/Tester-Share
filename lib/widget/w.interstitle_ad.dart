@@ -26,12 +26,12 @@ class InterstitialAdController {
   }
 }
 
-class InterstitialAd extends StatefulWidget {
+class InterstitialAdExample extends StatefulWidget {
   @override
-  State<InterstitialAd> createState() => _InterstitialAdState();
+  State<InterstitialAdExample> createState() => _InterstitialAdExampleState();
 }
 
-class _InterstitialAdState extends State<InterstitialAd> {
+class _InterstitialAdExampleState extends State<InterstitialAdExample> {
   final InterstitialAdController adController = InterstitialAdController();
 
   @override
