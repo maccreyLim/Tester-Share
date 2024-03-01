@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,8 +15,8 @@ import 'package:tester_share_app/scr/setting_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart';
-import 'package:tester_share_app/widget/w.notification.dart'; // intl 패키지 추가
 import 'package:icon_badge/icon_badge.dart';
+import 'package:tester_share_app/widget/w.notification.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,48 +29,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final ColorsCollection colors = ColorsCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
-  final CustomNotification customNotification = CustomNotification();
   final MassageFirebaseController _massageFirebaseController =
       MassageFirebaseController();
   var messageString = "";
-
-  void getMyDeviceToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
-
-    print("내 디바이스 토큰: $token");
-  }
+  int previousCount = 0;
 
   @override
   void initState() {
-    getMyDeviceToken();
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      RemoteNotification? notification = message.notification;
-
-      if (notification != null) {
-        FlutterLocalNotificationsPlugin().show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'high_importance_channel',
-              'high_importance_notification',
-              importance: Importance.max,
-            ),
-          ),
-        );
-
-        setState(() {
-          messageString = message.notification!.body!;
-
-          print("Foreground 메시지 수신: $messageString");
-        });
-      }
-    });
-
+    //출시시 시간을 1분으로 수정 필요
     if (_authController.isLogin) {
-      _getUnreadMessageCount();
+      Timer.periodic(Duration(minutes: 60), (Timer timer) {
+        _getUnreadMessageCount();
+      });
     }
     super.initState();
   }
@@ -78,10 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
     await for (int count
         in _massageFirebaseController.getUnreadMessageCountStream()) {
       if (mounted) {
-        print('메시지 카운트 :$count');
         setState(() {
           _authController.setMessageCount(count);
         });
+
+        if (count != previousCount) {
+          FlutterLocalNotification.showNotification(
+              "$count개의 메시지가 도착", "확인하시기를 바랍니다.");
+          previousCount = count; // 현재 count 값을 이전 값으로 업데이트
+        }
       }
     }
   }
@@ -93,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            "메시지 내용: $messageString",
-            // "Wellcome to ${_authController.userData?['profileName']}",
+            // "메시지 내용: $messageString",
+            "${_authController.userData?['profileName']}",
             style: TextStyle(color: colors.textColor, fontSize: 16),
           ),
         ),
@@ -116,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
-                customNotification.showPushAlarm("title", "안녕하세요");
+                FlutterLocalNotification.showNotification("title", "안녕하세요");
               },
               icon: const Icon(Icons.message)),
           IconButton(

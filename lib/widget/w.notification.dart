@@ -1,40 +1,54 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class ConcreteNotificationDetails extends NotificationDetails {
-  ConcreteNotificationDetails({
-    required AndroidNotificationDetails android,
-  }) : super(android: android);
-}
+class FlutterLocalNotification {
+  FlutterLocalNotification._();
 
-class CustomNotification {
-  final NotificationDetails _details = ConcreteNotificationDetails(
-    android: const AndroidNotificationDetails(
-      'alarm 1',
-      '1번 푸시',
-      channelDescription: '푸시 알림 채널',
-      importance: Importance.high,
-      priority: Priority.high,
-    ),
-  );
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  Future<void> showPushAlarm(title, Contents) async {
-    FlutterLocalNotificationsPlugin _localNotification =
-        FlutterLocalNotificationsPlugin();
+  static init() async {
+    AndroidInitializationSettings androidInitializationSettings =
+        const AndroidInitializationSettings('mipmap/ic_launcher');
 
-// 신호를 받은 후 10초 후에 알림을 보내기 위해 Future.delayed 사용
-    await Future.delayed(const Duration(seconds: 3), () async {
-      await _localNotification.show(
-        0,
-        //메시지 title
-        title,
-        //메시지 Contents
-        Contents,
-        _details,
-        payload: 'deepLink',
-      );
-    });
+    DarwinInitializationSettings iosInitializationSettings =
+        const DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+
+    InitializationSettings initializationSettings = InitializationSettings(
+      android: androidInitializationSettings,
+      iOS: iosInitializationSettings,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  static requestNotificationPermission() {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
+
+  static Future<void> showNotification(title, message) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('channel id', 'channel name',
+            channelDescription: 'channel description',
+            importance: Importance.max,
+            priority: Priority.max,
+            showWhen: false);
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails,
+        iOS: DarwinNotificationDetails(badgeNumber: 1));
+
+    await flutterLocalNotificationsPlugin.show(
+        0, title, message, notificationDetails);
   }
 }
-
-//사용법
-// customNotification.showPushAlarm()

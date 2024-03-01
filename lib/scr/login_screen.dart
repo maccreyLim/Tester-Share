@@ -4,6 +4,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/find_password_secreen.dart';
 import 'package:tester_share_app/scr/join_screen.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.fcm.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +23,12 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    FcmManager.initialize();
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -35,14 +42,6 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: colors.background,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       Get.back();
-        //     },
-        //     icon: const Icon(Icons.close),
-        //   ),
-        // ],
       ),
       backgroundColor: colors.background,
       body: Center(
