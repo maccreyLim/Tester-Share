@@ -13,7 +13,9 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart';
 import 'package:icon_badge/icon_badge.dart';
+import 'package:tester_share_app/widget/w.get_dialog.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
+import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,6 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     super.initState();
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 
 //읽지 않은 메시지를 받아오기
@@ -92,7 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
-                FlutterLocalNotification.showNotification("title", "안녕하세요");
+                Get.dialog(
+                  getXDialog(Get.context!,
+                      "The project has been registered\n You can check it in Setting -> My Tester Request Post"),
+                );
               },
               icon: const Icon(Icons.message)),
           IconButton(

@@ -11,6 +11,7 @@ import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class MyTesterRequestPostScreen extends StatelessWidget {
   final ColorsCollection _colors = ColorsCollection();
@@ -21,6 +22,14 @@ class MyTesterRequestPostScreen extends StatelessWidget {
   final SingleImageFirebaseController _singleImageFirebaseController =
       SingleImageFirebaseController();
   MyTesterRequestPostScreen({super.key});
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,6 +215,8 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                                     Color>(Colors.red),
                                           ),
                                           onPressed: () async {
+                                            //리워드광고
+                                            showRewardAd();
                                             // Multi image 삭제
                                             await _multiImageFirebaseController
                                                 .deleteImagesUrlFromStorage(

@@ -15,7 +15,9 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.get_dialog.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
+import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class CreateBoardScreen extends StatefulWidget {
   const CreateBoardScreen({super.key});
@@ -71,6 +73,14 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     testerRequestProfileController.dispose();
   }
 
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
+  }
+
   void _savePost() async {
     if (_authController.currentUser?.uid == null) {
       // 사용자 데이터가 없으면 예외 처리 또는 다른 조치를 취할 수 있습니다.
@@ -123,7 +133,11 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         await _boardFirebaseController.addBoard(newPost);
 
         // 저장이 완료되면 홈 화면으로 이동
-        Get.off(() => HomeScreen());
+        Get.off(() => const HomeScreen());
+        Get.dialog(
+          getXDialog(Get.context!,
+              "The project has been registered\n You can check it in Setting -> My Tester Request Post"),
+        );
       } catch (e) {
         print("Post 저장에 실패 : $e");
       }
@@ -303,7 +317,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   controller: appSetupUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'Test App Download Address',
+                    labelText: 'Web participation link',
                     hintText:
                         'Please enter the download address of the Test App.',
                     labelStyle: TextStyle(color: colors.textColor),
@@ -418,8 +432,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
-        onPressed: () {
-          adController.loadAndShowAd();
+        onPressed: () async {
+          showRewardAd();
           _savePost();
         },
         child: Text(

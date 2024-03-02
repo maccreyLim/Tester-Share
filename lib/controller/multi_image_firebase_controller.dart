@@ -10,18 +10,17 @@ class MultiImageFirebaseController {
 
   // ImagePicke
 
-  /// ImagePicker를 사용하여 갤러리에서 다중 이미지 선택하고 이미지 XFile리스트에 추가하는 메서드
+  /// ImagePicker를 사용하여 Xfile 리스트 반환
   Future<List<XFile?>> pickMultiImage(List<XFile?> pickedImages) async {
-    List<XFile?> newPickedImages = await ImagePicker().pickMultiImage(
-      imageQuality: 80,
-      maxHeight: 300,
-      maxWidth: 150,
+    List<XFile?> selectedImages = await ImagePicker().pickMultiImage(
+      //이미지 화질 설정
+      imageQuality: 100,
+      maxHeight: 600,
+      maxWidth: 300,
     );
-
-    if (newPickedImages.isNotEmpty) {
-      pickedImages.addAll(newPickedImages);
+    if (selectedImages.isNotEmpty) {
+      pickedImages.addAll(selectedImages);
     }
-
     return pickedImages; // 수정: 이미지 목록을 반환
   }
 
@@ -58,7 +57,7 @@ class MultiImageFirebaseController {
     }
   }
 
-  // Storage Create
+  // Storage Upload
 
   /// 선택한 다중 이미지들을 Firebase Storage에 업로드하고 imageUrls를 반환하는 메서드
   Future<List<String>> uploadMultiImages(List<XFile?> pickedImages) async {
@@ -72,7 +71,7 @@ class MultiImageFirebaseController {
               .ref()
               .child('boards_Images')
               .child(
-                  '${DateTime.now().millisecondsSinceEpoch}_${imageFile.path.split('/').last}');
+                  '${DateTime.now().millisecondsSinceEpoch}_App_${imageFile.path.split('/').last}');
 
           // 파일을 Firebase Storage에 업로드
           await ref.putFile(File(imageFile.path));
@@ -107,7 +106,7 @@ class MultiImageFirebaseController {
                 .ref()
                 .child('boards_Images')
                 .child(
-                    '${DateTime.now().millisecondsSinceEpoch}_${imageFile.path.split('/').last}');
+                    '${DateTime.now().millisecondsSinceEpoch}_App_${imageFile.path.split('/').last}');
 
             // 파일을 Firebase Storage에 업로드
             await ref.putFile(File(imageFile.path));
@@ -153,33 +152,47 @@ class MultiImageFirebaseController {
     }
   }
 
-// 이미지 수정삭제
+// List에서 이미지 수정삭제
   Future<List<String>> deleteUpdateImage(
-      int index, List<String> existingImageUrls) async {
+    int index,
+    List<String> existingImageUrls,
+  ) async {
     try {
+      // list 복사본 생성
+      List<String> updatedImageUrls = List.from(existingImageUrls);
+
       // index가 existingImageUrls 리스트의 범위 내에 있는지 확인
       if (index >= 0 && index < existingImageUrls.length) {
         // Firebase Storage 참조
         Reference imageRef =
             FirebaseStorage.instance.refFromURL(existingImageUrls[index]);
 
-        print("삭제 주소: $imageRef");
-
-        // Firebase Storage에서 이미지 삭제
+        // 이미지를 삭제하려고 시도
         await imageRef.delete();
 
         // 리스트에서 이미지 제거
-        existingImageUrls.removeAt(index);
+        updatedImageUrls.removeAt(index);
+        print("삭제 후 리스트: $updatedImageUrls");
 
         // 수정된 리스트 반환 (이미 삭제된 이미지는 제외)
-        return existingImageUrls;
+        return updatedImageUrls;
       } else {
         print('인덱스가 existingImageUrls 리스트의 범위를 벗어납니다.');
         // 오류가 발생한 경우 원래 리스트를 그대로 반환
         return existingImageUrls;
       }
     } catch (error) {
+      // 이미지를 삭제하는 도중 오류 발생
       print('이미지 삭제 오류: $error');
+
+      if (error is FirebaseException && error.code == 'object-not-found') {
+        // 이미지가 존재하지 않을 경우 오류가 발생하지만 무시하고 계속 진행
+        print('삭제하려는 이미지가 Firebase Storage에 존재하지 않습니다.');
+      } else {
+        // 다른 오류에 대해서는 그대로 throw
+        rethrow;
+      }
+
       // 오류가 발생한 경우 원래 리스트를 그대로 반환
       return existingImageUrls;
     }

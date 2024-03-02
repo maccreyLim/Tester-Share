@@ -7,7 +7,7 @@ class RewardAdManager {
   String getAdUnitId() {
     // 플랫폼에 따라 광고 단위 ID를 반환
     return Platform.isAndroid
-        ? 'your_android_ad_unit_id'
+        ? 'ca-app-pub-9128371394963939/2602642218'
         : 'your_ios_ad_unit_id';
   }
 

@@ -15,6 +15,7 @@ import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
+import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class UpdateBoardScreen extends StatefulWidget {
   final BoardFirebaseModel boards;
@@ -55,6 +56,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
   List<String> selectedLanguages = [];
   File? pickedImage;
   List<XFile?> pickedImages = [];
+  List<String> appImagesUrl = [];
 
   @override
   void initState() {
@@ -82,19 +84,19 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
   }
 
 //이미지 선택 함수
-  void _pickImages() async {
-    try {
-      List<XFile?> pickedImageFiles =
-          await _multiImageFirebaseController.pickMultiImage(pickedImages);
-      if (pickedImageFiles.isNotEmpty) {
-        setState(() {
-          pickedImages.addAll(pickedImageFiles);
-        });
-      }
-    } catch (e) {
-      print('Error picking images: $e');
-    }
-  }
+  // void _pickImages() async {
+  //   try {
+  //     List<XFile?> pickedImageFiles =
+  //         await _multiImageFirebaseController.pickMultiImage(pickedImages);
+  //     if (pickedImageFiles.isNotEmpty) {
+  //       setState(() {
+  //         pickedImages.addAll(pickedImageFiles);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error picking images: $e');
+  //   }
+  // }
 
   void _savePost() async {
     try {
@@ -104,7 +106,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         return;
       }
 //삭제된 이미지 리스트를 받아와야 함
-      List<String> appImagesUrl = [];
+
       String iconImageUrl = "";
       String? userUid = _authController.currentUser!.uid;
 
@@ -149,6 +151,14 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       print('오류 in _savePost: $e\n$stackTrace');
       // 에러 처리를 위한 추가적인 동작 수행
     }
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 
 // 선택된 이미지들이 유효한지 검증하는 함수
@@ -343,7 +353,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   controller: appSetupUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'Test App Download Address',
+                    labelText: 'Web participation link',
                     hintText:
                         'Please enter the download address of the Test App.',
                     labelStyle: TextStyle(color: colors.textColor),
@@ -363,8 +373,14 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                     width: 80,
                     height: 80,
                     child: IconButton(
-                      onPressed: () {
-                        _pickImages();
+                      onPressed: () async {
+                        List<XFile?> result =
+                            await _multiImageFirebaseController
+                                .pickMultiImage(pickedImages);
+                        setState(() {
+                          pickedImages = result;
+                          // Add other state update logic if needed
+                        });
                       },
                       icon: Icon(
                         Icons.camera_alt,
@@ -438,7 +454,8 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
 
                         setState(() {
                           pickedImages.removeAt(index);
-                          widget.boards.appImagesUrl = updatedImageUrls;
+                          appImagesUrl = updatedImageUrls;
+                          print("최종 업데이트할 리스트: $appImagesUrl");
                         });
                       },
                       icon: Icon(
@@ -467,7 +484,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          adController.loadAndShowAd();
+          showRewardAd();
           _savePost();
         },
         child: Text(

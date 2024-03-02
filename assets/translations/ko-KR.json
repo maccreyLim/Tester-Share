@@ -36,6 +36,7 @@
   "GitHub repository URL": "GitHub 리포지토리 URL",
   "Please enter GitHub repository URL" : "GitHub URL을 입력해 주세요",
   "TestApp Address" : "테스트 앱 다운로드 주소",
+  "Web participation link" : "Web참여 다운로드 주소",
   "Please enter the download address of the Test App" : "Test App 다운로드 주소를 입력해 주세요",
   "Please register the app image" : "App 이미지를 등록해주세요",
   "Create Post": "게시물 작성",
@@ -77,6 +78,8 @@
   "Inapproved projects cannot be deleted or modified" : "승인된 프로젝트는 삭제 및 수정이 불가능합니다",
   "The post does not exist" : "게시물이 존재하지 않습니다",
   "Tester Share is?" : "테스트쉐어란 무엇인가?",
-  "To send a reply" : " 답장 보내기"
+  "To send a reply" : " 답장 보내기",
+  "The project has been registered\n You can check it in Setting -> My Tester Request Post" : "프로젝트가 등록되었습니다 \n Setting -> My Tester Request Post에서 확인하실 수 있습니다",
+  "Close" : "닫 기"
   }
   

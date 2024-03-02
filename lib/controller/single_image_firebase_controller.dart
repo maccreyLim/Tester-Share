@@ -20,13 +20,13 @@ class SingleImageFirebaseController {
   // 선택한 단일 이미지를 Firebase Storage에 업로드
   Future<String?> uploadSingleImage(XFile? pickedImage) async {
     //기존 이미지 삭제 2/22추가
-    deleteSingleImage(pickedImage);
+    // deleteSingleImage(pickedImage);
 
     if (pickedImage != null) {
       try {
         // Firebase Storage 참조
         Reference ref = FirebaseStorage.instance.ref().child('boards_Images').child(
-            '${DateTime.now().millisecondsSinceEpoch}_${pickedImage.path.split('/').last}');
+            '${DateTime.now().millisecondsSinceEpoch}_Icon_${pickedImage.path.split('/').last}');
 
         // 파일을 Firebase Storage에 업로드
         await ref.putFile(File(pickedImage.path));
