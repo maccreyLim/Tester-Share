@@ -133,12 +133,24 @@ class _DetailUnapprovedPostScreenState
                     child: TextButton(
                       onPressed: () {
                         try {
-                          final _url =
-                              Uri.parse("https://${widget.boards.appSetupUrl}");
+                          final inputUrl = widget.boards.appSetupUrl;
+
+                          // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
+                          final hasProtocol = inputUrl.startsWith('http://') ||
+                              inputUrl.startsWith('https://');
+
+                          // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
+                          final urlWithProtocol =
+                              hasProtocol ? inputUrl : 'https://$inputUrl';
+
+                          // URL을 Uri 객체로 변환
+                          final _url = Uri.parse(urlWithProtocol);
+
+                          // 생성된 Uri를 사용하여 브라우저 열기
                           launchUrl(_url);
                         } catch (e) {
-                          // Handle the case when the URL is invalid or cannot be launched
-                          print('Error launching URL: $e');
+                          // URL이 유효하지 않거나 열 수 없는 경우 처리
+                          print('URL 열기 오류: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -207,12 +219,24 @@ class _DetailUnapprovedPostScreenState
                     child: TextButton(
                       onPressed: () {
                         try {
-                          final url =
-                              Uri.parse("https://${widget.boards.githubUrl}");
+                          final inputUrl = widget.boards.githubUrl;
+
+                          // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
+                          final hasProtocol = inputUrl.startsWith('http://') ||
+                              inputUrl.startsWith('https://');
+
+                          // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
+                          final urlWithProtocol =
+                              hasProtocol ? inputUrl : 'https://$inputUrl';
+
+                          // URL을 Uri 객체로 변환
+                          final url = Uri.parse(urlWithProtocol);
+
+                          // 생성된 Uri를 사용하여 브라우저 열기
                           launchUrl(url);
                         } catch (e) {
-                          // Handle the case when the URL is invalid or cannot be launched
-                          print('Error launching URL: $e');
+                          // URL이 유효하지 않거나 열 수 없는 경우 처리
+                          print('URL 열기 오류: $e');
                         }
                       },
                       style: TextButton.styleFrom(
