@@ -132,12 +132,13 @@ class _DetailUnapprovedPostScreenState
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final _url = Uri.tryParse(widget.boards.appSetupUrl);
-                        if (_url != null) {
+                        try {
+                          final _url =
+                              Uri.parse("https://${widget.boards.appSetupUrl}");
                           launchUrl(_url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${widget.boards.appSetupUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -205,12 +206,13 @@ class _DetailUnapprovedPostScreenState
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final url = Uri.tryParse(widget.boards.githubUrl);
-                        if (url != null) {
+                        try {
+                          final url =
+                              Uri.parse("https://${widget.boards.githubUrl}");
                           launchUrl(url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${widget.boards.githubUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: TextButton.styleFrom(

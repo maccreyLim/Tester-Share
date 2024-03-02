@@ -123,12 +123,13 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final _url = Uri.tryParse(boards.appSetupUrl);
-                        if (_url != null) {
+                        try {
+                          final _url =
+                              Uri.parse("https://${boards.appSetupUrl}");
                           launchUrl(_url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.appSetupUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -196,12 +197,12 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final url = Uri.tryParse(boards.githubUrl);
-                        if (url != null) {
+                        try {
+                          final url = Uri.parse("https://${boards.githubUrl}");
                           launchUrl(url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.githubUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: TextButton.styleFrom(

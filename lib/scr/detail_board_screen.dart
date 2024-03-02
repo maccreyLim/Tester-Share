@@ -6,6 +6,7 @@ import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailBoardScreen extends StatelessWidget {
   final BoardFirebaseModel
@@ -88,27 +89,31 @@ class DetailBoardScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     color: colors.boxColor,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        cardText(boards.developer, 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                //Todo 메시지 보내기
-                                print("Send the Message");
-                              },
-                              icon: Icon(Icons.message),
-                            ),
-                            Text(
-                              "Send a message to the developer",
-                              style: TextStyle(color: colors.importantMessage),
-                            ),
-                          ],
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          cardText(boards.developer, 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  //Todo 메시지 보내기
+                                  print("Send the Message");
+                                },
+                                icon: Icon(Icons.message),
+                              ),
+                              Text(
+                                "Send a message to the developer",
+                                style:
+                                    TextStyle(color: colors.importantMessage),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -122,12 +127,13 @@ class DetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final _url = Uri.tryParse(boards.appSetupUrl);
-                        if (_url != null) {
+                        try {
+                          final _url =
+                              Uri.parse("https://${boards.appSetupUrl}");
                           launchUrl(_url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.appSetupUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -195,19 +201,17 @@ class DetailBoardScreen extends StatelessWidget {
                     color: colors.boxColor,
                     child: TextButton(
                       onPressed: () {
-                        final url = Uri.tryParse(boards.githubUrl);
-                        if (url != null) {
+                        try {
+                          final url = Uri.parse("https://${boards.githubUrl}");
                           launchUrl(url);
-                        } else {
-                          // Handle the case when the URL is invalid or null
-                          print('Invalid URL: ${boards.githubUrl}');
+                        } catch (e) {
+                          // Handle the case when the URL is invalid or cannot be launched
+                          print('Error launching URL: $e');
                         }
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor:
-                            colors.boxColor, // Set button color to black
-                        elevation:
-                            8, // Add some elevation for a raised appearance
+                        backgroundColor: colors.boxColor,
+                        elevation: 8,
                       ),
                       child: cardText(boards.githubUrl, 20),
                     ),
