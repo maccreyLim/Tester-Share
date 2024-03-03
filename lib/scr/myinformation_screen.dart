@@ -88,7 +88,7 @@ class MyInformationScreen extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          fontSize: _fontSizeCollection.settinFontSize,
+          fontSize: _fontSizeCollection.settingFontSize,
           color: colors.textColor,
         ),
         children: [

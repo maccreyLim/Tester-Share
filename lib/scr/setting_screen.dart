@@ -65,7 +65,7 @@ class SettingScreen extends StatelessWidget {
                         "Tester Share is?",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -84,7 +84,7 @@ class SettingScreen extends StatelessWidget {
                         "My Page",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -103,7 +103,7 @@ class SettingScreen extends StatelessWidget {
                         "My Tester Request Post",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -122,7 +122,7 @@ class SettingScreen extends StatelessWidget {
                         "Unapproved post",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -141,7 +141,7 @@ class SettingScreen extends StatelessWidget {
                         "Notice",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -161,7 +161,7 @@ class SettingScreen extends StatelessWidget {
                         "Inquiries and Partnerships",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -180,7 +180,7 @@ class SettingScreen extends StatelessWidget {
                         "Terms and Privacy",
                         style: TextStyle(
                             color: colors.textColor,
-                            fontSize: _fontSizeCollection.settinFontSize),
+                            fontSize: _fontSizeCollection.settingFontSize),
                       )),
                 ],
               ),
@@ -201,7 +201,7 @@ class SettingScreen extends StatelessWidget {
                       "After watching the advertisement, \nsupport us",
                       style: TextStyle(
                         color: colors.textColor,
-                        fontSize: _fontSizeCollection.settinFontSize,
+                        fontSize: _fontSizeCollection.settingFontSize,
                       ),
                     ),
                   ),

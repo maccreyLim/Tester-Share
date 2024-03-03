@@ -43,7 +43,7 @@ class NoticeScreen extends StatelessWidget {
             Text(
               "Notice",
               style: TextStyle(
-                fontSize: _fontSizeCollection.settinFontSize,
+                fontSize: _fontSizeCollection.settingFontSize,
                 color: colors.textColor,
               ),
             ),

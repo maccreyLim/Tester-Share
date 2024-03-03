@@ -63,7 +63,7 @@ class DetailNoticeScreen extends StatelessWidget {
           Text(
             notice.title,
             style: TextStyle(
-              fontSize: _fontSizeCollection.settinFontSize,
+              fontSize: _fontSizeCollection.settingFontSize,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -81,7 +81,7 @@ class DetailNoticeScreen extends StatelessWidget {
               Text(
                 notice.content,
                 style: TextStyle(
-                  fontSize: _fontSizeCollection.settinFontSize,
+                  fontSize: _fontSizeCollection.settingFontSize,
                   color: colors.textColor,
                 ),
                 textAlign: TextAlign.start,
