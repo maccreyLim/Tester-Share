@@ -144,27 +144,31 @@ class NoticeScreen extends StatelessWidget {
             }
             //리스트 타이틀로 구현
             return ListTile(
-                leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
-                title: Text(
-                  "${comment.title} ($formattedDate)",
-                  maxLines: 1, // 최대 줄 수를 1로 설정
-                  overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
-                  style: TextStyle(color: colors.iconColor),
-                ),
-                subtitle: Text(
-                  comment.content,
-                  maxLines: 2, // 최대 줄 수를 1로 설정
-                  overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
-                  style: TextStyle(color: colors.textColor),
-                ),
-                onTap: () {
-                  Get.to(() => DetailNoticeScreen(notice: comment));
-                },
-                trailing: IconButton(
-                    onPressed: () {
-                      _noticeController.deleteNotice(comment.id);
-                    },
-                    icon: Icon(Icons.close)));
+              leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
+              title: Text(
+                "${comment.title} ($formattedDate)",
+                maxLines: 1, // 최대 줄 수를 1로 설정
+                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
+                style: TextStyle(color: colors.iconColor),
+              ),
+              subtitle: Text(
+                comment.content,
+                maxLines: 2, // 최대 줄 수를 1로 설정
+                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
+                style: TextStyle(color: colors.textColor),
+              ),
+              onTap: () {
+                Get.to(() => DetailNoticeScreen(notice: comment));
+              },
+              trailing: authController.userData!['isAdmin']
+                  ? IconButton(
+                      onPressed: () {
+                        _noticeController.deleteNotice(comment.id);
+                      },
+                      icon: Icon(Icons.close),
+                    )
+                  : null,
+            );
           },
         ),
       ),

@@ -6,7 +6,6 @@ import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailBoardScreen extends StatelessWidget {
   final BoardFirebaseModel

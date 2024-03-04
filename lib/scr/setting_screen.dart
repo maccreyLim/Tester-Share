@@ -72,6 +72,25 @@ class SettingScreen extends StatelessWidget {
               Row(
                 children: [
                   Icon(
+                    Icons.announcement,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(() => NoticeScreen());
+                      },
+                      child: Text(
+                        "Notice",
+                        style: TextStyle(
+                            color: colors.textColor,
+                            fontSize: _fontSizeCollection.settingFontSize),
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(
                     Icons.person,
                     color: colors.iconColor,
                   ),
@@ -120,25 +139,6 @@ class SettingScreen extends StatelessWidget {
                       },
                       child: Text(
                         "Unapproved post",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      )),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.announcement,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(() => NoticeScreen());
-                      },
-                      child: Text(
-                        "Notice",
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
