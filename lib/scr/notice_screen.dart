@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
+import 'package:tester_share_app/controller/notice_controller.dart';
 import 'package:tester_share_app/model/notice_firebase_model.dart';
 import 'package:tester_share_app/scr/create_notice_screen.dart';
 import 'package:tester_share_app/scr/detail_notice_screen.dart';
@@ -16,6 +17,7 @@ class NoticeScreen extends StatelessWidget {
   // Firestore 쿼리 실행을 위한 변수 선언
   final Query query = FirebaseFirestore.instance.collection('notice');
   NoticeScreen({super.key});
+  final NoticeController _noticeController = NoticeController();
 
   @override
   Widget build(BuildContext context) {
@@ -142,23 +144,27 @@ class NoticeScreen extends StatelessWidget {
             }
             //리스트 타이틀로 구현
             return ListTile(
-              leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
-              title: Text(
-                "${comment.title} ($formattedDate)",
-                maxLines: 1, // 최대 줄 수를 1로 설정
-                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
-                style: TextStyle(color: colors.iconColor),
-              ),
-              subtitle: Text(
-                comment.content,
-                maxLines: 2, // 최대 줄 수를 1로 설정
-                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
-                style: TextStyle(color: colors.textColor),
-              ),
-              onTap: () {
-                Get.to(() => DetailNoticeScreen(notice: comment));
-              },
-            );
+                leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
+                title: Text(
+                  "${comment.title} ($formattedDate)",
+                  maxLines: 1, // 최대 줄 수를 1로 설정
+                  overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
+                  style: TextStyle(color: colors.iconColor),
+                ),
+                subtitle: Text(
+                  comment.content,
+                  maxLines: 2, // 최대 줄 수를 1로 설정
+                  overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
+                  style: TextStyle(color: colors.textColor),
+                ),
+                onTap: () {
+                  Get.to(() => DetailNoticeScreen(notice: comment));
+                },
+                trailing: IconButton(
+                    onPressed: () {
+                      _noticeController.deleteNotice(comment.id);
+                    },
+                    icon: Icon(Icons.close)));
           },
         ),
       ),

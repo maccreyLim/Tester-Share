@@ -81,7 +81,7 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
             title: titleController.text, // 입력 필드의 값 사용
             content: contentsController.text, // 입력 필드의 값 사용
             createdAt: DateTime.now(),
-            id: "", // 문서 아이디
+            // id: "", // 문서 아이디
           );
 
           await NoticeController().createNotice(announcetList);

@@ -40,7 +40,7 @@ dependencies:
   firebase_auth: ^4.16.0 # 파이어베이스 로그인 패키지
   firebase_storage: ^11.6.0 # 파이어베이스 스토리지 패키지
   cloud_firestore: ^4.14.0 # 파이어베이스 DB 패키지
-  intl: ^0.19.0 
+  intl: ^0.19.0 #지역
   image_picker: ^1.0.7 # 이미지 피커 패키지
   url_launcher: ^6.2.3 # 인터넷 브라우저 사용 패키지
   fluttertoast: ^8.2.4 # 토스트 메시지 패키지
@@ -49,10 +49,11 @@ dependencies:
   webview_flutter_android: ^3.14.0 # 웹뷰패키지
   webview_flutter_wkwebview: ^3.11.0 # 웹뷰패키지
   flutter_email_sender: ^6.0.2 # 이메일 보내기 패키지
-  flutter_local_notifications: ^16.3.2
-  icon_badge: ^1.0.0
-  change_app_package_name: ^1.1.0
-  firebase_messaging: ^14.7.10
+  flutter_local_notifications: ^16.3.2 #로컬 노티케이션
+  icon_badge: ^1.0.0 #아이콘에 뱃지를 표시
+  change_app_package_name: ^1.1.0 #패키지 이름 변경
+  firebase_messaging: ^14.7.10 #파이어베이스 메시징 서비스
+  
 
 
 dev_dependencies:

@@ -36,12 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     //출시시 시간을 1분으로 수정 필요
-    if (_authController.isLogin) {
-      _getUnreadMessageCount();
-      Timer.periodic(Duration(minutes: 5), (Timer timer) {
-        _getUnreadMessageCount();
-      });
-    }
+    // if (_authController.isLogin) {
+    //   Timer.periodic(Duration(minutes: 5), (Timer timer) {
+    //     _getUnreadMessageCount();
+    //   });
+    // }
+    _getUnreadMessageCount();
     super.initState();
   }
 
@@ -274,11 +274,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      //아래배너광고
-      // bottomNavigationBar: SizedBox(
-      //   width: double.infinity,
-      //   child: BannerAD(),
-      // ),
     );
   }
 

@@ -92,6 +92,7 @@ class _UpdateNoticeScreenState extends State<UpdateNoticeScreen> {
 
             showToast('게시물이 성공적으로 수정되었습니다.', 1);
             Get.back(); // 화면 닫기
+            Get.back();
           }
         },
         child: Text(

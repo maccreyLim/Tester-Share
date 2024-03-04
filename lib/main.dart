@@ -27,7 +27,6 @@ Future<void> main() async {
   // 3초 후 권한 요청
   Future.delayed(const Duration(seconds: 3),
       FlutterLocalNotification.requestNotificationPermission());
-
   runApp(const MyApp());
 }
 
