@@ -107,7 +107,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       }
 //삭제된 이미지 리스트를 받아와야 함
 
-      String iconImageUrl = "";
+      String iconImageUrl = widget.boards.iconImageUrl;
       String? userUid = _authController.currentUser!.uid;
 
       // 선택된 이미지들이 유효한지 검사

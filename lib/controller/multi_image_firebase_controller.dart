@@ -94,10 +94,11 @@ class MultiImageFirebaseController {
       List<XFile?> pickedImages, List<String> existingImageUrls) async {
     try {
       // 이미지 업로드 전에 기존 이미지 삭제
-      await deleteImagesUrlFromStorage(existingImageUrls);
+      // await deleteImagesUrlFromStorage(existingImageUrls);
 
       List<String> newImageUrls = [];
 
+      // 선택한 각 이미지에 대해 업로드 진행
       for (XFile? imageFile in pickedImages) {
         if (imageFile != null) {
           try {
@@ -113,6 +114,8 @@ class MultiImageFirebaseController {
 
             // 다운로드 URL 가져오기
             String downloadURL = await ref.getDownloadURL();
+
+            // 새로운 이미지 URL을 목록에 추가
             newImageUrls.add(downloadURL);
           } catch (e) {
             print('다중 이미지 업로드 오류: $e');
@@ -120,7 +123,9 @@ class MultiImageFirebaseController {
         }
       }
 
-      return newImageUrls;
+      // 기존 이미지 URL 목록에 새로 업로드한 이미지 URL들을 추가하여 반환
+      existingImageUrls.addAll(newImageUrls);
+      return existingImageUrls;
     } catch (e) {
       print('이미지 업로드 및 삭제 중 오류 발생: $e');
       return [];
@@ -167,12 +172,13 @@ class MultiImageFirebaseController {
         Reference imageRef =
             FirebaseStorage.instance.refFromURL(existingImageUrls[index]);
 
-        // 이미지를 삭제하려고 시도
+        // 이미지를 삭제
         await imageRef.delete();
+        print("이미지 삭제:$imageRef");
 
         // 리스트에서 이미지 제거
-        updatedImageUrls.removeAt(index);
-        print("삭제 후 리스트: $updatedImageUrls");
+        existingImageUrls.removeAt(index);
+        print("삭제 후 리스트반화되는 리스트: $updatedImageUrls");
 
         // 수정된 리스트 반환 (이미 삭제된 이미지는 제외)
         return updatedImageUrls;
