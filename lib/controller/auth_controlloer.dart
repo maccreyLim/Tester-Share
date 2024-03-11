@@ -35,7 +35,8 @@ class AuthController extends GetxController {
 
     _user.bindStream(authentication.userChanges());
 
-    ever(_user, (User? user) {
+    // ever(_user, (User? user)
+    _user.listen((User? user) {
       print('_user changed: $user');
       print('_userData value: ${_userData.value}');
       _moveToPage(user);
