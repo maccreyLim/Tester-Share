@@ -56,11 +56,11 @@
   "Terms and Privacy" : "약관 및 개인 정보 보호",
   "Apply to be a Tester": "테스터 신청",
   "-  Test App URL  -" : "-  테스트 앱 주소  -",
-  "-  Supported Languages  -" : "-  지원하는 언어  -",
+  "-  Supported Languages  -" : "-  지원 언어  -",
   "-  Github URL  -" : "-  깃허브 주소  -",
   "-  App Image  -" : "- 앱 이미지  -",
   "-  Introduction  -" :"-  소 개  -",
-  "-  Developer  -" : "-  Developer  -",
+  "-  Developer  -" : "-  개 발 자  -",
   "Send a message to the developer" : "개발자에게 메시지 보내기",
   "After watching the advertisement, \nsupport us" : "광고보고 후원하기",
   "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n" : "아래 내용을 함께 보내주시면 큰 도움이 됩니다.\n 아이디 : \n OS 버전: \n기기 : \n 아래에 문의 내용을 적어주세요.\n",
@@ -80,6 +80,10 @@
   "Tester Share is?" : "테스트쉐어란 무엇인가?",
   "To send a reply" : " 답장 보내기",
   "The project has been registered\n You can check it in Setting -> My Tester Request Post" : "프로젝트가 등록되었습니다 \n Setting -> My Tester Request Post에서 확인하실 수 있습니다",
-  "Close" : "닫 기"
+  "Close" : "닫 기",
+  "Developer" : "개발자",
+  "Setting" : "설 정",
+  "Unapproved post" : "미승인된 게시물"
+  
   }
   

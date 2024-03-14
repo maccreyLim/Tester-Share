@@ -158,13 +158,13 @@ class MultiImageFirebaseController {
   }
 
 // List에서 이미지 수정삭제
-  Future<List<String>> deleteUpdateImage(
+  Future<List<String>> deleteUpdateImageList(
     int index,
     List<String> existingImageUrls,
   ) async {
     try {
       // list 복사본 생성
-      List<String> updatedImageUrls = List.from(existingImageUrls);
+      // List<String> updatedImageUrls = List.from(existingImageUrls);
 
       // index가 existingImageUrls 리스트의 범위 내에 있는지 확인
       if (index >= 0 && index < existingImageUrls.length) {
@@ -178,10 +178,10 @@ class MultiImageFirebaseController {
 
         // 리스트에서 이미지 제거
         existingImageUrls.removeAt(index);
-        print("삭제 후 리스트반화되는 리스트: $updatedImageUrls");
+        print("함수에서 업데이트할 리스트: $existingImageUrls");
 
         // 수정된 리스트 반환 (이미 삭제된 이미지는 제외)
-        return updatedImageUrls;
+        return existingImageUrls;
       } else {
         print('인덱스가 existingImageUrls 리스트의 범위를 벗어납니다.');
         // 오류가 발생한 경우 원래 리스트를 그대로 반환

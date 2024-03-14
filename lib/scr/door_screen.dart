@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:tester_share_app/scr/home_screen.dart';
+import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 class DoorScreen extends StatelessWidget {
@@ -30,14 +31,19 @@ class DoorScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 100),
-            createText(
-                "Starting from November 13, 2023, new developers are required to have at least 20 testers participate for a duration of 14 days to register an app on Google Play. This policy has been implemented."),
-            createText(
-                "In response to this, developers, facing difficulties in gathering a sufficient number of testers, are forming mutually beneficial relationships and collaborating through Tester Share to test each other's apps."),
-            createText(
-                "This is an effort to explore ways for developers to successfully register their apps while complying with Google Play policies."),
+            createText(tr(
+                "Starting from November 13, 2023, new developers are required to have at least 20 testers participate for a duration of 14 days to register an app on Google Play. This policy has been implemented.")),
+            createText(tr(
+                "In response to this, developers, facing difficulties in gathering a sufficient number of testers, are forming mutually beneficial relationships and collaborating through Tester Share to test each other's apps.")),
+            createText(tr(
+                "This is an effort to explore ways for developers to successfully register their apps while complying with Google Play policies.")),
             const SizedBox(height: 40),
-            createText("[Flutter developer] Maccrey"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                createText("[ Flutter developer ] Maccrey"),
+              ],
+            ),
             const SizedBox(height: 40),
           ],
         ),

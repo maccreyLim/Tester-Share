@@ -11,7 +11,7 @@ class SingleImageFirebaseController {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 50,
-      maxHeight: 300,
+      maxHeight: 150,
       maxWidth: 150,
     );
     return pickedFile;

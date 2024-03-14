@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:tester_share_app/scr/home_screen.dart';
+import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/login_screen.dart';
 import 'package:tester_share_app/scr/wellcome_join_message_screen.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';

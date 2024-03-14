@@ -83,21 +83,6 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
     pickedImage = File(widget.boards.iconImageUrl);
   }
 
-//이미지 선택 함수
-  // void _pickImages() async {
-  //   try {
-  //     List<XFile?> pickedImageFiles =
-  //         await _multiImageFirebaseController.pickMultiImage(pickedImages);
-  //     if (pickedImageFiles.isNotEmpty) {
-  //       setState(() {
-  //         pickedImages.addAll(pickedImageFiles);
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print('Error picking images: $e');
-  //   }
-  // }
-
   void _savePost() async {
     try {
       // 현재 사용자의 UID가 없으면 에러 출력 후 함수 종료
@@ -105,21 +90,21 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         print('오류: 사용자 데이터를 가져올 수 없습니다.');
         return;
       }
-//삭제된 이미지 리스트를 받아와야 함
+      //삭제된 이미지 리스트를 받아와야 함
 
       String iconImageUrl = widget.boards.iconImageUrl;
       String? userUid = _authController.currentUser!.uid;
 
-      // 선택된 이미지들이 유효한지 검사
-      if (_validatePickedImages()) {
-        // 다중 이미지 업데이트
-        List<String> urls = await _multiImageFirebaseController
-            .updateMultiImages(pickedImages, widget.boards.appImagesUrl);
-        appImagesUrl.addAll(urls);
-      }
-
       // 폼 검증
       if (_formKey.currentState!.validate()) {
+        // 선택된 이미지들이 유효한지 검사
+        if (_validatePickedImages()) {
+          // 다중 이미지 업데이트
+          List<String> urls = await _multiImageFirebaseController
+              .updateMultiImages(pickedImages, widget.boards.appImagesUrl);
+          appImagesUrl = urls; // 이미지 URL을 새로운 값으로 설정
+        }
+
         // 새로운 게시물 모델 생성
         BoardFirebaseModel newPost = BoardFirebaseModel(
           docid: widget.boards.docid,
@@ -441,7 +426,6 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                           ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 10),
                     width: 20,
                     height: 20,
                     child: IconButton(
@@ -449,16 +433,18 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                         // 기존 이미지를 삭제하고 리스트에서도 제거
                         List<String> updatedImageUrls =
                             await _multiImageFirebaseController
-                                .deleteUpdateImage(
+                                .deleteUpdateImageList(
                                     index, widget.boards.appImagesUrl);
 
                         setState(() {
                           pickedImages.removeAt(index);
-                          appImagesUrl = updatedImageUrls;
+                          appImagesUrl.clear();
+                          appImagesUrl.addAll(updatedImageUrls);
+                          print("삭제 업데이트할 리스트: $updatedImageUrls");
                           print("최종 업데이트할 리스트: $appImagesUrl");
                         });
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 20,

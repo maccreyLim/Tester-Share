@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/door_screen.dart';
@@ -48,7 +49,7 @@ class SettingScreen extends StatelessWidget {
                   color: colors.textColor,
                   fontSize: _fontSizeCollection.subjectFontSize,
                 ),
-              ),
+              ).tr(),
               SizedBox(height: 30),
               Row(
                 children: [
@@ -66,7 +67,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -85,7 +86,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -104,7 +105,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -123,7 +124,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -142,7 +143,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -162,7 +163,7 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
               Row(
@@ -181,11 +182,13 @@ class SettingScreen extends StatelessWidget {
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),
-                      )),
+                      ).tr()),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.tv,
@@ -203,7 +206,7 @@ class SettingScreen extends StatelessWidget {
                         color: colors.textColor,
                         fontSize: _fontSizeCollection.settingFontSize,
                       ),
-                    ),
+                    ).tr(),
                   ),
                 ],
               ),
@@ -217,10 +220,12 @@ class SettingScreen extends StatelessWidget {
   }
 
   void _sendEmail() async {
+    var _body = tr(
+        "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n");
+    var _subject = tr('Inquiry and Partnership Inquiry Regarding Tester Share');
     final Email email = Email(
-        body:
-            'Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n',
-        subject: 'Inquiry and Partnership Inquiry Regarding Tester Share',
+        body: _body,
+        subject: _subject,
         recipients: ['maccrey@naver.com'],
         cc: ['m01071630214@gmail.com'],
         isHTML: false);
@@ -228,12 +233,13 @@ class SettingScreen extends StatelessWidget {
     try {
       await FlutterEmailSender.send(email);
     } catch (e) {
-      String title =
-          'Since I cannot use the default mail app,\nit is difficult to send inquiries directly through the app.\n\nPlease use your preferred email\nand send inquiries to maccrey@naver.com. Thank you.';
+      String title = tr(
+          "Since I cannot use the default mail app,\nit is difficult to send inquiries directly through the app.\n\nPlease use your preferred email\nand send inquiries to maccrey@naver.com. Thank you.");
+      ;
       Get.defaultDialog(
-        title: 'Guidance',
+        title: tr("Guidance"),
         content: Text(title),
-        textConfirm: 'Confirmation',
+        textConfirm: tr("Confirmation"),
         confirmTextColor: Colors.white54,
         onConfirm: Get.back,
       );

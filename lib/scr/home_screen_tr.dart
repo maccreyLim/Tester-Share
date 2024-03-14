@@ -6,9 +6,9 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen.dart';
-import 'package:tester_share_app/scr/detail_board_screen.dart';
+import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen.dart';
-import 'package:tester_share_app/scr/setting_screen.dart';
+import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +16,7 @@ import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.get_dialog.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.reward_ad.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -102,9 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           IconButton(
               onPressed: () {
+                var dialogMessage = tr(
+                    "The project has been registered\n You can check it in Setting -> My Tester Request Post");
                 Get.dialog(
-                  getXDialog(Get.context!,
-                      "The project has been registered\n You can check it in Setting -> My Tester Request Post"),
+                  getXDialog(Get.context!, dialogMessage),
                 );
               },
               icon: const Icon(Icons.message)),
@@ -136,9 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
               print('Data from Firestore: ${snapshot.data}');
               return Center(
                 child: Text(
-                  'The post does not exist',
+                  "The post does not exist",
                   style: TextStyle(color: colors.textColor, fontSize: 22),
-                ),
+                ).tr(),
               );
             }
 
@@ -186,16 +188,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(
-                                  'Creation date: ${_formattedDate(boards[index].createAt)}',
-                                  style: TextStyle(
-                                      fontSize: 14, color: colors.textColor),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Creation date",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: colors.textColor),
+                                    ).tr(),
+                                    Text(
+                                      ': ${_formattedDate(boards[index].createAt)}',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: colors.textColor),
+                                    ),
+                                  ],
                                 ),
                                 if (boards[index].updateAt != null)
-                                  Text(
-                                    'Modification date: ${_formattedDate(boards[index].updateAt!)}',
-                                    style: TextStyle(
-                                        fontSize: 14, color: colors.textColor),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Modification date",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: colors.textColor),
+                                      ).tr(),
+                                      Text(
+                                        ': ${_formattedDate(boards[index].updateAt!)}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: colors.textColor),
+                                      ),
+                                    ],
                                   )
                               ],
                             ),
@@ -242,16 +268,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       boards[index].testerRequest >
                                               boards[index].testerParticipation
-                                          ? 'In progress'
+                                          ? "In progress"
                                           : "Completed",
                                       style: TextStyle(
                                           color: colors.iconColor,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
-                                    )),
+                                    ).tr()),
                               ),
-                              cardText(
-                                  'Developer: ${boards[index].developer}', 14),
+                              Row(
+                                children: [
+                                  cardText(
+                                      'Developer : ${boards[index].developer}',
+                                      14),
+                                ],
+                              ),
                             ],
                           ),
                           Divider(),

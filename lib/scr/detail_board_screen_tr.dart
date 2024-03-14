@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -63,14 +63,34 @@ class DetailBoardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Creation date: ${_formattedDate(boards.createAt)}',
-                    style: TextStyle(fontSize: 14, color: colors.textColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Creation date',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ).tr(),
+                      Text(
+                        ': ${_formattedDate(boards.createAt)}',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ),
+                    ],
                   ),
                   if (boards.updateAt != null)
-                    Text(
-                      'Modification date: ${_formattedDate(boards.updateAt!)}',
-                      style: TextStyle(fontSize: 14, color: colors.textColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Modification date',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ).tr(),
+                        Text(
+                          ': ${_formattedDate(boards.updateAt!)}',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ),
+                      ],
                     )
                 ],
               ),
@@ -81,9 +101,9 @@ class DetailBoardScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const Text(
-                    '-  Developer  -',
+                    "-  Developer  -",
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -102,13 +122,13 @@ class DetailBoardScreen extends StatelessWidget {
                                   //Todo 메시지 보내기
                                   print("Send the Message");
                                 },
-                                icon: Icon(Icons.message),
+                                icon: const Icon(Icons.message),
                               ),
                               Text(
                                 "Send a message to the developer",
                                 style:
                                     TextStyle(color: colors.importantMessage),
-                              ),
+                              ).tr(),
                             ],
                           ),
                         ],
@@ -119,7 +139,7 @@ class DetailBoardScreen extends StatelessWidget {
                   const Text(
                     '-  Test App URL  -',
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -160,13 +180,13 @@ class DetailBoardScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '-  Supported Languages  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 const SizedBox(height: 20),
               ],
             ),
@@ -205,7 +225,7 @@ class DetailBoardScreen extends StatelessWidget {
                 const Text(
                   '-  Github URL  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
@@ -244,13 +264,13 @@ class DetailBoardScreen extends StatelessWidget {
                 const SizedBox(height: 40),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  App Image  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -273,13 +293,13 @@ class DetailBoardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  Introduction  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -306,7 +326,7 @@ class DetailBoardScreen extends StatelessWidget {
                 child: Text(
                   'Apply to be a Tester',
                   style: TextStyle(fontSize: 20, color: colors.iconColor),
-                ),
+                ).tr(),
               ),
             ),
             SizedBox(width: double.infinity, child: BannerAD()),
