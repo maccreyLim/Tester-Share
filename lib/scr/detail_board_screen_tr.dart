@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
+import 'package:tester_share_app/scr/developer_message_create_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
@@ -120,7 +121,7 @@ class DetailBoardScreen extends StatelessWidget {
                               IconButton(
                                 onPressed: () {
                                   //Todo 메시지 보내기
-                                  print("Send the Message");
+                                  const DeveloperMessageCreateScreen();
                                 },
                                 icon: const Icon(Icons.message),
                               ),

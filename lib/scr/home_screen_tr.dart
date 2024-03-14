@@ -11,7 +11,6 @@ import 'package:tester_share_app/scr/message_state_screen.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:intl/intl.dart';
 import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.get_dialog.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
@@ -64,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           print(count);
         });
 
-        if (count != previousCount) {
+        if (count != previousCount && count != 0) {
           FlutterLocalNotification.showNotification(
               "$count개의 메시지가 도착", "확인하시기를 바랍니다.");
           previousCount = count; // 현재 count 값을 이전 값으로 업데이트

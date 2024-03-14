@@ -10,7 +10,11 @@ import 'package:tester_share_app/scr/login_screen.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 
 // 앱에서 지원하는 언어 리스트 변수
-final supportedLocales = [const Locale('en', 'US'), const Locale('ko', 'KR')];
+final supportedLocales = [
+  const Locale('en', 'US'),
+  const Locale('ko', 'KR'),
+  const Locale('ja', 'JP')
+];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

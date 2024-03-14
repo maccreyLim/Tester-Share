@@ -8,14 +8,16 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
-class MessageCreateScreen extends StatefulWidget {
-  const MessageCreateScreen({super.key});
+class DeveloperMessageCreateScreen extends StatefulWidget {
+  const DeveloperMessageCreateScreen({super.key});
 
   @override
-  State<MessageCreateScreen> createState() => _MessageCreateScreenState();
+  State<DeveloperMessageCreateScreen> createState() =>
+      _DeveloperMessageCreateScreenState();
 }
 
-class _MessageCreateScreenState extends State<MessageCreateScreen> {
+class _DeveloperMessageCreateScreenState
+    extends State<DeveloperMessageCreateScreen> {
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final _formkey = GlobalKey<FormState>();
@@ -63,61 +65,6 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                    child: TextField(
-                      controller: _search,
-                      decoration: const InputDecoration(
-                        hintText: '회원검색',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.search),
-                        filled: true,
-                        fillColor: Colors.black, // 배경색 변경
-                        border: UnderlineInputBorder(
-                            // 경계선 스타일 변경
-                            // borderRadius:
-                            //     BorderRadius.circular(25), // 텍스트 필드의 각도를 설정
-                            borderSide: BorderSide(color: Colors.white)),
-                      ),
-                      style: TextStyle(color: colors.textColor),
-                      onChanged: (v) async {
-                        Map<String, dynamic> results =
-                            await _mfirebase.getUserByNickname(v);
-                        setState(() {
-                          searchResults = results;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Text(
-                    '검색 결과',
-                    style: TextStyle(color: colors.textColor),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: searchResults.length,
-                    itemBuilder: (context, index) {
-                      final user = searchResults.keys.elementAt(index);
-                      final userData = searchResults[user];
-
-                      final nickname = userData['profileName'] as String;
-
-                      return ListTile(
-                          title: Text(nickname,
-                              style: TextStyle(color: colors.textColor)),
-                          onTap: () {
-                            setState(() {
-                              sendUserController.text = nickname;
-                              //UID 저장
-                              receiverUid = user;
-                            });
-                          },
-                          leading: Icon(Icons.person_add));
-                    },
-                  ),
                   SizedBox(
                     height: 30,
                   ),

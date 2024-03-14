@@ -71,7 +71,7 @@ class _MessageStateScreenState extends State<MessageStateScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Get.to(MessageCreateScrren());
+          Get.to(MessageCreateScreen());
         },
       ),
     );

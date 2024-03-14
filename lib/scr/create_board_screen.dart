@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -127,16 +128,13 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         language: selectedLanguages,
       );
       try {
-        print("Before saving post: pickedImage: $pickedImage");
-        print("Before saving post: appImagesUrl: $appImagesUrl");
-        print("Before saving post: newPost: $newPost");
         await _boardFirebaseController.addBoard(newPost);
 
         // 저장이 완료되면 홈 화면으로 이동
         Get.off(() => const HomeScreen());
         Get.dialog(
           getXDialog(Get.context!,
-              "The project has been registered\n You can check it in Setting -> My Tester Request Post"),
+              tr("The project has been registered\n You can check it in Setting -> My Tester Request Post")),
         );
       } catch (e) {
         print("Post 저장에 실패 : $e");

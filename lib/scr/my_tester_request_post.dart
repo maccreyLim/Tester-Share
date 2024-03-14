@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -72,9 +73,9 @@ class MyTesterRequestPostScreen extends StatelessWidget {
               print('Data from Firestore: ${snapshot.data}');
               return Center(
                 child: Text(
-                  '게시물이 존재하지 않습니다.',
+                  "The post does not exist",
                   style: TextStyle(color: _colors.textColor, fontSize: 22),
-                ),
+                ).tr(),
               );
             }
 
@@ -179,12 +180,12 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                     },
                                     child: Text(
                                       boards[index].isApproval == false
-                                          ? 'Unapporoval'
+                                          ? tr('Unapporoval')
                                           : boards[index].testerRequest >
                                                   boards[index]
                                                       .testerParticipation
-                                              ? 'In progress'
-                                              : "Completed",
+                                              ? tr('In progress')
+                                              : tr("Completed"),
                                       style: TextStyle(
                                           color: _colors.iconColor,
                                           fontSize: 12,
@@ -205,7 +206,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: SizedBox(
-                                  width: 310,
+                                  width: 220,
                                   height: 26,
                                   child: !(boards[index].isApproval)
                                       ? ElevatedButton(
@@ -240,14 +241,14 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                                   .buttonFontSize,
                                               fontWeight: FontWeight.w500,
                                             ),
-                                          ),
+                                          ).tr(),
                                         )
                                       : Text(
-                                          "Inapproved projects cannot be deleted or modified.",
+                                          "Inapproved projects cannot be deleted or modified",
                                           style: TextStyle(
                                               color: _colors.textColor,
                                               fontSize: 10),
-                                        ),
+                                        ).tr(),
                                 ),
                               ),
                             ],

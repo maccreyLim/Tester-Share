@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/scr/my_tester_request_post.dart';
 
 Widget getXDialog(BuildContext context, String message) {
   return Dialog(
@@ -38,10 +39,11 @@ Widget contentBox(BuildContext context, String message) {
               style: TextStyle(fontSize: 16),
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              Get.back();
+              Get.back;
+              Get.to(MyTesterRequestPostScreen());
             },
             style: ButtonStyle(
               backgroundColor:
@@ -50,7 +52,7 @@ Widget contentBox(BuildContext context, String message) {
                   MaterialStateProperty.all<Size>(Size(200, 40)), // 버튼 최소 크기
             ),
             child: Text(
-              'Close',
+              'Go My Tester Request Post',
               style: TextStyle(color: Colors.white),
             ),
           ),
