@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/my_tester_request_post.dart';
+import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 Widget getXDialog(BuildContext context, String message) {
   return Dialog(
@@ -14,6 +16,7 @@ Widget getXDialog(BuildContext context, String message) {
 }
 
 Widget contentBox(BuildContext context, String message) {
+  final ColorsCollection _colors = ColorsCollection();
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -31,9 +34,9 @@ Widget contentBox(BuildContext context, String message) {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: [
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(20),
             child: Text(
               message,
               style: TextStyle(fontSize: 16),
@@ -42,7 +45,6 @@ Widget contentBox(BuildContext context, String message) {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              Get.back;
               Get.to(MyTesterRequestPostScreen());
             },
             style: ButtonStyle(
@@ -54,7 +56,22 @@ Widget contentBox(BuildContext context, String message) {
             child: Text(
               'Go My Tester Request Post',
               style: TextStyle(color: Colors.white),
+            ).tr(),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  _colors.buttonColor), // 버튼 배경색
+              minimumSize:
+                  MaterialStateProperty.all<Size>(Size(232, 40)), // 버튼 최소 크기
             ),
+            child: Text(
+              "Close",
+              style: TextStyle(color: Colors.white),
+            ).tr(),
           ),
           SizedBox(height: 8),
         ],

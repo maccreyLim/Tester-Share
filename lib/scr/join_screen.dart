@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
@@ -114,8 +115,8 @@ class EmailInput extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         icon: const Icon(Icons.email),
-        labelText: 'Google Play Store ID',
-        hintText: 'Please enter your Google Play Store ID',
+        labelText: tr('Google Play Store ID'),
+        hintText: tr('Please enter your Google Play Store ID'),
         labelStyle: TextStyle(color: colors.textColor),
       ),
       style: TextStyle(color: colors.iconColor),
@@ -140,8 +141,8 @@ class PasswordInput extends StatelessWidget {
       obscureText: true,
       decoration: InputDecoration(
         icon: const Icon(Icons.password),
-        labelText: 'Password',
-        hintText: 'Please enter your Password',
+        labelText: tr('Password'),
+        hintText: tr('Please enter your Password'),
         labelStyle: TextStyle(color: colors.textColor),
       ),
       style: TextStyle(color: colors.iconColor),
@@ -165,8 +166,8 @@ class ProfileNameInput extends StatelessWidget {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         icon: const Icon(Icons.password),
-        labelText: 'Profile Name',
-        hintText: 'Please enter ProfileName',
+        labelText: tr('Profile Name'),
+        hintText: tr('Please enter ProfileName'),
         labelStyle: TextStyle(color: colors.textColor),
       ),
       style: TextStyle(color: colors.iconColor),
@@ -190,9 +191,9 @@ class DeployedInput extends StatelessWidget {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         icon: const Icon(Icons.password),
-        labelText: 'Number of App Launch Experiences',
+        labelText: tr('Number of App Launch Experiences'),
         hintText:
-            'Please enter the number of experiences when launching the app',
+            tr('Please enter the number of experiences when launching the app'),
         labelStyle: TextStyle(color: colors.textColor),
       ),
       style: TextStyle(color: colors.iconColor),
@@ -226,7 +227,7 @@ class SignUpButton extends StatelessWidget {
             color: colors.iconColor,
             fontSize: fontsize.buttonFontSize,
           ),
-        ),
+        ).tr(),
       ),
     );
   }

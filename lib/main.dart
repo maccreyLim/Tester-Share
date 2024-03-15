@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/firebase_options.dart';
-import 'package:tester_share_app/scr/login_screen.dart';
+import 'package:tester_share_app/scr/login_screen_tr.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 
 // 앱에서 지원하는 언어 리스트 변수

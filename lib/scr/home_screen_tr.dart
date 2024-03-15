@@ -12,7 +12,6 @@ import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:icon_badge/icon_badge.dart';
-import 'package:tester_share_app/widget/w.get_dialog.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.reward_ad.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -35,12 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    //출시시 시간을 1분으로 수정 필요
-    // if (_authController.isLogin) {
-    //   Timer.periodic(Duration(minutes: 5), (Timer timer) {
-    //     _getUnreadMessageCount();
-    //   });
-    // }
     _getUnreadMessageCount();
     super.initState();
   }
@@ -100,15 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.to(const MessageStateScreen());
                 },
               )),
-          IconButton(
-              onPressed: () {
-                var dialogMessage = tr(
-                    "The project has been registered\n You can check it in Setting -> My Tester Request Post");
-                Get.dialog(
-                  getXDialog(Get.context!, dialogMessage),
-                );
-              },
-              icon: const Icon(Icons.message)),
+          // IconButton(
+          //     onPressed: () {
+          //       // Todo: Post(게시판)으로 이동)
+          //       );
+          //     },
+          //     icon: const Icon(Icons.article)),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());

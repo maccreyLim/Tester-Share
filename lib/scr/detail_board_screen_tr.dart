@@ -118,18 +118,26 @@ class DetailBoardScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              IconButton(
-                                onPressed: () {
-                                  //Todo 메시지 보내기
-                                  const DeveloperMessageCreateScreen();
+                              GestureDetector(
+                                onTap: () {
+                                  // 메시지 보내기 기능 추가
+                                  Get.to(DeveloperMessageCreateScreen(
+                                      receiverUid: boards.createUid,
+                                      developer: boards.developer));
                                 },
-                                icon: const Icon(Icons.message),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.message,
+                                        color: Colors.white),
+                                    SizedBox(width: 20),
+                                    Text(
+                                      "Send a message",
+                                      style: TextStyle(
+                                          color: colors.importantMessage),
+                                    ).tr(),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                "Send a message to the developer",
-                                style:
-                                    TextStyle(color: colors.importantMessage),
-                              ).tr(),
                             ],
                           ),
                         ],

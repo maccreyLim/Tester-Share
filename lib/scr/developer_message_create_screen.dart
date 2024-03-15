@@ -9,7 +9,10 @@ import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class DeveloperMessageCreateScreen extends StatefulWidget {
-  const DeveloperMessageCreateScreen({super.key});
+  const DeveloperMessageCreateScreen(
+      {super.key, required this.receiverUid, required this.developer});
+  final String receiverUid; // 수신자의 UID를 저장하는 변수
+  final String developer; // 수신자 이름
 
   @override
   State<DeveloperMessageCreateScreen> createState() =>
@@ -23,8 +26,7 @@ class _DeveloperMessageCreateScreenState
   final _formkey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   TextEditingController sendUserController = TextEditingController();
-  TextEditingController _search = TextEditingController();
-  String receiverUid = ''; // 수신자의 UID를 저장하는 변수
+
   final _seach = SearchController();
   final MassageFirebaseController _mfirebase =
       MassageFirebaseController(); // MessageFirebase 클래스의 인스턴스 생성
@@ -37,6 +39,12 @@ class _DeveloperMessageCreateScreenState
     messageController.dispose();
     sendUserController.dispose();
     _seach.dispose();
+  }
+
+  @override
+  void initState() {
+    sendUserController.text = widget.developer;
+    super.initState();
   }
 
   @override
@@ -65,7 +73,7 @@ class _DeveloperMessageCreateScreenState
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -87,7 +95,7 @@ class _DeveloperMessageCreateScreenState
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -110,7 +118,7 @@ class _DeveloperMessageCreateScreenState
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   SizedBox(
@@ -121,12 +129,12 @@ class _DeveloperMessageCreateScreenState
                         if (_formkey.currentState!.validate()) {
                           MessageModel message = MessageModel(
                               senderUid: _authController.userData!['uid'],
-                              receiverUid: receiverUid,
+                              receiverUid: widget.receiverUid,
                               contents: messageController.text,
                               timestamp: DateTime.now());
                           _mfirebase.createMessage(
                               message, sendUserController.text);
-                          Get.off(MessageStateScreen());
+                          Get.off(const MessageStateScreen());
                         }
                       },
                       style: ElevatedButton.styleFrom(

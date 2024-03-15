@@ -11,19 +11,20 @@ class UserFirebaseModel {
   int? testerRequest; // 테스터 요청 생성 수
   DateTime createAt; // 생성날짜
   DateTime? updateAt; // 업데이트 날짜
+  int? point; //포인트
 
-  UserFirebaseModel({
-    this.uid,
-    required this.email,
-    required this.isAdmin,
-    required this.profileName,
-    this.profileImageUrl,
-    required this.deployed,
-    this.testerParticipation,
-    this.testerRequest,
-    required this.createAt,
-    this.updateAt,
-  });
+  UserFirebaseModel(
+      {this.uid,
+      required this.email,
+      required this.isAdmin,
+      required this.profileName,
+      this.profileImageUrl,
+      required this.deployed,
+      this.testerParticipation,
+      this.testerRequest,
+      required this.createAt,
+      this.updateAt,
+      this.point});
 
   factory UserFirebaseModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -37,6 +38,7 @@ class UserFirebaseModel {
       testerRequest: data['testerRequest'] ?? 0,
       createAt: (data['createAt'] as Timestamp).toDate(),
       updateAt: (data['updateAt'] as Timestamp).toDate(),
+      point: data['point'] ?? 0,
     );
   }
 
@@ -50,6 +52,7 @@ class UserFirebaseModel {
       'testerRequest': testerRequest,
       'createAt': createAt,
       'updateAt': updateAt,
+      'point': point,
     };
   }
 }

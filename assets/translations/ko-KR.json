@@ -61,7 +61,7 @@
   "-  App Image  -" : "- 앱 이미지  -",
   "-  Introduction  -" :"-  소 개  -",
   "-  Developer  -" : "-  개 발 자  -",
-  "Send a message to the developer" : "개발자에게 메시지 보내기",
+  "Send a message" : "개발자에게 메시지 보내기",
   "After watching the advertisement, \nsupport us" : "광고보고 후원하기",
   "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n" : "아래 내용을 함께 보내주시면 큰 도움이 됩니다.\n 아이디 : \n OS 버전: \n기기 : \n 아래에 문의 내용을 적어주세요.\n",
   "Inquiry and Partnership Inquiry Regarding Tester Share": "Tester Share에 관한 문의 및 제휴문의",
@@ -79,12 +79,13 @@
   "The post does not exist" : "게시물이 존재하지 않습니다",
   "Tester Share is?" : "테스트쉐어란 무엇인가?",
   "To send a reply" : " 답장 보내기",
-  "The project has been registered\n You can check it in Setting -> My Tester Request Post" : "프로젝트가 등록되었습니다 \n Setting -> My Tester Request Post에서 확인하실 수 있습니다",
+  "The project has been registered\n\n You can check it in Setting -> My Tester Request Post" : "프로젝트가 등록되었습니다 \n\n Setting -> My Tester Request Post에서 확인하실 수 있습니다",
   "Close" : "닫 기",
   "Developer" : "개발자",
   "Setting" : "설 정",
   "Unapproved post" : "미승인된 게시물",
-  "Delete" : "삭제"
+  "Delete" : "삭제",
+  "Go My Tester Request Post" : "나의 테스터 요청 게시판로 이동"
   
   }
   

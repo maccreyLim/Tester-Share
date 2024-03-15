@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
-import 'package:tester_share_app/scr/login_screen.dart';
+import 'package:tester_share_app/scr/login_screen_tr.dart';
 import 'package:tester_share_app/scr/wellcome_join_message_screen.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
@@ -117,6 +117,7 @@ class AuthController extends GetxController {
         'testerParticipation': 0,
         'testerRequest': 0,
         'createAt': DateTime.now(),
+        'point': 20,
       });
 
       // 회원가입 성공 시, 여기에서 다른 동작을 추가할 수 있습니다.

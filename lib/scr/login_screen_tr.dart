@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
@@ -37,68 +38,75 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
+    return GestureDetector(
+      onTap: () {
+        // 포커스를 다른 곳으로 이동하여 키보드를 내립니다.
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: colors.background,
+        ),
         backgroundColor: colors.background,
-      ),
-      backgroundColor: colors.background,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                EmailInput(controller: _emailController, colors: colors),
-                const SizedBox(height: 20),
-                PasswordInput(controller: _passwordController, colors: colors),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: colors.textColor,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        //Todo: 파이어베이스 Password찾기 구현
-                        Get.to(() => const FindPasswordScreen());
-                      },
-                      child: const Text(
-                        'Find Your Password',
-                        style: TextStyle(color: Colors.white54),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  EmailInput(controller: _emailController, colors: colors),
+                  const SizedBox(height: 20),
+                  PasswordInput(
+                      controller: _passwordController, colors: colors),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.search,
+                        color: colors.textColor,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 220),
-                LogInButton(
-                  onPressed: () async {
-                    // 로그아웃 및 로그인 페이지로 이동
-                    if (_formKey.currentState!.validate()) {
-                      await _authController.signIn(
-                        _emailController.text,
-                        _passwordController.text,
-                      );
-                      print(_authController.userData);
-                    }
-                  },
-                  colors: colors,
-                  fontsize: fontsize,
-                ),
-                const SizedBox(height: 6),
-                CreateButton(
-                  onPressed: () {
-                    // 로그인
-                    Get.to(() => const JoinScreen());
-                  },
-                  colors: colors,
-                  fontsize: fontsize,
-                ),
-              ],
+                      TextButton(
+                        onPressed: () {
+                          //Todo: 파이어베이스 Password찾기 구현
+                          Get.to(() => const FindPasswordScreen());
+                        },
+                        child: const Text(
+                          'Find Your Password',
+                          style: TextStyle(color: Colors.white54),
+                        ).tr(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 220),
+                  LogInButton(
+                    onPressed: () async {
+                      // 로그아웃 및 로그인 페이지로 이동
+                      if (_formKey.currentState!.validate()) {
+                        await _authController.signIn(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        print(_authController.userData);
+                      }
+                    },
+                    colors: colors,
+                    fontsize: fontsize,
+                  ),
+                  const SizedBox(height: 6),
+                  CreateButton(
+                    onPressed: () {
+                      // 로그인
+                      Get.to(() => const JoinScreen());
+                    },
+                    colors: colors,
+                    fontsize: fontsize,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -120,8 +128,8 @@ class EmailInput extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         icon: const Icon(Icons.email),
-        labelText: 'Google Play Store ID',
-        hintText: 'Please enter your Google Play Store ID',
+        labelText: tr('Google Play Store ID'),
+        hintText: tr('Please enter your Google Play Store ID'),
         labelStyle: TextStyle(color: colors.textColor),
       ),
       style: TextStyle(color: colors.iconColor),
@@ -155,10 +163,11 @@ class _PasswordInputState extends State<PasswordInput> {
       obscureText: _obscureText,
       decoration: InputDecoration(
         icon: const Icon(Icons.password),
-        labelText: 'Password',
-        hintText: 'Please enter your Password',
+        labelText: tr('Password'),
+        hintText: tr('Please enter your Password'),
         suffixIcon: Semantics(
-          label: _obscureText ? 'Show password' : 'Covering the password',
+          label:
+              _obscureText ? tr('Show password') : tr('Covering the password'),
           child: IconButton(
             icon: Icon(
               _obscureText
@@ -197,21 +206,20 @@ class LogInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.blue),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          'LogIn',
-          style: TextStyle(
-            color: colors.iconColor,
-            fontSize: fontsize.buttonFontSize,
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color?>(Colors.blue),
           ),
-        ),
-      ),
-    );
+          onPressed: onPressed,
+          child: Text(
+            'LogIn',
+            style: TextStyle(
+              color: colors.iconColor,
+              fontSize: fontsize.buttonFontSize,
+            ),
+          ).tr(),
+        ));
   }
 }
 
@@ -241,7 +249,7 @@ class CreateButton extends StatelessWidget {
             color: colors.iconColor,
             fontSize: fontsize.buttonFontSize,
           ),
-        ),
+        ).tr(),
       ),
     );
   }

@@ -59,6 +59,8 @@ class MyInformationScreen extends StatelessWidget {
             SizedBox(height: 20),
             _textForm('testerParticipation', 'Number of Tester Participation'),
             SizedBox(height: 20),
+            _textForm('point', 'point'),
+            SizedBox(height: 20),
             Expanded(child: Container()),
             ChangePasswordButton(),
           ],
