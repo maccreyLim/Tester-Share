@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -16,7 +14,7 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.get_dialog.dart';
+import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:tester_share_app/widget/w.reward_ad.dart';
 
@@ -43,22 +41,18 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController introductionTextController = TextEditingController();
   TextEditingController testerRequestController = TextEditingController();
-  // TextEditingController testerParticipationController = TextEditingController();
-  // TextEditingController imageUrlController = TextEditingController();
-  // TextEditingController iconImageUrlController = TextEditingController();
   TextEditingController githubUrlController = TextEditingController();
   TextEditingController testerRequestProfileController =
       TextEditingController();
-  // TextEditingController languageController = TextEditingController();
   TextEditingController appSetupUrlController = TextEditingController();
   List<String> availableLanguages = [
-    "English",
-    "Korean",
-    "Chinese",
-    "Japanese",
-    "Spanish",
-    "French",
-    "German"
+    tr("English"),
+    tr("Korean"),
+    tr("Chinese"),
+    tr("Japanese"),
+    tr("Spanish"),
+    tr("French"),
+    tr("German")
   ];
   List<String> selectedLanguages = [];
   File? pickedImage; //이미지를 담는 변수
@@ -208,20 +202,19 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                     ),
                   ),
                   const SizedBox(width: 30), // 간격 조절을 위한 SizedBox 추가
-                  // Expanded 제거
                   Expanded(
                     child: TextFormField(
                       controller: titleController,
                       decoration: InputDecoration(
                         icon: const Icon(Icons.title),
-                        labelText: 'Title',
-                        hintText: 'Please write the title',
+                        labelText: tr('Title'),
+                        hintText: tr('Please write the title'),
                         labelStyle: TextStyle(color: colors.textColor),
                       ),
                       style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Title is required';
+                          return tr('Title is required');
                         }
                         return null;
                       },
@@ -231,7 +224,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               ),
               ExpansionTile(
                 title: Text("Supported Languages",
-                    style: TextStyle(color: colors.textColor)),
+                        style: TextStyle(color: colors.textColor))
+                    .tr(),
                 children: [
                   Column(
                     children: availableLanguages.map((language) {
@@ -261,14 +255,14 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 maxLines: 3,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.text_fields),
-                  labelText: 'Introduction Text',
-                  hintText: 'Please write the introduction text',
+                  labelText: tr('Introduction Text'),
+                  hintText: tr('Please write the introduction text'),
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
                 style: const TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Introduction text is required';
+                    return tr('Introduction text is required');
                   }
                   return null;
                 },
@@ -278,8 +272,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.numbers),
-                  labelText: 'Number of testers to request',
-                  hintText: 'Please enter the number of testers required',
+                  labelText: tr('Number of testers to request'),
+                  hintText: tr('Please enter the number of testers required'),
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -288,7 +282,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   if (value == null ||
                       value.isEmpty ||
                       int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
+                    return tr('Please enter a valid number');
                   }
                   return null;
                 },
@@ -298,14 +292,14 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   controller: githubUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'GitHub URL',
-                    hintText: 'GitHub repository URL',
+                    labelText: tr('GitHub URL'),
+                    hintText: tr('GitHub repository URL'),
                     labelStyle: TextStyle(color: colors.textColor),
                   ),
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter GitHub repository URL';
+                      return tr('Please enter GitHub repository URL');
                     }
                     return null;
                   }),
@@ -315,15 +309,16 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   controller: appSetupUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'Web participation link',
-                    hintText:
-                        'Please enter the download address of the Test App.',
+                    labelText: tr('Web participation link'),
+                    hintText: tr(
+                        'Please enter the download address of the Test App.'),
                     labelStyle: TextStyle(color: colors.textColor),
                   ),
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the download address of the Test App.';
+                      return tr(
+                          'Please enter the download address of the Test App.');
                     }
                     return null;
                   }),
@@ -350,7 +345,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   ),
                   const SizedBox(width: 20),
                   Text(
-                    " App 이미지를 등록해주세요",
+                    tr("Please register the app image"),
                     style: TextStyle(
                       color: colors.textColor,
                     ),
@@ -359,7 +354,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               ),
               const SizedBox(height: 20),
               pickedImages.isEmpty ? Container() : multiImageListView(),
-              Expanded(child: SizedBox()),
+              SizedBox(height: 20), // Expanded 위젯 제거 후 간격 조절 위젯 추가
               Align(alignment: Alignment.bottomCenter, child: _saveButton()),
             ],
           ),
@@ -379,44 +374,41 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         scrollDirection: Axis.horizontal,
         itemCount: pickedImages.length,
         itemBuilder: (context, index) {
-          return Row(
-            children: [
-              // 이미지 표시 부분
-              Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: Image.file(
-                      File(pickedImages[index]!.path),
-                      height: 150,
-                      width: 100,
-                      fit: BoxFit.cover,
+          return SizedBox(
+            width: 150,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.file(
+                    File(pickedImages[index]!.path),
+                    height: 150,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  width: 20,
+                  height: 20,
+                  child: IconButton(
+                    onPressed: () async {
+                      setState(() {
+                        _multiImageFirebaseController.deleteImageList(
+                          index,
+                          pickedImages,
+                        );
+                      });
+                    },
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 20,
                     ),
                   ),
-                  // List에서 이미지 삭제 버튼
-                  Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    width: 20, // 조절 가능한 너비
-                    height: 20,
-                    child: IconButton(
-                      onPressed: () async {
-                        // 이미지파일 삭제
-                        setState(() {
-                          _multiImageFirebaseController.deleteImageList(
-                              index, pickedImages);
-                        });
-                      },
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 36),
-            ],
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -439,7 +431,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           style: TextStyle(
               fontSize: _fontSizeCollection.buttonFontSize,
               color: colors.iconColor),
-        ),
+        ).tr(),
       ),
     );
   }

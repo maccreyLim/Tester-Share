@@ -6,12 +6,13 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/create_board_screen.dart';
+import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
 import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class MyTesterRequestPostScreen extends StatelessWidget {
@@ -176,16 +177,23 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: () {
-                                      Get.to(() => ProjectJoinScreen());
+                                      // If not in progress
+                                      if (!boards[index].isApproval) {
+                                        showMyDialog(context,
+                                            tr("Please wait until the administrator approves"));
+                                      } else {
+                                        showMyDialog(context,
+                                            tr("Deletion is not possible as it is currently in progress"));
+                                      }
                                     },
                                     child: Text(
-                                      boards[index].isApproval == false
-                                          ? tr('Unapporoval')
-                                          : boards[index].testerRequest >
+                                      boards[index].isApproval
+                                          ? boards[index].testerRequest >
                                                   boards[index]
                                                       .testerParticipation
                                               ? tr('In progress')
-                                              : tr("Completed"),
+                                              : tr("Completed")
+                                          : tr('Unapproval'),
                                       style: TextStyle(
                                           color: _colors.iconColor,
                                           fontSize: 12,
@@ -289,6 +297,27 @@ class MyTesterRequestPostScreen extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(color: _colors.textColor, fontSize: size),
+    );
+  }
+
+  void showMyDialog(BuildContext context, String content) {
+    // GetX 패키지를 이용하여 다이얼로그 표시
+    Get.dialog(
+      // 다이얼로그 내용을 구성합니다.
+      AlertDialog(
+        title: const Text('Notification').tr(),
+        content: Text(content),
+        actions: <Widget>[
+          // 확인 버튼 추가
+          TextButton(
+            onPressed: () {
+              // 다이얼로그 닫기
+              Get.back();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 }

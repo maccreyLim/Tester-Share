@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tester_share_app/scr/my_tester_request_post.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 Widget getXDialog(BuildContext context, String message) {

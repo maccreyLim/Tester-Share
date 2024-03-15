@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/door_screen.dart';
-import 'package:tester_share_app/scr/my_tester_request_post.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.dart';
 import 'package:tester_share_app/scr/notice_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';

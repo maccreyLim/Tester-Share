@@ -32,15 +32,15 @@
   "Please enter a valid number": "올바른 숫자를 입력해 주세요",
   "Number of participants as testers": "테스터로 참여한 수",
   "Please enter the number of participants as a tester": "테스터로 참여한 수를 입력해 주세요",
-  "GitHub URL": "GitHub URL",
+  "GitHub URL": "GitHub 주소",
   "GitHub repository URL": "GitHub 리포지토리 URL",
   "Please enter GitHub repository URL" : "GitHub URL을 입력해 주세요",
   "TestApp Address" : "테스트 앱 다운로드 주소",
-  "Web participation link" : "Web참여 다운로드 주소",
+  "Web participation link" : "웹 참여 다운로드 주소",
   "Please enter the download address of the Test App" : "Test App 다운로드 주소를 입력해 주세요",
   "Please register the app image" : "App 이미지를 등록해주세요",
   "Create Post": "게시물 작성",
-
+  "Update Post" : "게시문 수정",
   
   "Tester Request Profile": "테스터 요청 프로필",
   "Tester profile information": "테스터 프로필 정보를 입력해 주세요.",
@@ -85,7 +85,20 @@
   "Setting" : "설 정",
   "Unapproved post" : "미승인된 게시물",
   "Delete" : "삭제",
-  "Go My Tester Request Post" : "나의 테스터 요청 게시판로 이동"
+  "Go My Tester Request Post" : "나의 테스터 요청 게시판로 이동",
+  "English" : "영 어",
+  "Korean" : "한국어",
+  "Chinese" : "중국어",
+  "Japanese" : "일본어",
+  "Spanish" : "스페인어",
+  "French" : "프랑스어",
+  "German" : "독일어",
+  "here is the email to request to become a tester" : "아래의 메일 주소로 테스터를 신청합니다.",
+  "Unapporoval" : "관리자 미승인",
+  "Please wait until the administrator approves" : "관리자가 승인할때까지 잠시만 기다려 주세요",
+  "Notification" : "알 림",
+  "Deletion is not possible as it is currently in progress" : "현재 진행중이므로 삭제가 불가능합니다"
+
   
   }
   

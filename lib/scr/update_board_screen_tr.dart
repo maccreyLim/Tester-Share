@@ -1,6 +1,7 @@
 //기존이미지 삭제수정은 됨. 기존이미지에서 추가를 하면 이미지파일은 올라가는데 appImageUrl에는 주소가 리스트에 기족이 안됨
 
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/my_tester_request_post.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -45,13 +46,13 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       TextEditingController();
   TextEditingController appSetupUrlController = TextEditingController();
   List<String> availableLanguages = [
-    "English",
-    "Korean",
-    "Chinese",
-    "Japanese",
-    "Spanish",
-    "French",
-    "German"
+    tr("English"),
+    tr("Korean"),
+    tr("Chinese"),
+    tr("Japanese"),
+    tr("Spanish"),
+    tr("French"),
+    tr("German")
   ];
   List<String> selectedLanguages = [];
   File? pickedImage;
@@ -232,14 +233,14 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                       controller: titleController,
                       decoration: InputDecoration(
                         icon: const Icon(Icons.title),
-                        labelText: 'Title',
-                        hintText: 'Please write the title',
+                        labelText: tr('Title'),
+                        hintText: tr('Please write the title'),
                         labelStyle: TextStyle(color: colors.textColor),
                       ),
                       style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Title is required';
+                          return tr('Title is required');
                         }
                         return null;
                       },
@@ -251,7 +252,8 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 children: [
                   ExpansionTile(
                     title: Text("Supported Languages",
-                        style: TextStyle(color: colors.textColor)),
+                            style: TextStyle(color: colors.textColor))
+                        .tr(),
                     children: [
                       Column(
                         children: availableLanguages.map((language) {
@@ -284,14 +286,14 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 maxLines: 3,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.text_fields),
-                  labelText: 'Introduction Text',
-                  hintText: 'Please write the introduction text',
+                  labelText: tr('Introduction Text'),
+                  hintText: tr('Please write the introduction text'),
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
                 style: const TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Introduction text is required';
+                    return tr('Introduction text is required');
                   }
                   return null;
                 },
@@ -301,8 +303,8 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   icon: const Icon(Icons.numbers),
-                  labelText: 'Number of testers to request',
-                  hintText: 'Please enter the number of testers required',
+                  labelText: tr('Number of testers to request'),
+                  hintText: tr('Please enter the number of testers required'),
                   labelStyle: TextStyle(color: colors.textColor),
                 ),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -311,7 +313,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   if (value == null ||
                       value.isEmpty ||
                       int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
+                    return tr('Please enter a valid number');
                   }
                   return null;
                 },
@@ -321,14 +323,14 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   controller: githubUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'GitHub URL',
-                    hintText: 'GitHub repository URL',
+                    labelText: tr('GitHub URL'),
+                    hintText: tr('GitHub repository URL'),
                     labelStyle: TextStyle(color: colors.textColor),
                   ),
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter GitHub repository URL';
+                      return tr('Please enter GitHub repository URL');
                     }
                     return null;
                   }),
@@ -338,15 +340,16 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   controller: appSetupUrlController,
                   decoration: InputDecoration(
                     icon: const Icon(Icons.link),
-                    labelText: 'Web participation link',
-                    hintText:
-                        'Please enter the download address of the Test App.',
+                    labelText: tr('Web participation link'),
+                    hintText: tr(
+                        'Please enter the download address of the Test App.'),
                     labelStyle: TextStyle(color: colors.textColor),
                   ),
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the download address of the Test App.';
+                      return tr(
+                          'Please enter the download address of the Test App.');
                     }
                     return null;
                   }),
@@ -376,7 +379,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   ),
                   const SizedBox(width: 20),
                   Text(
-                    "Please register App images",
+                    tr("Please register the app image"),
                     style: TextStyle(
                       color: colors.textColor,
                     ),
@@ -385,7 +388,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
               ),
               const SizedBox(height: 20),
               pickedImages.isEmpty ? Container() : multiImageListView(),
-              Expanded(child: SizedBox()),
+              SizedBox(height: 20),
               Align(alignment: Alignment.bottomCenter, child: _saveButton()),
             ],
           ),
@@ -407,53 +410,57 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         itemBuilder: (context, index) {
           return Row(
             children: [
-              Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: pickedImages[index]!.path.startsWith('http')
-                        ? Image.network(
-                            pickedImages[index]!.path,
-                            height: 150,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.file(
-                            File(pickedImages[index]!.path),
-                            height: 150,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                  Container(
-                    width: 20,
-                    height: 20,
-                    child: IconButton(
-                      onPressed: () async {
-                        // 기존 이미지를 삭제하고 리스트에서도 제거
-                        List<String> updatedImageUrls =
-                            await _multiImageFirebaseController
-                                .deleteUpdateImageList(
-                                    index, widget.boards.appImagesUrl);
+              SizedBox(
+                width: 150,
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: pickedImages[index]!.path.startsWith('http')
+                          ? Image.network(
+                              pickedImages[index]!.path,
+                              height: 150,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(pickedImages[index]!.path),
+                              height: 150,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 20,
+                      height: 20,
+                      child: IconButton(
+                        onPressed: () async {
+                          // 기존 이미지를 삭제하고 리스트에서도 제거
+                          List<String> updatedImageUrls =
+                              await _multiImageFirebaseController
+                                  .deleteUpdateImageList(
+                                      index, widget.boards.appImagesUrl);
 
-                        setState(() {
-                          pickedImages.removeAt(index);
-                          appImagesUrl.clear();
-                          appImagesUrl.addAll(updatedImageUrls);
-                          print("삭제 업데이트할 리스트: $updatedImageUrls");
-                          print("최종 업데이트할 리스트: $appImagesUrl");
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 20,
+                          setState(() {
+                            pickedImages.removeAt(index);
+                            appImagesUrl.clear();
+                            appImagesUrl.addAll(updatedImageUrls);
+                            print("삭제 업데이트할 리스트: $updatedImageUrls");
+                            print("최종 업데이트할 리스트: $appImagesUrl");
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(width: 36),
+              const SizedBox(width: 20), // 이미지 간격 조정을 위한 SizedBox 추가
             ],
           );
         },
@@ -478,7 +485,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           style: TextStyle(
               fontSize: _fontSizeCollection.buttonFontSize,
               color: colors.iconColor),
-        ),
+        ).tr(),
       ),
     );
   }

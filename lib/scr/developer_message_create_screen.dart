@@ -10,9 +10,13 @@ import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class DeveloperMessageCreateScreen extends StatefulWidget {
   const DeveloperMessageCreateScreen(
-      {super.key, required this.receiverUid, required this.developer});
+      {super.key,
+      required this.receiverUid,
+      required this.developer,
+      this.message});
   final String receiverUid; // 수신자의 UID를 저장하는 변수
   final String developer; // 수신자 이름
+  final String? message;
 
   @override
   State<DeveloperMessageCreateScreen> createState() =>
@@ -44,6 +48,7 @@ class _DeveloperMessageCreateScreenState
   @override
   void initState() {
     sendUserController.text = widget.developer;
+    messageController.text = widget.message ?? ''; // 옵셔널한 메시지에 대한 처리
     super.initState();
   }
 

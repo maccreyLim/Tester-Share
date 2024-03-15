@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/developer_message_create_screen.dart';
-import 'package:tester_share_app/scr/project_join_screen.dart';
+
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +13,7 @@ class DetailBoardScreen extends StatelessWidget {
   final BoardFirebaseModel
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
   final ColorsCollection colors = ColorsCollection();
-
+  final AuthController _authController = AuthController.instance;
   // Use 'final' for the constructor parameter, and fix the constructor name
   DetailBoardScreen({Key? key, required this.boards}) : super(key: key);
 
@@ -219,7 +220,7 @@ class DetailBoardScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 20),
                         cardText(
-                          boards.language![index],
+                          tr(boards.language![index]),
                           20,
                         ),
                       ],
@@ -330,7 +331,17 @@ class DetailBoardScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.blue),
                 ),
                 onPressed: () {
-                  Get.to(() => ProjectJoinScreen());
+                  String testApplyMessage =
+                      tr("here is the email to request to become a tester");
+                  // 테스터 신청 이메일 메시지를 구성합니다.
+                  String emailMessage =
+                      "$testApplyMessage\n${_authController.userData!['email']}";
+                  //테스터 신청
+                  Get.to(DeveloperMessageCreateScreen(
+                    receiverUid: boards.createUid,
+                    developer: boards.developer,
+                    message: emailMessage,
+                  ));
                 },
                 child: Text(
                   'Apply to be a Tester',
