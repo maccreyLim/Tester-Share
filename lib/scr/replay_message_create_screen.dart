@@ -63,7 +63,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 2),
                 Text(
                   '원본메시지',
                   style: TextStyle(
@@ -71,13 +71,13 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black54),
                 ),
-                Divider(),
                 SizedBox(height: 6),
                 Text(
                   '${widget.message.contents}',
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
-                SizedBox(height: 60),
+                Divider(),
+                SizedBox(height: 20),
                 TextFormField(
                   style: TextStyle(fontSize: 16, color: _colors.textColor),
                   cursorHeight: 20,
@@ -129,12 +129,14 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                         color: _colors.iconColor),
                   ),
                 ),
-                SizedBox(height: 10),
-                SizedBox(width: double.infinity, child: BannerAD()),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }

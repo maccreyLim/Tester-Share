@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/door_screen.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.dart';
@@ -17,6 +18,7 @@ class SettingScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final InterstitialAdController adController = InterstitialAdController();
+  final AuthController _authController = AuthController.instance;
 
   SettingScreen({super.key});
 
@@ -127,25 +129,26 @@ class SettingScreen extends StatelessWidget {
                       ).tr()),
                 ],
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.post_add,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(() => UnapprovedPostScreen());
-                      },
-                      child: Text(
-                        "Unapproved post",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      ).tr()),
-                ],
-              ),
+              if (_authController.userData!['isAdmin'] == true)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.post_add,
+                      color: colors.iconColor,
+                    ),
+                    const SizedBox(width: 10),
+                    TextButton(
+                        onPressed: () {
+                          Get.to(() => UnapprovedPostScreen());
+                        },
+                        child: Text(
+                          "Unapproved post",
+                          style: TextStyle(
+                              color: colors.textColor,
+                              fontSize: _fontSizeCollection.settingFontSize),
+                        ).tr()),
+                  ],
+                ),
               Row(
                 children: [
                   Icon(

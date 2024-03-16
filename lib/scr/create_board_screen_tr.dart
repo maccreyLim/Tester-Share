@@ -317,8 +317,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return tr(
-                          'Please enter the download address of the Test App.');
+                      // return tr(
+                      //     'Please enter the download address of the Test App.');
                     }
                     return null;
                   }),

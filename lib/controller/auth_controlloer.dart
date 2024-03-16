@@ -376,4 +376,9 @@ class AuthController extends GetxController {
       return false; // 오류가 발생하면 일단 중복이 아닌 것으로 간주
     }
   }
+
+  // 사용자 데이터를 업데이트하는 메서드
+  void updateUserData(Map<String, dynamic> newData) {
+    _userData.value = newData;
+  }
 }

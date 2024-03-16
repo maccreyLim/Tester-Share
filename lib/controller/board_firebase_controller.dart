@@ -82,14 +82,20 @@ class BoardFirebaseController {
     }
   }
 
-  // Stream (스트림)
-  Stream<List<BoardFirebaseModel>> boardStream() {
+  Stream<List<BoardFirebaseModel>> boardStream({String? currentUserUid}) {
+    print("스트할 ID : $currentUserUid");
     try {
-      return FirebaseFirestore.instance
-          .collection('boards')
-          .orderBy('createAt', descending: true) // createAt을 기준으로 내림차순 정렬
-          .snapshots()
-          .map((QuerySnapshot querySnapshot) {
+      CollectionReference boardsCollection =
+          FirebaseFirestore.instance.collection('boards');
+
+      Query query = boardsCollection.orderBy('createAt', descending: true);
+
+      // currentUserUid가 제공되면 해당 사용자의 게시물만 필터링
+      if (currentUserUid != null) {
+        query = query.where('createUid', isEqualTo: currentUserUid);
+      }
+
+      return query.snapshots().map((QuerySnapshot querySnapshot) {
         List<BoardFirebaseModel> boards = [];
         for (QueryDocumentSnapshot doc in querySnapshot.docs) {
           if (doc.exists) {

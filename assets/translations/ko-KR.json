@@ -40,7 +40,7 @@
   "Please enter the download address of the Test App" : "Test App 다운로드 주소를 입력해 주세요",
   "Please register the app image" : "App 이미지를 등록해주세요",
   "Create Post": "게시물 작성",
-  "Update Post" : "게시문 수정",
+  "Update Post" : "게시물 수정",
   
   "Tester Request Profile": "테스터 요청 프로필",
   "Tester profile information": "테스터 프로필 정보를 입력해 주세요.",
@@ -100,7 +100,8 @@
   "Deletion is not possible as it is currently in progress" : "현재 진행중이므로 삭제가 불가능합니다",
   "Check Availability" : "중복확인",
   "Available" : "사용가능",
-  "Unavailable" : "사용불가"
+  "Unavailable" : "사용불가",
+  "Please verify the availability of the profile name" : "프로필 이름의 중복여부을 확인하세요"
 
   
   }

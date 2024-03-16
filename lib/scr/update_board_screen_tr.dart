@@ -98,12 +98,22 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
 
       // 폼 검증
       if (_formKey.currentState!.validate()) {
+        // 새로 추가된 이미지만 필터링
+        List<XFile?> newImages = pickedImages
+            .where((image) =>
+                image != null &&
+                !widget.boards.appImagesUrl.contains(image.path))
+            .toList();
+
         // 선택된 이미지들이 유효한지 검사
         if (_validatePickedImages()) {
-          // 다중 이미지 업데이트
-          List<String> urls = await _multiImageFirebaseController
-              .updateMultiImages(pickedImages, widget.boards.appImagesUrl);
-          appImagesUrl = urls; // 이미지 URL을 새로운 값으로 설정
+          // 새로 업로드할 이미지가 있는 경우에만 업로드 수행
+          if (newImages.isNotEmpty) {
+            // 다중 이미지 업데이트
+            List<String> urls = await _multiImageFirebaseController
+                .updateMultiImages(newImages, widget.boards.appImagesUrl);
+            appImagesUrl.addAll(urls); // 새로운 URL을 기존 URL 리스트에 추가
+          }
         }
 
         // 새로운 게시물 모델 생성
@@ -367,7 +377,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                                 .pickMultiImage(pickedImages);
                         setState(() {
                           pickedImages = result;
-                          print(pickedImages);
+                          print("업데이트된 리스트:$pickedImages");
                         });
                       },
                       icon: Icon(
@@ -460,7 +470,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                   ],
                 ),
               ),
-              const SizedBox(width: 20), // 이미지 간격 조정을 위한 SizedBox 추가
+              // const SizedBox(width: 10), // 이미지 간격 조정을 위한 SizedBox 추가
             ],
           );
         },

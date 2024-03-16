@@ -349,9 +349,12 @@ class DetailBoardScreen extends StatelessWidget {
                 ).tr(),
               ),
             ),
-            SizedBox(width: double.infinity, child: BannerAD()),
           ],
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }

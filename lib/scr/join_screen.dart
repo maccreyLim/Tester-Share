@@ -285,7 +285,7 @@ class SignUpButton extends StatelessWidget {
     // 프로필 이름이 사용 가능하지 않은 경우 에러 메시지를 표시
     if (!isProfileNameAvailable) {
       return Text(
-        'Profile name is not available', // 에러 메시지
+        tr("Please verify the availability of the profile name"), // 에러 메시지
         style: TextStyle(
           color: Colors.red, // 에러 메시지 색상
         ),

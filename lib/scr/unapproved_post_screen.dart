@@ -168,6 +168,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                         boards[index].isApproval
                                             ? updateBoard(boards[index], false)
                                             : updateBoard(boards[index], true);
+                                        //testerParticipation의 값을 하나 증가시킴
 
                                         setState(() {});
                                       },

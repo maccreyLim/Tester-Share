@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_detail_board_screen.dart';
-import 'package:tester_share_app/scr/project_join_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -23,6 +23,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
       MultiImageFirebaseController();
   final SingleImageFirebaseController _singleImageFirebaseController =
       SingleImageFirebaseController();
+  final AuthController _authController = AuthController.instance;
   MyTesterRequestPostScreen({super.key});
 
   void showRewardAd() {
@@ -62,7 +63,8 @@ class MyTesterRequestPostScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<List<BoardFirebaseModel>>(
-          stream: _board.boardStream(),
+          stream: _board.boardStream(
+              currentUserUid: _authController.userData!['uid']),
           builder: (context, AsyncSnapshot<List<BoardFirebaseModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -71,7 +73,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
             if (!snapshot.hasData ||
                 snapshot.data == null ||
                 snapshot.data!.isEmpty) {
-              print('Data from Firestore: ${snapshot.data}');
+              print('스냅샷 데이타: ${snapshot.data}');
               return Center(
                 child: Text(
                   "The post does not exist",
