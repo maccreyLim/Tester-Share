@@ -14,6 +14,7 @@ class JoinScreen extends StatefulWidget {
 
 class JoinScreenState extends State<JoinScreen> {
   bool signUpSuccess = false;
+  bool _isProfileNameAvailable = false;
   final AuthController _authController = AuthController.instance;
   final ColorsCollection colors = ColorsCollection();
   final FontSizeCollection fontsize = FontSizeCollection();
@@ -64,7 +65,17 @@ class JoinScreenState extends State<JoinScreen> {
                       controller: _passwordController, colors: colors),
                   const SizedBox(height: 20),
                   ProfileNameInput(
-                      controller: _profileNameController, colors: colors),
+                    controller: _profileNameController,
+                    colors: colors,
+                    authController: _authController,
+                    isProfileNameAvailable: _isProfileNameAvailable,
+                    setIsProfileNameAvailable: (bool value) {
+                      // 상태 변경 함수 추가
+                      setState(() {
+                        _isProfileNameAvailable = value;
+                      });
+                    },
+                  ),
                   const SizedBox(height: 20),
                   DeployedInput(
                       controller: _deployedController, colors: colors),
@@ -91,6 +102,7 @@ class JoinScreenState extends State<JoinScreen> {
                     },
                     colors: colors,
                     fontsize: fontsize,
+                    isProfileNameAvailable: _isProfileNameAvailable,
                   ),
                 ],
               ),
@@ -106,7 +118,7 @@ class EmailInput extends StatelessWidget {
   final TextEditingController controller;
   final ColorsCollection colors;
 
-  const EmailInput({required this.controller, required this.colors});
+  const EmailInput({super.key, required this.controller, required this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +143,8 @@ class PasswordInput extends StatelessWidget {
   final TextEditingController controller;
   final ColorsCollection colors;
 
-  const PasswordInput({required this.controller, required this.colors});
+  const PasswordInput(
+      {super.key, required this.controller, required this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -153,27 +166,77 @@ class PasswordInput extends StatelessWidget {
   }
 }
 
-class ProfileNameInput extends StatelessWidget {
+class ProfileNameInput extends StatefulWidget {
   final TextEditingController controller;
   final ColorsCollection colors;
+  final AuthController authController; // AuthController 추가
+  final bool isProfileNameAvailable;
+  final Function(bool)
+      setIsProfileNameAvailable; // setIsProfileNameAvailable 매개변수 추가
 
-  const ProfileNameInput({required this.controller, required this.colors});
+  const ProfileNameInput({
+    Key? key,
+    required this.controller,
+    required this.colors,
+    required this.authController,
+    required this.isProfileNameAvailable,
+    required this.setIsProfileNameAvailable, // 매개변수 추가
+  }) : super(key: key); // key 매개변수 추가
 
   @override
+  _ProfileNameInputState createState() => _ProfileNameInputState();
+}
+
+class _ProfileNameInputState extends State<ProfileNameInput> {
+  @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        icon: const Icon(Icons.password),
-        labelText: tr('Profile Name'),
-        hintText: tr('Please enter ProfileName'),
-        labelStyle: TextStyle(color: colors.textColor),
-      ),
-      style: TextStyle(color: colors.iconColor),
-      validator: (value) {
-        return null;
-      },
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            controller: widget.controller,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              icon: const Icon(Icons.person),
+              labelText: tr('Profile Name'),
+              hintText: tr('Please enter ProfileName'),
+              labelStyle: TextStyle(color: widget.colors.textColor),
+            ),
+            style: TextStyle(color: widget.colors.iconColor),
+            validator: (value) {
+              return null;
+            },
+          ),
+        ),
+        IconButton(
+          onPressed: () async {
+            // 프로필 이름 중복 확인
+            final profileName = widget.controller.text;
+            final isAvailable =
+                await widget.authController.isProfileNameAvailable(profileName);
+            widget.setIsProfileNameAvailable(
+                isAvailable); // setIsProfileNameAvailable 함수 호출하여 상태 변경
+          },
+          icon: Row(
+            // Using Row directly in the icon parameter
+            children: [
+              Icon(Icons.check),
+              SizedBox(width: 8.0),
+              Text(
+                tr('Check Availability'), // 중복 확인을 나타내는 텍스트
+                style: TextStyle(
+                  color: widget.colors.textColor, // 텍스트 색상
+                  fontSize: 14.0, // 텍스트 크기
+                ),
+              ),
+            ],
+          ),
+          color: widget.isProfileNameAvailable ? Colors.green : Colors.red,
+          tooltip: widget.isProfileNameAvailable
+              ? tr('Available')
+              : tr('Unavailable'), // 중복 확인을 나타내는 툴팁 추가
+        ),
+      ],
     );
   }
 }
@@ -208,12 +271,26 @@ class SignUpButton extends StatelessWidget {
   final VoidCallback onPressed;
   final ColorsCollection colors;
   final FontSizeCollection fontsize;
+  final bool isProfileNameAvailable; // 프로필 이름 사용 가능 여부
 
-  const SignUpButton(
-      {required this.onPressed, required this.colors, required this.fontsize});
+  const SignUpButton({
+    required this.onPressed,
+    required this.colors,
+    required this.fontsize,
+    required this.isProfileNameAvailable,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // 프로필 이름이 사용 가능하지 않은 경우 에러 메시지를 표시
+    if (!isProfileNameAvailable) {
+      return Text(
+        'Profile name is not available', // 에러 메시지
+        style: TextStyle(
+          color: Colors.red, // 에러 메시지 색상
+        ),
+      );
+    }
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(

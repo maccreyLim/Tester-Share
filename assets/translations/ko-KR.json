@@ -97,7 +97,10 @@
   "Unapporoval" : "관리자 미승인",
   "Please wait until the administrator approves" : "관리자가 승인할때까지 잠시만 기다려 주세요",
   "Notification" : "알 림",
-  "Deletion is not possible as it is currently in progress" : "현재 진행중이므로 삭제가 불가능합니다"
+  "Deletion is not possible as it is currently in progress" : "현재 진행중이므로 삭제가 불가능합니다",
+  "Check Availability" : "중복확인",
+  "Available" : "사용가능",
+  "Unavailable" : "사용불가"
 
   
   }

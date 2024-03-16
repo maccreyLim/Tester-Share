@@ -358,4 +358,22 @@ class AuthController extends GetxController {
 
     update();
   }
+
+  //프로필이름 중복확인
+  Future<bool> isProfileNameAvailable(String profileName) async {
+    try {
+      // Firestore에서 해당 프로필 이름이 있는지 확인
+      final querySnapshot = await _firestore
+          .collection('users')
+          .where('profileName', isEqualTo: profileName)
+          .get();
+
+      // 해당 프로필 이름이 사용 가능한지 여부를 반환
+      return querySnapshot.docs.isEmpty;
+    } catch (e) {
+      // 오류 처리
+      print('Error checking profile name availability: $e');
+      return false; // 오류가 발생하면 일단 중복이 아닌 것으로 간주
+    }
+  }
 }

@@ -367,7 +367,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                                 .pickMultiImage(pickedImages);
                         setState(() {
                           pickedImages = result;
-                          // Add other state update logic if needed
+                          print(pickedImages);
                         });
                       },
                       icon: Icon(
