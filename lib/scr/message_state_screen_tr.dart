@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tester_share_app/scr/received_message_screen.dart'
+import 'package:tester_share_app/scr/received_message_screen_tr.dart'
     as ReceivedScreen;
-import 'package:tester_share_app/scr/send_Message_screen.dart' as SendScreen;
-import 'package:tester_share_app/scr/massage_create_screen.dart';
+import 'package:tester_share_app/scr/send_Message_screen_tr.dart' as SendScreen;
+import 'package:tester_share_app/scr/massage_create_screen_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 class MessageStateScreen extends StatefulWidget {
@@ -56,12 +57,12 @@ class _MessageStateScreenState extends State<MessageStateScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.mail,
                 color: _selectedIndex == 0 ? Colors.blue : _colors.iconColor),
-            label: '받은 쪽지함',
+            label: tr("Received Messages"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.send,
                 color: _selectedIndex == 1 ? Colors.blue : _colors.iconColor),
-            label: '보낸 쪽지함',
+            label: tr("Sent Messages"),
           ),
         ],
         currentIndex: _selectedIndex,

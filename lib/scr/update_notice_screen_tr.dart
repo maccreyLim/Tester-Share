@@ -1,34 +1,38 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/notice_controller.dart';
-import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/notice_firebase_model.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
-class CreateNoticeScreen extends StatefulWidget {
-  const CreateNoticeScreen({super.key});
+class UpdateNoticeScreen extends StatefulWidget {
+  final NoticeFirebaseModel notice; // 수정할 게시물 데이터를 받아올 변수
+
+  const UpdateNoticeScreen({required this.notice, Key? key}) : super(key: key);
 
   @override
-  State<CreateNoticeScreen> createState() => _CreateNoticeScreenState();
+  State<UpdateNoticeScreen> createState() => _UpdateNoticeScreenState();
 }
 
-class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
-  //Property
+class _UpdateNoticeScreenState extends State<UpdateNoticeScreen> {
+  // Property
   final _formkey = GlobalKey<FormState>();
-
   TextEditingController titleController = TextEditingController();
-
   TextEditingController contentsController = TextEditingController();
-
   final ColorsCollection _colors = ColorsCollection();
-
-  final AuthController _authController = AuthController.instance;
-
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
 
-  //TextEditingController dispose
+  @override
+  void initState() {
+    super.initState();
+    // 기존 게시물 데이터로 초기화
+    titleController.text = widget.notice.title;
+    contentsController.text = widget.notice.content;
+  }
+
+  // TextEditingController dispose
   @override
   void dispose() {
     super.dispose();
@@ -42,7 +46,6 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: _colors.background,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: _colors.background,
         actions: [
           IconButton(
@@ -64,7 +67,7 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
     );
   }
 
-  Widget saveButton() {
+  Widget updateButton() {
     return SizedBox(
       width: double.infinity,
       height: 50,
@@ -73,26 +76,28 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
           backgroundColor: Colors.blue,
         ),
         onPressed: () async {
-          NoticeFirebaseModel announcetList = NoticeFirebaseModel(
-            uid: _authController.userData!['uid'],
-            profileName: _authController.userData!['profileName'] ?? "",
-            isLiked: false,
-            likeCount: 0,
-            title: titleController.text, // 입력 필드의 값 사용
-            content: contentsController.text, // 입력 필드의 값 사용
-            createdAt: DateTime.now(),
-            // id: "", // 문서 아이디
-          );
+          if (_formkey.currentState!.validate()) {
+            // 폼 검증 성공 시 업데이트 수행
+            NoticeFirebaseModel updatedNotice = NoticeFirebaseModel(
+              uid: widget.notice.uid,
+              profileName: widget.notice.profileName,
+              isLiked: widget.notice.isLiked,
+              likeCount: widget.notice.likeCount,
+              title: titleController.text,
+              content: contentsController.text,
+              createdAt: widget.notice.createdAt,
+              id: widget.notice.id,
+            );
 
-          await NoticeController().createNotice(announcetList);
+            await NoticeController().updateNotice(updatedNotice);
 
-          showToast('게시물이 성공적으로 저장되었습니다.', 1);
-          setState(() {
+            showToast(tr("The post has been successfully updated"), 1);
+            Get.back(); // 화면 닫기
             Get.back();
-          });
+          }
         },
         child: Text(
-          'SAVE',
+          'UPDATE',
           style: TextStyle(
               fontSize: _fontSizeCollection.buttonFontSize,
               color: _colors.iconColor),
@@ -109,20 +114,20 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            inputText(titleController, "제목", 1, 60),
+            inputText(titleController, tr("Title"), 1, 60),
             SizedBox(
               height: 50,
             ),
-            inputText(contentsController, "내용", 16, 420),
+            inputText(contentsController, tr("Content"), 16, 420),
             SizedBox(height: 100),
-            SizedBox(height: 40, width: double.infinity, child: saveButton()),
+            SizedBox(height: 50, width: double.infinity, child: updateButton()),
           ],
         ),
       ),
     );
   }
 
-  //입력폼( 컨트롤러 , 텍스트필트 이름,텍스트필드 라인수)
+  // 입력폼(컨트롤러, 텍스트필드 이름, 텍스트필드 라인수)
   Widget inputText(
       TextEditingController name, String nametext, int line, double intheight) {
     return Row(
@@ -133,7 +138,7 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
               fontSize: _fontSizeCollection.buttonFontSize,
               color: _colors.iconColor),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         SizedBox(
@@ -142,8 +147,8 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
           child: TextFormField(
             textAlignVertical: TextAlignVertical.center,
             controller: name,
-            style: TextStyle(
-              color: Colors.white, // 입력된 텍스트의 색상을 흰색으로 변경
+            style: const TextStyle(
+              color: Colors.white,
             ),
             decoration: const InputDecoration(
               border: OutlineInputBorder(
@@ -151,12 +156,11 @@ class _CreateNoticeScreenState extends State<CreateNoticeScreen> {
               ),
               hintText: "",
             ),
-            keyboardType:
-                TextInputType.multiline, // Use multiline keyboard type
-            maxLines: line, // Allow multiple lines
+            keyboardType: TextInputType.multiline,
+            maxLines: line,
             validator: (value) {
               if (value!.isEmpty) {
-                return "$nametext을 입력해주세요";
+                return tr("Please enter $nametext");
               }
               return null;
             },

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/detail_unapproved_post_screen.dart';
+import 'package:tester_share_app/scr/detail_unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
@@ -30,7 +31,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
             child: Text(
               "Unapproved post",
               style: TextStyle(color: colors.textColor, fontSize: 16),
-            ),
+            ).tr(),
           ),
           automaticallyImplyLeading: false,
           backgroundColor: colors.background,
@@ -63,9 +64,9 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                 print('Data from Firestore: ${snapshot.data}');
                 return Center(
                   child: Text(
-                    '게시물이 존재하지 않습니다.',
+                    "The post does not exist",
                     style: TextStyle(color: colors.textColor, fontSize: 22),
-                  ),
+                  ).tr(),
                 );
               }
 
@@ -114,17 +115,40 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(
-                                    'Creation date: ${_formattedDate(boards[index].createAt)}',
-                                    style: TextStyle(
-                                        fontSize: 14, color: colors.textColor),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'Creation date',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: colors.textColor),
+                                      ).tr(),
+                                      Text(
+                                        ': ${_formattedDate(boards[index].createAt)}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: colors.textColor),
+                                      ),
+                                    ],
                                   ),
                                   if (boards[index].updateAt != null)
-                                    Text(
-                                      'Modification date: ${_formattedDate(boards[index].updateAt!)}',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: colors.textColor),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Modification date',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: colors.textColor),
+                                        ).tr(),
+                                        Text(
+                                          ': ${_formattedDate(boards[index].updateAt!)}',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: colors.textColor),
+                                        ),
+                                      ],
                                     )
                                 ],
                               ),
@@ -146,41 +170,42 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                   height: 24,
                                   width: 120,
                                   child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        // 버튼의 배경색을 상태에 따라 동적으로 변경하는 설정입니다.
-                                        backgroundColor: MaterialStateProperty
-                                            .resolveWith<Color>(
-                                          (Set<MaterialState> states) {
-                                            // "진행중" 상태에 따라 배경색을 설정합니다.
-                                            if (boards[index].isApproval) {
-                                              return colors
-                                                  .stateIsIng; // 상태가 "진행중"일 때의 배경색
-                                            } else {
-                                              // 다른 상태에는 기본 배경색을 설정합니다.
-                                              return colors.stateIsClose;
-                                            }
-                                          },
-                                        ),
+                                    style: ButtonStyle(
+                                      // 버튼의 배경색을 상태에 따라 동적으로 변경하는 설정입니다.
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          // "진행중" 상태에 따라 배경색을 설정합니다.
+                                          if (boards[index].isApproval) {
+                                            return colors
+                                                .stateIsIng; // 상태가 "진행중"일 때의 배경색
+                                          } else {
+                                            // 다른 상태에는 기본 배경색을 설정합니다.
+                                            return colors.stateIsClose;
+                                          }
+                                        },
                                       ),
-                                      onPressed: () {
-                                        adController.loadAndShowAd();
-                                        //Todo : firebase isApproval = true;
-                                        boards[index].isApproval
-                                            ? updateBoard(boards[index], false)
-                                            : updateBoard(boards[index], true);
-                                        //testerParticipation의 값을 하나 증가시킴
+                                    ),
+                                    onPressed: () {
+                                      adController.loadAndShowAd();
+                                      //Todo : firebase isApproval = true;
+                                      boards[index].isApproval
+                                          ? updateBoard(boards[index], false)
+                                          : updateBoard(boards[index], true);
+                                      //testerParticipation의 값을 하나 증가시킴
 
-                                        setState(() {});
-                                      },
-                                      child: Text(
-                                        boards[index].isApproval
-                                            ? 'Approval'
-                                            : "Unapproval",
-                                        style: TextStyle(
-                                            color: colors.iconColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500),
-                                      )),
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      boards[index].isApproval
+                                          ? tr('Approval')
+                                          : tr("Unapproval"),
+                                      style: TextStyle(
+                                          color: colors.iconColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500),
+                                    ).tr(),
+                                  ),
                                 ),
                                 cardText(
                                     'Developer: ${boards[index].developer}',

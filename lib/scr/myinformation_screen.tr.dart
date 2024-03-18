@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
-import 'package:tester_share_app/scr/change_password_screen.dart';
+import 'package:tester_share_app/scr/change_password_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -47,17 +48,18 @@ class MyInformationScreen extends StatelessWidget {
                 fontSize: _fontSizeCollection.subjectFontSize,
                 color: colors.textColor,
               ),
-            ),
+            ).tr(),
             SizedBox(height: 40),
             _textForm('email', 'E - mail'),
             SizedBox(height: 20),
             _textForm('formattedDate', 'Registration Date', formattedDate),
             SizedBox(height: 20),
-            _textForm('deployed', 'Number of App Launch Experiences'),
+            _textForm('deployed', tr('Number of App Launch Experiences')),
             SizedBox(height: 20),
-            _textForm('testerRequest', 'Number of Tester Requests'),
+            _textForm('testerRequest', tr('Number of Tester Requests')),
             SizedBox(height: 20),
-            _textForm('testerParticipation', 'Number of Tester Participation'),
+            _textForm(
+                'testerParticipation', tr('Number of Tester Participation')),
             SizedBox(height: 20),
             _textForm('point', 'point'),
             SizedBox(height: 20),
@@ -76,9 +78,14 @@ class MyInformationScreen extends StatelessWidget {
   Widget _textForm(String field, String subject, [String? additionalData]) {
     dynamic data = _authController.userData![field];
 
+    String yearText = tr("year");
+    String monthText = tr("month");
+    String dayText = tr("day");
+
     // Timestamp 또는 int인 경우 문자열로 변환
     if (data is Timestamp) {
-      data = formatDateTime(data.toDate(), 'yyyy년 MM월 dd일');
+      data = formatDateTime(
+          data.toDate(), 'yyyy $yearText MM $monthText dd $dayText');
     } else if (data is int) {
       data = data.toString();
     }
@@ -95,7 +102,7 @@ class MyInformationScreen extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: '$subject: ',
+            text: '$subject : ',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           TextSpan(

@@ -7,7 +7,7 @@ import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
-import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';

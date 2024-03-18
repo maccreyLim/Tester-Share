@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/send_message_detail.dart';
+import 'package:tester_share_app/scr/send_message_detail_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 
 class SendMessageScreen extends StatefulWidget {
@@ -119,7 +120,7 @@ class _SendMessageScreen extends State<SendMessageScreen> {
               }
 
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Text('메시지가 없습니다.');
+                return Text("No messages available").tr();
               }
 
               List<MessageModel> messages = snapshot.data!;
@@ -141,24 +142,37 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                     final Duration difference = now.difference(created);
 
                     String formattedDate;
+                    String minutes = tr("minutes ago");
+                    String hours = tr("hours ago");
 
                     if (difference.inHours > 0) {
-                      formattedDate = '${difference.inHours}시간 전';
+                      formattedDate = '${difference.inHours} $minutes';
                     } else if (difference.inMinutes > 0) {
-                      formattedDate = '${difference.inMinutes}분 전';
+                      formattedDate = '${difference.inMinutes} $hours';
                     } else {
-                      formattedDate = '방금 전';
+                      formattedDate = tr("Just now");
                     }
                     return ListTile(
                       title: message.isRead
-                          ? Text(
-                              'To : ${message.receiverNickname}   ($formattedDate)\n Read : 읽음',
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey),
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'To : ${message.receiverNickname}   ($formattedDate)',
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.grey),
+                                ),
+                                const SizedBox(width: 10),
+                                const Text(
+                                  "The recipient has read the message",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey),
+                                ).tr(),
+                              ],
                             )
                           : Text(
                               'To : ${message.receiverNickname}   ($formattedDate)',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red),

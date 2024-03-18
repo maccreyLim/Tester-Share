@@ -1,36 +1,29 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
-class DeveloperMessageCreateScreen extends StatefulWidget {
-  const DeveloperMessageCreateScreen(
-      {super.key,
-      required this.receiverUid,
-      required this.developer,
-      this.message});
-  final String receiverUid; // 수신자의 UID를 저장하는 변수
-  final String developer; // 수신자 이름
-  final String? message;
+class MessageCreateScreen extends StatefulWidget {
+  const MessageCreateScreen({super.key});
 
   @override
-  State<DeveloperMessageCreateScreen> createState() =>
-      _DeveloperMessageCreateScreenState();
+  State<MessageCreateScreen> createState() => _MessageCreateScreenState();
 }
 
-class _DeveloperMessageCreateScreenState
-    extends State<DeveloperMessageCreateScreen> {
+class _MessageCreateScreenState extends State<MessageCreateScreen> {
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final _formkey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   TextEditingController sendUserController = TextEditingController();
-
+  TextEditingController _search = TextEditingController();
+  String receiverUid = ''; // 수신자의 UID를 저장하는 변수
   final _seach = SearchController();
   final MassageFirebaseController _mfirebase =
       MassageFirebaseController(); // MessageFirebase 클래스의 인스턴스 생성
@@ -43,13 +36,6 @@ class _DeveloperMessageCreateScreenState
     messageController.dispose();
     sendUserController.dispose();
     _seach.dispose();
-  }
-
-  @override
-  void initState() {
-    sendUserController.text = widget.developer;
-    messageController.text = widget.message ?? ''; // 옵셔널한 메시지에 대한 처리
-    super.initState();
   }
 
   @override
@@ -78,7 +64,62 @@ class _DeveloperMessageCreateScreenState
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                    child: TextField(
+                      controller: _search,
+                      decoration: InputDecoration(
+                        hintText: tr("Member Search"),
+                        hintStyle: TextStyle(color: Colors.grey),
+                        prefixIcon: Icon(Icons.search),
+                        filled: true,
+                        fillColor: Colors.black, // 배경색 변경
+                        border: const UnderlineInputBorder(
+                            // 경계선 스타일 변경
+                            // borderRadius:
+                            //     BorderRadius.circular(25), // 텍스트 필드의 각도를 설정
+                            borderSide: BorderSide(color: Colors.white)),
+                      ),
+                      style: TextStyle(color: colors.textColor),
+                      onChanged: (v) async {
+                        Map<String, dynamic> results =
+                            await _mfirebase.getUserByNickname(v);
+                        setState(() {
+                          searchResults = results;
+                        });
+                      },
+                    ),
+                  ),
                   const SizedBox(
+                    height: 14,
+                  ),
+                  Text(
+                    "Search Results",
+                    style: TextStyle(color: colors.textColor),
+                  ).tr(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: searchResults.length,
+                    itemBuilder: (context, index) {
+                      final user = searchResults.keys.elementAt(index);
+                      final userData = searchResults[user];
+
+                      final nickname = userData['profileName'] as String;
+
+                      return ListTile(
+                          title: Text(nickname,
+                              style: TextStyle(color: colors.textColor)),
+                          onTap: () {
+                            setState(() {
+                              sendUserController.text = nickname;
+                              //UID 저장
+                              receiverUid = user;
+                            });
+                          },
+                          leading: Icon(Icons.person_add));
+                    },
+                  ),
+                  SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -86,21 +127,21 @@ class _DeveloperMessageCreateScreenState
                     cursorHeight: 20,
                     maxLines: 1,
                     controller: sendUserController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      labelText: "보낼사람",
+                      labelText: tr("Recipient"),
                     ),
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "보낼사람을 입력해주세요";
+                        return tr("Please enter the recipient");
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -108,22 +149,22 @@ class _DeveloperMessageCreateScreenState
                     cursorHeight: 20,
                     maxLines: 10,
                     controller: messageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      labelText: "메시지",
+                      labelText: tr("Message"),
                     ),
                     maxLength: 100,
                     keyboardType: TextInputType.multiline,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "메시지를 입력해주세요";
+                        return tr("Please enter a message");
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 25,
                   ),
                   SizedBox(
@@ -134,23 +175,23 @@ class _DeveloperMessageCreateScreenState
                         if (_formkey.currentState!.validate()) {
                           MessageModel message = MessageModel(
                               senderUid: _authController.userData!['uid'],
-                              receiverUid: widget.receiverUid,
+                              receiverUid: receiverUid,
                               contents: messageController.text,
                               timestamp: DateTime.now());
                           _mfirebase.createMessage(
                               message, sendUserController.text);
-                          Get.off(const MessageStateScreen());
+                          Get.off(MessageStateScreen());
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,
                       ),
                       child: Text(
-                        '보내기',
+                        'Send',
                         style: TextStyle(
                             color: colors.iconColor,
                             fontSize: _fontSizeCollection.buttonFontSize),
-                      ),
+                      ).tr(),
                     ),
                   ),
                 ],

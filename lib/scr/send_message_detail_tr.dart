@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -53,21 +54,31 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      '받는 사람 : ${widget.message.senderNickname}',
-                      style: const TextStyle(fontSize: 20, color: Colors.grey),
-                      // textAlign: TextAlign.start,
-                    ),
+                    // Text(
+                    //   '받는 사람 : ${widget.message.senderNickname}',
+                    //   style: const TextStyle(fontSize: 20, color: Colors.grey),
+                    //   // textAlign: TextAlign.start,
+                    // ),
                     const SizedBox(height: 5),
-                    Text(
-                      '보낸 사람 : ${widget.message.receiverNickname}',
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
-                      // textAlign: TextAlign.start,
+                    Row(
+                      children: [
+                        const Text(
+                          'Sender',
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                          // textAlign: TextAlign.start,
+                        ).tr(),
+                        Text(
+                          ' : ${widget.message.receiverNickname}',
+                          style:
+                              const TextStyle(fontSize: 20, color: Colors.grey),
+                          // textAlign: TextAlign.start,
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 40),
               SingleChildScrollView(
                 child: Container(
                     color: _colors.background,
@@ -85,7 +96,7 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
               ElevatedButton.icon(
                   onPressed: () async {
                     await _deleteMessage(widget.message.id);
-                    showToast('메시지가 삭제되었습니다.', 1);
+                    showToast(tr("The message has been deleted"), 1);
 
                     Get.to(MessageStateScreen());
                   },
@@ -93,16 +104,16 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: widget.message.isRead
                         ? const Text(
-                            'Delete',
+                            "Delete",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.redAccent),
-                          )
+                          ).tr()
                         : const Text(
-                            '아직 읽지않은 메시지',
+                            "The unread messages",
                             style: TextStyle(fontSize: 20, color: Colors.grey),
-                          ),
+                          ).tr(),
                   ),
                   icon: const Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

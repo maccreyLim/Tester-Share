@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/notice_controller.dart';
 import 'package:tester_share_app/model/notice_firebase_model.dart';
-import 'package:tester_share_app/scr/create_notice_screen.dart';
-import 'package:tester_share_app/scr/detail_notice_screen.dart';
+import 'package:tester_share_app/scr/create_notice_screen_tr.dart';
+import 'package:tester_share_app/scr/detail_notice_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -48,7 +49,7 @@ class NoticeScreen extends StatelessWidget {
                 fontSize: _fontSizeCollection.settingFontSize,
                 color: colors.textColor,
               ),
-            ),
+            ).tr(),
             Expanded(
               child: noticeStreenBuilder(),
             ),
@@ -97,12 +98,14 @@ class NoticeScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return const Text('공지사항 데이터를 가져오는 중 오류가 발생했습니다.');
+            return const Text(
+                    'An error occurred while fetching the announcement data')
+                .tr();
           }
 
           final querySnapshot = snapshot.data;
           if (querySnapshot == null || querySnapshot.docs.isEmpty) {
-            return const Text('공지사항이 없습니다.');
+            return const Text("There are no notices");
           }
 
           final announcementList = querySnapshot.docs
@@ -136,13 +139,15 @@ class NoticeScreen extends StatelessWidget {
             final Duration difference = now.difference(created);
 
             String formattedDate;
+            String minutes = tr("minutes ago");
+            String hours = tr("hours ago");
 
             if (difference.inHours > 0) {
-              formattedDate = '${difference.inHours}시간 전';
+              formattedDate = '${difference.inHours} $minutes';
             } else if (difference.inMinutes > 0) {
-              formattedDate = '${difference.inMinutes}분 전';
+              formattedDate = '${difference.inMinutes} $hours';
             } else {
-              formattedDate = '방금 전';
+              formattedDate = tr('Just now');
             }
             //리스트 타이틀로 구현
             return ListTile(

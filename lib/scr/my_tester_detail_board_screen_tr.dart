@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -64,14 +65,34 @@ class MyTestDetailBoardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Creation date: ${_formattedDate(boards.createAt)}',
-                    style: TextStyle(fontSize: 14, color: colors.textColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Creation date',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ).tr(),
+                      Text(
+                        ': ${_formattedDate(boards.createAt)}',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ),
+                    ],
                   ),
                   if (boards.updateAt != null)
-                    Text(
-                      'Modification date: ${_formattedDate(boards.updateAt!)}',
-                      style: TextStyle(fontSize: 14, color: colors.textColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Modification date',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ).tr(),
+                        Text(
+                          ': ${_formattedDate(boards.updateAt!)}',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ),
+                      ],
                     )
                 ],
               ),
@@ -84,7 +105,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                   const Text(
                     '-  Developer  -',
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -104,9 +125,9 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                               icon: Icon(Icons.message),
                             ),
                             Text(
-                              "Send a message to the developer",
+                              "Send a message",
                               style: TextStyle(color: colors.importantMessage),
-                            ),
+                            ).tr(),
                           ],
                         ),
                       ],
@@ -116,7 +137,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                   const Text(
                     '-  Test App URL  -',
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -157,13 +178,13 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   '-  Supported Languages  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 const SizedBox(height: 20),
               ],
             ),
@@ -202,7 +223,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                 const Text(
                   '-  Github URL  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
@@ -243,13 +264,13 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                 const SizedBox(height: 40),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  App Image  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -272,13 +293,13 @@ class MyTestDetailBoardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  Introduction  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -308,7 +329,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: _fontSizeCollection.buttonFontSize,
                       color: colors.iconColor),
-                ),
+                ).tr(),
               ),
             ),
             const SizedBox(height: 10),

@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/message_state_screen.dart';
+import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -56,21 +57,25 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '받을 사람 :  ${widget.message.senderNickname}',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent),
+                Row(
+                  children: [
+                    const Text(
+                      "Recipient",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent),
+                    ).tr(),
+                  ],
                 ),
-                SizedBox(height: 2),
-                Text(
-                  '원본메시지',
+                const SizedBox(height: 2),
+                const Text(
+                  "The original message",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black54),
-                ),
+                ).tr(),
                 SizedBox(height: 6),
                 Text(
                   '${widget.message.contents}',
@@ -85,16 +90,16 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                   maxLength: 100,
                   controller: messageController,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-                    labelText: "답장 내용",
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelText: tr("The reply content"),
+                    labelStyle: const TextStyle(color: Colors.white),
                   ),
                   keyboardType: TextInputType.multiline,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "답장 내용을 입력해주세요";
+                      return tr("Please enter the reply content");
                     }
                     return null;
                   },
@@ -127,7 +132,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                     style: TextStyle(
                         fontSize: _fonts.buttonFontSize,
                         color: _colors.iconColor),
-                  ),
+                  ).tr(),
                 ),
               ],
             ),

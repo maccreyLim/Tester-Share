@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
@@ -44,8 +45,8 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
               controller: emailController,
               decoration: InputDecoration(
                 icon: const Icon(Icons.email),
-                labelText: 'Google Play Store ID',
-                hintText: 'Google Play Store ID를 입력해 주세요.',
+                labelText: tr('Google Play Store ID'),
+                hintText: tr('Please enter your Google Play Store ID'),
                 labelStyle: TextStyle(color: _colors.textColor),
                 focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
@@ -68,11 +69,11 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                   // 비밀번호 찾기 실행
                   await _authController.forgotPassword(emailController.text);
                   // 알림 표시
-                  showToast('비밀번호 재설정 메일을 전송했습니다.', 2);
+                  showToast(tr("Password reset email has been sent"), 2);
                   Get.back();
                 },
                 child: Text(
-                  '비밀번호 찾기',
+                  'Find Password',
                   style: TextStyle(
                     fontSize: _fontSize.buttonFontSize,
                     fontWeight: FontWeight.bold,

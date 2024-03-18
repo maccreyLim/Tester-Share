@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
+import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailUnapprovedPostScreen extends StatefulWidget {
   final BoardFirebaseModel boards;
-  DetailUnapprovedPostScreen({Key? key, required this.boards})
+  const DetailUnapprovedPostScreen({Key? key, required this.boards})
       : super(key: key);
 
   @override
@@ -73,14 +74,32 @@ class _DetailUnapprovedPostScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Creation date: ${_formattedDate(widget.boards.createAt)}',
-                    style: TextStyle(fontSize: 14, color: colors.textColor),
+                  Row(
+                    children: [
+                      Text(
+                        'Creation date',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ).tr(),
+                      Text(
+                        ': ${_formattedDate(widget.boards.createAt)}',
+                        style: TextStyle(fontSize: 14, color: colors.textColor),
+                      ),
+                    ],
                   ),
                   if (widget.boards.updateAt != null)
-                    Text(
-                      'Modification date: ${_formattedDate(widget.boards.updateAt!)}',
-                      style: TextStyle(fontSize: 14, color: colors.textColor),
+                    Row(
+                      children: [
+                        Text(
+                          'Modification date',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ).tr(),
+                        Text(
+                          ': ${_formattedDate(widget.boards.updateAt!)}',
+                          style:
+                              TextStyle(fontSize: 14, color: colors.textColor),
+                        ),
+                      ],
                     )
                 ],
               ),
@@ -93,7 +112,7 @@ class _DetailUnapprovedPostScreenState
                   const Text(
                     '-  Developer  -',
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -115,7 +134,7 @@ class _DetailUnapprovedPostScreenState
                             Text(
                               "Send a message to the developer",
                               style: TextStyle(color: colors.importantMessage),
-                            ),
+                            ).tr(),
                           ],
                         ),
                       ],
@@ -125,7 +144,7 @@ class _DetailUnapprovedPostScreenState
                   const Text(
                     '-  Test App URL  -',
                     style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -166,13 +185,13 @@ class _DetailUnapprovedPostScreenState
                 ],
               ),
             ),
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '-  Supported Languages  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 const SizedBox(height: 20),
               ],
             ),
@@ -211,7 +230,7 @@ class _DetailUnapprovedPostScreenState
                 const Text(
                   '-  Github URL  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
@@ -252,13 +271,13 @@ class _DetailUnapprovedPostScreenState
                 const SizedBox(height: 40),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  App Image  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -281,13 +300,13 @@ class _DetailUnapprovedPostScreenState
               ),
             ),
             const SizedBox(height: 40),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '-  Introduction  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                ).tr(),
               ],
             ),
             const SizedBox(height: 10),
@@ -298,9 +317,9 @@ class _DetailUnapprovedPostScreenState
                   child: cardText(widget.boards.introductionText, 16)),
             ),
             const SizedBox(height: 50),
-            SizedBox(height: 20),
-            Divider(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 20),
             SizedBox(width: double.infinity, child: BannerAD()),
             const SizedBox(height: 30),
             Padding(
@@ -320,7 +339,7 @@ class _DetailUnapprovedPostScreenState
                   Get.back();
                 },
                 child: Text(
-                  widget.boards.isApproval ? 'Unapproval' : 'Approval',
+                  widget.boards.isApproval ? tr("Unapporoval") : tr('Approval'),
                   style: TextStyle(fontSize: 20, color: colors.iconColor),
                 ),
               ),

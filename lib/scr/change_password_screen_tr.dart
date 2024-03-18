@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
@@ -59,7 +60,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 style: TextStyle(
                     fontSize: _fontSizeCollection.subjectFontSize,
                     color: _colors.textColor),
-              ),
+              ).tr(),
               Form(
                   key: _formKey,
                   child: Column(
@@ -69,14 +70,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         obscureText: true,
                         decoration: InputDecoration(
                           icon: const Icon(Icons.title),
-                          labelText: 'Current Password',
-                          hintText: 'Please write the Current Password',
+                          labelText: tr('Current Password'),
+                          hintText: tr('Please write the Current Password'),
                           labelStyle: TextStyle(color: _colors.textColor),
                         ),
                         style: const TextStyle(color: Colors.white),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Current Password is required';
+                            return tr('Current Password is required');
                           }
                           return null;
                         },
@@ -86,14 +87,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         obscureText: true,
                         decoration: InputDecoration(
                           icon: const Icon(Icons.title),
-                          labelText: 'New Password',
-                          hintText: 'Please write the New Password',
+                          labelText: tr('New Password'),
+                          hintText: tr('Please write the New Password'),
                           labelStyle: TextStyle(color: _colors.textColor),
                         ),
                         style: const TextStyle(color: Colors.white),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'New Password is required';
+                            return tr('New Password is required');
                           }
                           return null;
                         },
@@ -133,7 +134,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             fontSize: _fontSizeCollection.buttonFontSize,
             color: _colors.iconColor,
           ),
-        ),
+        ).tr(),
       ),
     );
   }

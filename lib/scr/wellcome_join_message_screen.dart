@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
@@ -28,13 +29,13 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                     fontSize: 50,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
-              ),
+              ).tr(),
               const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Tester Share에 회원 가입을 해주셔서 \n감사합니다.\n\n',
+                    "Thank you for signing up for \nTester Share.\n\n",
                     style: TextStyle(
                         fontSize: 20,
                         color: colors.textColor,
@@ -47,24 +48,24 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      '-- 중 요 --\n',
+                      "-- IMPORTANT --\n",
                       style: TextStyle(
                           fontSize: 26,
                           color: colors.iconColor,
                           fontWeight: FontWeight.bold),
-                    ),
+                    ).tr(),
                   ],
                 ),
               ),
               Text(
-                '가입시 입력하신  E-mail주소로 인증메일을 \n보내드렸습니다.\n인증메일을 확인하시고 로그인은 \n반드시 인증절차를 완료하셔야 \n가능합니다.',
+                "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. It is mandatory to complete the verification process for login.",
                 style: TextStyle(
                   fontSize: 20,
                   color: colors.textColor,
                   fontWeight: FontWeight.bold,
                   height: 2,
                 ),
-              ),
+              ).tr(),
               const SizedBox(
                 height: 50,
               ),
@@ -84,11 +85,11 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                         Get.to(() => const LoginScreen());
                       },
                       child: Text(
-                        '확인',
+                        "Confirm",
                         style: TextStyle(
                             color: colors.iconColor,
                             fontSize: fontsize.buttonFontSize),
-                      ),
+                      ).tr(),
                     ),
                   ),
                 ],
