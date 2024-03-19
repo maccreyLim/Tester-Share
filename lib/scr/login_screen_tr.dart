@@ -25,8 +25,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    super.initState();
+    //FCM 초기화
     FcmManager.initialize();
+    super.initState();
   }
 
   @override

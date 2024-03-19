@@ -116,13 +116,21 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         iconImageUrl: iconImageUrl,
         githubUrl: githubUrlController.text,
         appSetupUrl: appSetupUrlController.text,
-        testerRequestProfile: {
-          'tester_name': [],
-        },
+        testerRequestProfile: {},
         language: selectedLanguages,
       );
       try {
         await _boardFirebaseController.addBoard(newPost);
+        String _uid = _authController.userData!['uid'];
+        int value =
+            ++_authController.userData!['testerRequest']; // 전위 증가 연산자 사용
+
+        // 업데이트할 데이터
+        Map<String, dynamic> _userNewData = {
+          "testerRequest": value,
+        };
+        // 사용자 데이터 업데이트
+        _authController.updateUserData(_uid, _userNewData);
 
         // 저장이 완료되면 홈 화면으로 이동
         Get.off(() => const HomeScreen());

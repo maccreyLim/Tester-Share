@@ -6,7 +6,6 @@ import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
-import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 

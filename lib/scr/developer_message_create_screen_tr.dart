@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
+import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
+import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -14,10 +17,13 @@ class DeveloperMessageCreateScreen extends StatefulWidget {
       {super.key,
       required this.receiverUid,
       required this.developer,
+      required this.boards,
       this.message});
   final String receiverUid; // 수신자의 UID를 저장하는 변수
   final String developer; // 수신자 이름
   final String? message;
+  final BoardFirebaseModel
+      boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
 
   @override
   State<DeveloperMessageCreateScreen> createState() =>
@@ -37,6 +43,7 @@ class _DeveloperMessageCreateScreenState
       MassageFirebaseController(); // MessageFirebase 클래스의 인스턴스 생성
   Map<String, dynamic> searchResults = {}; // 검색 결과를 저장할 변수
   final AuthController _authController = AuthController.instance;
+  final BoardFirebaseController _board = BoardFirebaseController();
 
   @override
   void dispose() {
@@ -142,6 +149,37 @@ class _DeveloperMessageCreateScreenState
                               message, sendUserController.text);
                           Get.off(const MessageStateScreen());
                         }
+
+                        //UserDate에서 testerParticipation +1증가
+                        String _uid = _authController.userData!['uid'];
+                        int value = ++_authController
+                            .userData!['testerParticipation']; // 전위 증가 연산자 사용
+                        // 현재 사용자의 프로필 이름 가져오기
+                        String _profileName =
+                            _authController.userData!['profileName'];
+
+                        // 업데이트할 데이터
+                        Map<String, dynamic> _userNewData = {
+                          "testerParticipation": value,
+                        };
+                        // 사용자 데이터 업데이트
+                        _authController.updateUserData(_uid, _userNewData);
+
+                        //board에서 testerParticipation +증가
+                        String _docUid = widget.boards.docid;
+                        int _value = ++widget.boards.testerParticipation;
+                        List<dynamic> existingProfileNames =
+                            _authController.userData!['testerRequestProfile'] ??
+                                [];
+                        existingProfileNames.add(_profileName);
+                        // 업데이트할 데이터
+                        Map<String, dynamic> _boardNewData = {
+                          "testerParticipation": _value,
+                          // 기존 프로필 이름을 포함한 리스트를 사용하여 새로운 리스트 생성
+                          "testerRequestProfile": existingProfileNames,
+                        };
+                        // 사용자 데이터 업데이트
+                        _board.updateBoardData(_docUid, _boardNewData);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,

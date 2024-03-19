@@ -117,7 +117,7 @@ class AuthController extends GetxController {
         'testerParticipation': 0,
         'testerRequest': 0,
         'createAt': DateTime.now(),
-        'point': 20,
+        'point': 0,
       });
 
       // 회원가입 성공 시, 여기에서 다른 동작을 추가할 수 있습니다.
@@ -378,7 +378,37 @@ class AuthController extends GetxController {
   }
 
   // 사용자 데이터를 업데이트하는 메서드
-  void updateUserData(Map<String, dynamic> newData) {
-    _userData.value = newData;
+  Future<void> updateUserData(String uid, Map<String, dynamic> newData) async {
+    try {
+      // 사용자가 로그인되어 있는지 확인
+      User? user = authentication.currentUser;
+      if (user != null) {
+        // Firestore의 "users" 컬렉션에서 사용자 문서 참조 가져오기
+        DocumentReference userDocRef = _firestore.collection('users').doc(uid);
+
+        // 사용자 데이터 업데이트
+        await userDocRef.set(newData, SetOptions(merge: true));
+        print("사용자 데이터가 업데이트되었습니다.");
+      } else {
+        print("사용자가 로그인되어 있지 않습니다.");
+      }
+    } catch (e) {
+      print("사용자 데이터 업데이트 중 오류가 발생했습니다: $e");
+    }
   }
 }
+
+
+
+// // 사용자 UID (Firebase Authentication에서 가져옴)
+//   String uid = "사용자의 UID";
+
+//   // 업데이트할 데이터
+//   Map<String, dynamic> newData = {
+//     "name": "새로운 이름",
+//     "email": "새로운 이메일@example.com",
+//     // 필요한 경우 다른 필드도 추가할 수 있습니다.
+//   };
+
+//   // 사용자 데이터 업데이트
+//   updateUserData(uid, newData);

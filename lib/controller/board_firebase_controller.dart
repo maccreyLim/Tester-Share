@@ -1,9 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 
 class BoardFirebaseController {
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection('boards');
+
+  // Firebase Authentication 인스턴스 생성
+  final FirebaseAuth _authentication = FirebaseAuth.instance;
+// Firestore 인스턴스 생성
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 // Create (추가)
   Future<void> addBoard(BoardFirebaseModel newPost) async {
@@ -107,6 +113,26 @@ class BoardFirebaseController {
     } catch (e) {
       print('Error streaming boards: $e');
       return const Stream.empty();
+    }
+  }
+
+  // 사용자 데이터를 업데이트하는 메서드
+  Future<void> updateBoardData(String docUid, Map<String, dynamic> newData) async {
+    try {
+      // 사용자가 로그인되어 있는지 확인
+      User? user = _authentication.currentUser;
+      if (user != null) {
+        // Firestore의 "users" 컬렉션에서 사용자 문서 참조 가져오기
+        DocumentReference userDocRef = _firestore.collection('boards').doc(docUid);
+
+        // 사용자 데이터 업데이트
+        await userDocRef.set(newData, SetOptions(merge: true));
+        print("사용자 데이터가 업데이트되었습니다.");
+      } else {
+        print("사용자가 로그인되어 있지 않습니다.");
+      }
+    } catch (e) {
+      print("사용자 데이터 업데이트 중 오류가 발생했습니다: $e");
     }
   }
 }

@@ -14,7 +14,7 @@ class DetailBoardScreen extends StatelessWidget {
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
   final ColorsCollection colors = ColorsCollection();
   final AuthController _authController = AuthController.instance;
-  // Use 'final' for the constructor parameter, and fix the constructor name
+
   DetailBoardScreen({Key? key, required this.boards}) : super(key: key);
 
   @override
@@ -124,7 +124,8 @@ class DetailBoardScreen extends StatelessWidget {
                                   // 메시지 보내기 기능 추가
                                   Get.to(DeveloperMessageCreateScreen(
                                       receiverUid: boards.createUid,
-                                      developer: boards.developer));
+                                      developer: boards.developer,
+                                      boards: boards));
                                 },
                                 child: Row(
                                   children: [
@@ -341,6 +342,7 @@ class DetailBoardScreen extends StatelessWidget {
                     receiverUid: boards.createUid,
                     developer: boards.developer,
                     message: emailMessage,
+                    boards: boards,
                   ));
                 },
                 child: Text(

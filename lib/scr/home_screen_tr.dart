@@ -93,12 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.to(const MessageStateScreen());
                 },
               )),
-          // IconButton(
-          //     onPressed: () {
-          //       // Todo: Post(게시판)으로 이동)
-          //       );
-          //     },
-          //     icon: const Icon(Icons.article)),
+          IconButton(
+              onPressed: () {
+              
+//테스트
+              },
+              icon: const Icon(Icons.article)),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());
