@@ -431,7 +431,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () async {
-          showRewardAd();
+          adController.loadAndShowAd();
           _savePost();
         },
         child: Text(

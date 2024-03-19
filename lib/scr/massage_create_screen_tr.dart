@@ -5,6 +5,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -20,15 +21,16 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final _formkey = GlobalKey<FormState>();
-  TextEditingController messageController = TextEditingController();
-  TextEditingController sendUserController = TextEditingController();
-  TextEditingController _search = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
+  final TextEditingController sendUserController = TextEditingController();
+  final TextEditingController _search = TextEditingController();
   String receiverUid = ''; // 수신자의 UID를 저장하는 변수
   final _seach = SearchController();
   final MassageFirebaseController _mfirebase =
       MassageFirebaseController(); // MessageFirebase 클래스의 인스턴스 생성
   Map<String, dynamic> searchResults = {}; // 검색 결과를 저장할 변수
   final AuthController _authController = AuthController.instance;
+  final InterstitialAdManager adController = InterstitialAdManager();
 
   @override
   void dispose() {
@@ -171,6 +173,7 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        adController.loadAndShowAd();
                         //  Todo: MessageFirebase에서 메시지 등록
                         if (_formkey.currentState!.validate()) {
                           MessageModel message = MessageModel(

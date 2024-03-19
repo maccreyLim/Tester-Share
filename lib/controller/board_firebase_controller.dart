@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 
 class BoardFirebaseController {
@@ -117,13 +118,15 @@ class BoardFirebaseController {
   }
 
   // 사용자 데이터를 업데이트하는 메서드
-  Future<void> updateBoardData(String docUid, Map<String, dynamic> newData) async {
+  Future<void> updateBoardData(
+      String docUid, Map<String, dynamic> newData) async {
     try {
       // 사용자가 로그인되어 있는지 확인
       User? user = _authentication.currentUser;
       if (user != null) {
         // Firestore의 "users" 컬렉션에서 사용자 문서 참조 가져오기
-        DocumentReference userDocRef = _firestore.collection('boards').doc(docUid);
+        DocumentReference userDocRef =
+            _firestore.collection('boards').doc(docUid);
 
         // 사용자 데이터 업데이트
         await userDocRef.set(newData, SetOptions(merge: true));

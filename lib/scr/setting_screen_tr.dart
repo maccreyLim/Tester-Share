@@ -210,7 +210,7 @@ class SettingScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // InterstitialAdExample();
-                      showRewardAd();
+
                       adController.loadAndShowAd();
                       //UserDate에서 point +1증가
 

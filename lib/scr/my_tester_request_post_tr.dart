@@ -22,6 +22,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
   final SingleImageFirebaseController _singleImageFirebaseController =
       SingleImageFirebaseController();
   final AuthController _authController = AuthController.instance;
+  final InterstitialAdManager adController = InterstitialAdManager();
   MyTesterRequestPostScreen({super.key});
 
   void showRewardAd() {
@@ -225,7 +226,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                           ),
                                           onPressed: () async {
                                             //리워드광고
-                                            showRewardAd();
+                                            adController.loadAndShowAd();
                                             // Multi image 삭제
                                             await _multiImageFirebaseController
                                                 .deleteImagesUrlFromStorage(
@@ -320,4 +321,8 @@ class MyTesterRequestPostScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class InterstitialAdManager {
+  void loadAndShowAd() {}
 }

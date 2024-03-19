@@ -91,7 +91,6 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         print('오류: 사용자 데이터를 가져올 수 없습니다.');
         return;
       }
-      //삭제된 이미지 리스트를 받아와야 함
 
       String iconImageUrl = widget.boards.iconImageUrl;
       String? userUid = _authController.currentUser!.uid;
@@ -107,12 +106,13 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
 
         // 선택된 이미지들이 유효한지 검사
         if (_validatePickedImages()) {
-          // 새로 업로드할 이미지가 있는 경우에만 업로드 수행
-          if (newImages.isNotEmpty) {
-            // 다중 이미지 업데이트
-            List<String> urls = await _multiImageFirebaseController
-                .updateMultiImages(newImages, widget.boards.appImagesUrl);
-            appImagesUrl.addAll(urls); // 새로운 URL을 기존 URL 리스트에 추가
+          // 이미지가 변경된 경우에만 업로드 수행
+          if (newImages.isNotEmpty ||
+              appImagesUrl.length != pickedImages.length) {
+            // 다중 이미지 업로드
+            List<String> newUrls = await _multiImageFirebaseController
+                .updateMultiImages(pickedImages, widget.boards.appImagesUrl);
+            appImagesUrl = newUrls; // 새로운 URL로 리스트 업데이트
           }
         }
 
@@ -487,7 +487,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
-          showRewardAd();
+          adController.loadAndShowAd();
           _savePost();
         },
         child: Text(
