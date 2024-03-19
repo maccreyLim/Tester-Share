@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -176,7 +175,8 @@ class _DeveloperMessageCreateScreenState
                         Map<String, dynamic> _boardNewData = {
                           "testerParticipation": _value,
                           // 기존 프로필 이름을 포함한 리스트를 사용하여 새로운 리스트 생성
-                          "testerRequestProfile": existingProfileNames,
+                          //추후 리스트로 업데이트변경하고 READ부분까지 손봐야 함
+                          // "testerRequestProfile": existingProfileNames,
                         };
                         // 사용자 데이터 업데이트
                         _board.updateBoardData(_docUid, _boardNewData);
