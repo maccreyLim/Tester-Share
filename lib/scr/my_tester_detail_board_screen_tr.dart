@@ -311,30 +311,45 @@ class MyTestDetailBoardScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Divider(),
-            SizedBox(height: 20),
-            SizedBox(width: double.infinity, child: BannerAD()),
+            // SizedBox(height: 20),
+            // SizedBox(width: double.infinity, child: BannerAD()),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: () {
-                  Get.to(() => UpdateBoardScreen(boards: boards));
-                },
-                child: Text(
-                  'Update',
-                  style: TextStyle(
-                      fontSize: _fontSizeCollection.buttonFontSize,
-                      color: colors.iconColor),
-                ).tr(),
-              ),
+              child: !(boards.isApproval)
+                  ? ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      onPressed: () {
+                        Get.to(() => UpdateBoardScreen(boards: boards));
+                      },
+                      child: Text(
+                        'Update',
+                        style: TextStyle(
+                            fontSize: _fontSizeCollection.buttonFontSize,
+                            color: colors.iconColor),
+                      ).tr(),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Inapproved projects cannot be deleted or modified",
+                          style:
+                              TextStyle(color: colors.textColor, fontSize: 10),
+                        ).tr(),
+                      ],
+                    ),
             ),
             const SizedBox(height: 10),
           ],
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:tester_share_app/scr/door_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.tr.dart';
 import 'package:tester_share_app/scr/notice_screen_tr.dart';
+import 'package:tester_share_app/scr/faq_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -80,6 +81,28 @@ class SettingScreen extends StatelessWidget {
                             fontSize: _fontSizeCollection.settingFontSize),
                       ).tr()),
                 ],
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.question_answer,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(() => FAQScreen());
+                      },
+                      child: Text(
+                        "FAQ",
+                        style: TextStyle(
+                            color: colors.textColor,
+                            fontSize: _fontSizeCollection.settingFontSize),
+                      ).tr()),
+                ],
+              ),
+              SizedBox(
+                height: 10,
               ),
               Row(
                 children: [
@@ -200,42 +223,44 @@ class SettingScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.tv,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                    onPressed: () {
-                      // InterstitialAdExample();
 
-                      adController.loadAndShowAd();
-                      //UserDate에서 point +1증가
+              //Google 광고정책에 위반되는 것 같아서 일단은 Kill
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.tv,
+              //       color: colors.iconColor,
+              //     ),
+              //     const SizedBox(width: 10),
+              //     TextButton(
+              //       onPressed: () {
+              //         // InterstitialAdExample();
 
-                      String _uid = _authController.userData!['uid'];
-                      int value =
-                          ++_authController.userData!['point']; // 전위 증가 연산자 사용
+              //         adController.loadAndShowAd();
+              //         //UserDate에서 point +1증가
 
-                      // 업데이트할 데이터
-                      Map<String, dynamic> _userNewData = {
-                        "point": value,
-                        // 필요한 경우 다른 필드도 추가할 수 있습니다.
-                      };
-                      // 사용자 데이터 업데이트
-                      _authController.updateUserData(_uid, _userNewData);
-                    },
-                    child: Text(
-                      "After watching the advertisement, \nsupport us",
-                      style: TextStyle(
-                        color: colors.textColor,
-                        fontSize: _fontSizeCollection.settingFontSize,
-                      ),
-                    ).tr(),
-                  ),
-                ],
-              ),
+              //         String _uid = _authController.userData!['uid'];
+              //         int value =
+              //             ++_authController.userData!['point']; // 전위 증가 연산자 사용
+
+              //         // 업데이트할 데이터
+              //         Map<String, dynamic> _userNewData = {
+              //           "point": value,
+              //           // 필요한 경우 다른 필드도 추가할 수 있습니다.
+              //         };
+              //         // 사용자 데이터 업데이트
+              //         _authController.updateUserData(_uid, _userNewData);
+              //       },
+              //       child: Text(
+              //         "After watching the advertisement, \nsupport us",
+              //         style: TextStyle(
+              //           color: colors.textColor,
+              //           fontSize: _fontSizeCollection.settingFontSize,
+              //         ),
+              //       ).tr(),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),

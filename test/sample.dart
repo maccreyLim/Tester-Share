@@ -6,8 +6,8 @@ import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class DetailNoticeScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
-  final AuthController authController = AuthController.instance;
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+  final AuthController authController = AuthController.instance;
   DetailNoticeScreen({super.key});
 
   @override

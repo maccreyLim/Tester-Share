@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
+import 'package:tester_share_app/scr/developer_message_create_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
@@ -125,13 +126,16 @@ class _DetailUnapprovedPostScreenState
                           children: [
                             IconButton(
                               onPressed: () {
-                                //Todo 메시지 보내기
-                                print("Send the Message");
+                                // 메시지 보내기 기능 추가
+                                Get.to(DeveloperMessageCreateScreen(
+                                    receiverUid: widget.boards.createUid,
+                                    developer: widget.boards.developer,
+                                    boards: widget.boards));
                               },
                               icon: Icon(Icons.message),
                             ),
                             Text(
-                              "Send a message to the developer",
+                              "Send a message",
                               style: TextStyle(color: colors.importantMessage),
                             ).tr(),
                           ],
