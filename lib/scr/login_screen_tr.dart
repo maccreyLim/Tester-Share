@@ -156,7 +156,7 @@ class _PasswordInputState extends State<PasswordInput> {
       keyboardType: TextInputType.text,
       obscureText: _obscureText,
       decoration: InputDecoration(
-        icon: const Icon(Icons.password),
+        icon: const Icon(Icons.key),
         labelText: tr('Password'),
         hintText: tr('Please enter your Password'),
         suffixIcon: Semantics(

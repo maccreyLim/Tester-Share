@@ -153,7 +153,7 @@ class PasswordInput extends StatelessWidget {
       keyboardType: TextInputType.text,
       obscureText: true,
       decoration: InputDecoration(
-        icon: const Icon(Icons.password),
+        icon: const Icon(Icons.key),
         labelText: tr('Password'),
         hintText: tr('Please enter your Password'),
         labelStyle: TextStyle(color: colors.textColor),
