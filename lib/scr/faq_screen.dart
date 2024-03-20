@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class FAQScreen extends StatelessWidget {
   FAQScreen({super.key});
