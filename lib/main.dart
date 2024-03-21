@@ -7,7 +7,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/firebase_options.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
-import 'package:tester_share_app/widget/w.fcm.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 
 // 앱에서 지원하는 언어 리스트 변수
@@ -37,8 +36,6 @@ Future<void> main() async {
       FlutterLocalNotification.requestNotificationPermission());
   //다국어 초기화
   await EasyLocalization.ensureInitialized();
-  //FCM 초기화
-  FcmManager.initialize();
 
   runApp(
     EasyLocalization(
