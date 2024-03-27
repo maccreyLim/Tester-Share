@@ -46,13 +46,14 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       TextEditingController();
   TextEditingController appSetupUrlController = TextEditingController();
   List<String> availableLanguages = [
-    tr("English"),
-    tr("Korean"),
-    tr("Chinese"),
-    tr("Japanese"),
-    tr("Spanish"),
-    tr("French"),
-    tr("German")
+    "English",
+    "Korean",
+    "Chinese",
+    "Japanese",
+    "Spanish",
+    "French",
+    "German",
+    "Other languages"
   ];
   List<String> selectedLanguages = [];
   File? pickedImage; //이미지를 담는 변수
@@ -102,23 +103,22 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       // 게시물 저장 로직을 여기에 추가
       // BoardFirebaseModel을 활용하여 새로운 게시물을 생성
       BoardFirebaseModel newPost = BoardFirebaseModel(
-        docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
-        isApproval: false,
-        createUid: userUid.toString(), // 현재 사용자의 UID로 설정
-        developer: _authController.userData?['profileName'],
-        createAt: DateTime.now(),
-        updateAt: null, // 처음 생성이므로 null로 설정
-        title: titleController.text,
-        introductionText: introductionTextController.text,
-        testerRequest: int.parse(testerRequestController.text),
-        testerParticipation: 0,
-        appImagesUrl: appImagesUrl,
-        iconImageUrl: iconImageUrl,
-        githubUrl: githubUrlController.text,
-        appSetupUrl: appSetupUrlController.text,
-        testerRequestProfile: {},
-        language: selectedLanguages,
-      );
+          docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
+          isApproval: false,
+          createUid: userUid.toString(), // 현재 사용자의 UID로 설정
+          developer: _authController.userData?['profileName'],
+          createAt: DateTime.now(),
+          updateAt: null, // 처음 생성이므로 null로 설정
+          title: titleController.text,
+          introductionText: introductionTextController.text,
+          testerRequest: int.parse(testerRequestController.text),
+          testerParticipation: 0,
+          appImagesUrl: appImagesUrl,
+          iconImageUrl: iconImageUrl,
+          githubUrl: githubUrlController.text,
+          appSetupUrl: appSetupUrlController.text,
+          language: selectedLanguages,
+          rquestProfileName: []);
       try {
         await _boardFirebaseController.addBoard(newPost);
         String _uid = _authController.userData!['uid'];
@@ -239,7 +239,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                     children: availableLanguages.map((language) {
                       bool isSelected = selectedLanguages.contains(language);
                       return CheckboxListTile(
-                        title: Text(language,
+                        title: Text(tr(language),
                             style: TextStyle(color: colors.textColor)),
                         value: isSelected,
                         onChanged: (value) {

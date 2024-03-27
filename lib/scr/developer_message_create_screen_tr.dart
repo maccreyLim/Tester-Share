@@ -180,6 +180,14 @@ class _DeveloperMessageCreateScreenState
                         };
                         // 사용자 데이터 업데이트
                         _board.updateBoardData(_docUid, _boardNewData);
+
+                        //board에 rquestProfileName 리스트에 업데이트
+                        String NewrquestProfileName =
+                            _authController.userData!['profileName'];
+                        _board.updateRquestProfileName(
+                            _docUid,
+                            widget.boards.rquestProfileName,
+                            NewrquestProfileName);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,

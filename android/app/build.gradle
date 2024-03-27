@@ -33,6 +33,7 @@ android {
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
+
     aaptOptions {
         useNewCruncher false
     }
@@ -41,6 +42,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -90,4 +92,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform("com.google.firebase:firebase-bom:29.0.2")
     implementation "com.google.firebase:firebase-analytics"
+    implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
 }

@@ -176,10 +176,19 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'From: ${message.senderNickname}   ($formattedDate)',
-                                  style: const TextStyle(
-                                      fontSize: 11, color: Colors.grey),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Sender',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.grey),
+                                    ).tr(),
+                                    Text(
+                                      ' : ${message.senderNickname}   ($formattedDate)',
+                                      style: const TextStyle(
+                                          fontSize: 11, color: Colors.grey),
+                                    ),
+                                  ],
                                 ),
                                 const Text(
                                   "This is a read message",

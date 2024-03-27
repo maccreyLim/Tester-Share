@@ -26,8 +26,7 @@ class SingleImageFirebaseController {
       try {
         // Firebase Storage 참조
         Reference ref = FirebaseStorage.instance.ref().child('boards_Images').child(
-            '${DateTime.now().millisecondsSinceEpoch}_Icon_${pickedImage.path.split('/').last}');
-
+            '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
         // 파일을 Firebase Storage에 업로드
         await ref.putFile(File(pickedImage.path));
 
@@ -51,7 +50,8 @@ class SingleImageFirebaseController {
         Reference imageRef = FirebaseStorage.instance
             .ref()
             .child('boards_Images')
-            .child(pickedImage.path.split('/').last);
+            .child(
+                '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
 
         // Firebase Storage에서 이미지 삭제
         await imageRef.delete();

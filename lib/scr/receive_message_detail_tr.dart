@@ -71,7 +71,7 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                     Row(
                       children: [
                         const Text(
-                          "Recipient",
+                          "Sender",
                           style: TextStyle(fontSize: 24, color: Colors.grey),
                           // textAlign: TextAlign.start,
                         ).tr(),

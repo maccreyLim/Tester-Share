@@ -88,7 +88,7 @@ class _SendMessageScreen extends State<SendMessageScreen> {
           String senderNickname = await getSenderNickname(message.senderUid);
           message.senderNickname = senderNickname;
           String receiverNickname =
-              await getReceiverNickname(message.senderUid);
+              await getReceiverNickname(message.receiverUid);
           message.receiverNickname = receiverNickname;
 
           messages.add(message);
@@ -157,10 +157,19 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'To : ${message.receiverNickname}   ($formattedDate)',
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Colors.grey),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Recipient",
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    ).tr(),
+                                    Text(
+                                      ' : ${message.receiverNickname}   ($formattedDate)',
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(width: 10),
                                 const Text(
@@ -170,12 +179,23 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                                 ).tr(),
                               ],
                             )
-                          : Text(
-                              'To : ${message.receiverNickname}   ($formattedDate)',
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
+                          : Row(
+                              children: [
+                                const Text(
+                                  "Recipient",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
+                                ).tr(),
+                                Text(
+                                  ' : ${message.receiverNickname}   ($formattedDate)',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
+                                ),
+                              ],
                             ),
                       subtitle: Text(
                         message.contents,

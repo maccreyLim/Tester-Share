@@ -53,7 +53,7 @@ class DetailBoardScreen extends StatelessWidget {
                   children: [
                     cardText(boards.title, 20),
                     cardText(
-                        '[${boards.testerRequest}/${boards.testerParticipation}]',
+                        '[${boards.testerParticipation}/${boards.testerRequest}]',
                         16),
                     const SizedBox(height: 10),
                   ],
@@ -326,30 +326,45 @@ class DetailBoardScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: () {
-                  String testApplyMessage =
-                      "아래의 메일 주소로 테스터를 신청합니다. \nhere is the email to request to become a tester. \nこちらがテスターになるためのメールアドレスです。";
-                  // 테스터 신청 이메일 메시지를 구성합니다.
-                  String emailMessage =
-                      "$testApplyMessage\n${_authController.userData!['email']}";
-                  //테스터 신청
-                  Get.to(DeveloperMessageCreateScreen(
-                    receiverUid: boards.createUid,
-                    developer: boards.developer,
-                    message: emailMessage,
-                    boards: boards,
-                  ));
-                },
-                child: Text(
-                  'Apply to be a Tester',
-                  style: TextStyle(fontSize: 20, color: colors.iconColor),
-                ).tr(),
-              ),
+              child: !boards.rquestProfileName
+                      .contains(_authController.userData!['profileName'])
+                  ? ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      onPressed: () {
+                        String testApplyMessage =
+                            "아래의 메일 주소로 테스터를 신청합니다. \nhere is the email to request to become a tester. \nこちらがテスターになるためのメールアドレスです。";
+                        // 테스터 신청 이메일 메시지를 구성합니다.
+                        String emailMessage =
+                            "$testApplyMessage\n${_authController.userData!['email']}";
+                        //테스터 신청
+                        Get.to(DeveloperMessageCreateScreen(
+                          receiverUid: boards.createUid,
+                          developer: boards.developer,
+                          message: emailMessage,
+                          boards: boards,
+                        ));
+                      },
+                      child: Text(
+                        'Apply to be a Tester',
+                        style: TextStyle(fontSize: 20, color: colors.iconColor),
+                      ).tr(),
+                    )
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "Already participated as a tester",
+                        style: TextStyle(fontSize: 20, color: colors.iconColor),
+                      ).tr(),
+                    ),
             ),
           ],
         ),

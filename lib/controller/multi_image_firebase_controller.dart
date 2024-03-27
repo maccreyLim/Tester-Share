@@ -71,7 +71,7 @@ class MultiImageFirebaseController {
               .ref()
               .child('boards_Images')
               .child(
-                  '${DateTime.now().millisecondsSinceEpoch}_App_${imageFile.path.split('/').last}');
+                  '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
           // 파일을 Firebase Storage에 업로드
           await ref.putFile(File(imageFile.path));
@@ -107,7 +107,7 @@ class MultiImageFirebaseController {
                 .ref()
                 .child('boards_Images')
                 .child(
-                    '${DateTime.now().millisecondsSinceEpoch}_App_${imageFile.path.split('/').last}');
+                    '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
             // 파일을 Firebase Storage에 업로드
             await ref.putFile(File(imageFile.path));

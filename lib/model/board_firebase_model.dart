@@ -15,28 +15,27 @@ class BoardFirebaseModel {
   String iconImageUrl; // AppIcon 이미지
   String githubUrl; // github 주소
   String appSetupUrl; // app 설치 주소
-  Map<String, dynamic> testerRequestProfile; // 테스터 참여자 이름
   List<dynamic>? language; // 사용 가능 언어 (nullable로 변경)
+  List<String> rquestProfileName; // App 이미지
 
   // 생성자 추가
-  BoardFirebaseModel({
-    required this.docid,
-    required this.isApproval,
-    required this.createUid,
-    required this.developer,
-    required this.createAt,
-    this.updateAt,
-    required this.title,
-    required this.introductionText,
-    required this.testerRequest,
-    required this.testerParticipation,
-    required this.appImagesUrl,
-    required this.iconImageUrl,
-    required this.githubUrl,
-    required this.appSetupUrl,
-    required this.testerRequestProfile,
-    this.language,
-  });
+  BoardFirebaseModel(
+      {required this.docid,
+      required this.isApproval,
+      required this.createUid,
+      required this.developer,
+      required this.createAt,
+      this.updateAt,
+      required this.title,
+      required this.introductionText,
+      required this.testerRequest,
+      required this.testerParticipation,
+      required this.appImagesUrl,
+      required this.iconImageUrl,
+      required this.githubUrl,
+      required this.appSetupUrl,
+      this.language,
+      required this.rquestProfileName});
 
   // fromFirestore 메서드 수정
   factory BoardFirebaseModel.fromFirestore(DocumentSnapshot doc) {
@@ -57,9 +56,8 @@ class BoardFirebaseModel {
       iconImageUrl: data?['iconImageUrl'] ?? '',
       githubUrl: data?['githubUrl'] ?? '',
       appSetupUrl: data?['appSetupUrl'] ?? '',
-      testerRequestProfile:
-          Map<String, dynamic>.from(data?['testerRequestProfile'] ?? {}),
       language: List<dynamic>.from(data?['language'] ?? []),
+      rquestProfileName: List<String>.from(data?['rquestProfileName'] ?? []),
     );
   }
 
@@ -80,8 +78,8 @@ class BoardFirebaseModel {
       'iconImageUrl': iconImageUrl,
       'githubUrl': githubUrl,
       'appSetupUrl': appSetupUrl,
-      'testerRequestProfile': testerRequestProfile,
       'language': language,
+      'rquestProfileName': rquestProfileName,
     };
   }
 }

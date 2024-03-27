@@ -41,7 +41,7 @@ class DoorScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                createText("[ Flutter developer ] Maccrey"),
+                createText("[ Flutter developer ] Maccrey", fontSize: 16),
               ],
             ),
             const SizedBox(height: 40),
@@ -51,12 +51,12 @@ class DoorScreen extends StatelessWidget {
     );
   }
 
-  Widget createText(String testMassage) {
+  Widget createText(String testMessage, {double fontSize = 22}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        testMassage,
-        style: TextStyle(color: colors.textColor, fontSize: 22),
+        testMessage,
+        style: TextStyle(color: colors.textColor, fontSize: fontSize),
       ),
     );
   }

@@ -93,8 +93,9 @@
   "Spanish" : "스페인어",
   "French" : "프랑스어",
   "German" : "독일어",
+  "Other languages" : "그외 언어",
   "here is the email to request to become a tester" : "아래의 메일 주소로 테스터를 신청합니다.",
-  "Unapporoval" : "관리자 미승인",
+  "Disapproval" : "관리자 미승인",
   "Approval" : "관리자 승인",
   "Please wait until the administrator approves" : "관리자가 승인할때까지 잠시만 기다려 주세요",
   "Notification" : "알 림",
@@ -154,6 +155,7 @@
   "I have met the app tester requirements. What should I do next?" : "App 테스터 요구사항을 충족했습니다. 어떻게 해야 하나요?",
   "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration)." : "App 테스터 요구사항을 충족하셨다면 (예: 프로덕션(출시 > 프로덕션), 사전 등록(출시 > 테스트 > 사전 등록)을 사용할 수 있습니다.",
   "What is internal testing?" : "내부 테스트는 무엇인가요?",
-  "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "앱 설정을 완료하기 전에 신뢰할 수 있는 소규모 테스터 그룹에 빌드를 빠르게 배포할 수 있습니다.\n이를 통해 문제를 파악하고 조기에 의견을 받아 볼 수 있습니다.\nPlay Console에 빌드를 추가하면 일반적으로 몇 초 이내에 테스터에게 제공됩니다.\n내부 테스트는 선택사항이지만 내부 테스트부터 시작하는 것이 좋습니다."
+  "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "앱 설정을 완료하기 전에 신뢰할 수 있는 소규모 테스터 그룹에 빌드를 빠르게 배포할 수 있습니다.\n이를 통해 문제를 파악하고 조기에 의견을 받아 볼 수 있습니다.\nPlay Console에 빌드를 추가하면 일반적으로 몇 초 이내에 테스터에게 제공됩니다.\n내부 테스트는 선택사항이지만 내부 테스트부터 시작하는 것이 좋습니다.",
+  "Already participated as a tester" : "이미 테스터로 참여했습니다"
   }
   

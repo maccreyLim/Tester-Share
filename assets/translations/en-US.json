@@ -90,8 +90,9 @@
     "Spanish" : "Spanish",
     "French" : "French",
     "German" : "German",
+    "Other languages" : "Other languages",
     "here is the email to request to become a tester" : "here is the email to request to become a tester",
-    "Unapporoval" : "Unapporoval",
+    "Disapproval" : "Disapproval",
     "Approval" : "Approval",
     "Please wait until the administrator approves" : "Please wait until the administrator approves",
     "Notification" : "Notification",
@@ -151,5 +152,6 @@
     "I have met the app tester requirements. What should I do next?" : "I have met the app tester requirements. What should I do next?",
     "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration)." : "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration).",
     "What is internal testing?" : "What is internal testing?",
-    "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing."
-    }
+    "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing.",
+    "Already participated as a tester" : "Already participated as a tester"
+}

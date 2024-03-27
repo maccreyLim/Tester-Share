@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
+import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
+import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/detail_unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UnapprovedPostScreen extends StatefulWidget {
@@ -18,10 +20,14 @@ class UnapprovedPostScreen extends StatefulWidget {
 }
 
 class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
-  final ColorsCollection colors = ColorsCollection();
+  final ColorsCollection _colors = ColorsCollection();
+  final FontSizeCollection _font = FontSizeCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
   final InterstitialAdController adController = InterstitialAdController();
-
+  final MultiImageFirebaseController _multiImageFirebaseController =
+      MultiImageFirebaseController();
+  final SingleImageFirebaseController _singleImageFirebaseController =
+      SingleImageFirebaseController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +36,11 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
             padding: const EdgeInsets.only(left: 10),
             child: Text(
               "Unapproved post",
-              style: TextStyle(color: colors.textColor, fontSize: 16),
+              style: TextStyle(color: _colors.textColor, fontSize: 16),
             ).tr(),
           ),
           automaticallyImplyLeading: false,
-          backgroundColor: colors.background,
+          backgroundColor: _colors.background,
           actions: [
             IconButton(
               onPressed: () {
@@ -42,12 +48,12 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
               },
               icon: Icon(
                 Icons.close,
-                color: colors.iconColor,
+                color: _colors.iconColor,
               ),
             )
           ],
         ),
-        backgroundColor: colors.background,
+        backgroundColor: _colors.background,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<List<BoardFirebaseModel>>(
@@ -65,7 +71,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                 return Center(
                   child: Text(
                     "The post does not exist",
-                    style: TextStyle(color: colors.textColor, fontSize: 22),
+                    style: TextStyle(color: _colors.textColor, fontSize: 22),
                   ).tr(),
                 );
               }
@@ -84,7 +90,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                           DetailUnapprovedPostScreen(boards: boards[index]));
                     },
                     child: Card(
-                      color: colors.cardColor,
+                      color: _colors.cardColor,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -104,7 +110,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                     cardText(boards[index].title, 20),
                                     const SizedBox(width: 10),
                                     cardText(
-                                        '[${boards[index].testerRequest}/${boards[index].testerParticipation}]',
+                                        '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
                                         20),
                                   ],
                                 )
@@ -122,13 +128,13 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                         'Creation date',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: colors.textColor),
+                                            color: _colors.textColor),
                                       ).tr(),
                                       Text(
                                         ': ${_formattedDate(boards[index].createAt)}',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: colors.textColor),
+                                            color: _colors.textColor),
                                       ),
                                     ],
                                   ),
@@ -140,13 +146,13 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                           'Modification date',
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: colors.textColor),
+                                              color: _colors.textColor),
                                         ).tr(),
                                         Text(
                                           ': ${_formattedDate(boards[index].updateAt!)}',
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: colors.textColor),
+                                              color: _colors.textColor),
                                         ),
                                       ],
                                     )
@@ -160,7 +166,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                     TextOverflow.ellipsis, // 초과되면 생략 부호 표시
                                 maxLines: 1,
                                 style: TextStyle(
-                                    color: colors.textColor,
+                                    color: _colors.textColor,
                                     fontSize: 20)), // 표시할 최대 라인 수),
                             const SizedBox(height: 10),
                             Row(
@@ -177,11 +183,11 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
                                           if (boards[index].isApproval) {
-                                            return colors
+                                            return _colors
                                                 .stateIsIng; // 상태가 "진행중"일 때의 배경색
                                           } else {
                                             // 다른 상태에는 기본 배경색을 설정합니다.
-                                            return colors.stateIsClose;
+                                            return _colors.stateIsClose;
                                           }
                                         },
                                       ),
@@ -199,9 +205,9 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                     child: Text(
                                       boards[index].isApproval
                                           ? tr('Approval')
-                                          : tr("Unapproval"),
+                                          : tr("Disapproval"),
                                       style: TextStyle(
-                                          color: colors.iconColor,
+                                          color: _colors.iconColor,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ).tr(),
@@ -212,6 +218,62 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                     14),
                               ],
                             ),
+                            Divider(),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                  child: SizedBox(
+                                    width: 220,
+                                    height: 26,
+                                    child: !(boards[index].isApproval)
+                                        ? ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(Colors.red),
+                                            ),
+                                            onPressed: () async {
+                                              //리워드광고
+                                              adController.loadAndShowAd();
+                                              // Multi image 삭제
+                                              await _multiImageFirebaseController
+                                                  .deleteImagesUrlFromStorage(
+                                                      boards
+                                                          .first.appImagesUrl);
+                                              print("멀티이미지가 삭제되었습니다.");
+                                              // Single image 삭제
+                                              await _singleImageFirebaseController
+                                                  .deleteImageUrl(boards
+                                                      .first.iconImageUrl);
+                                              print("싱글이미지가 삭제되었습니다.");
+                                              // 삭제 구현
+                                              _board.deleteBoard(
+                                                  boards.first.docid);
+                                              print("게시판데이타가 삭제되었습니다.");
+                                            },
+                                            child: Text(
+                                              "Delete",
+                                              style: TextStyle(
+                                                color: _colors.iconColor,
+                                                fontSize: _font.buttonFontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ).tr(),
+                                          )
+                                        : Text(
+                                            "Inapproved projects cannot be deleted or modified",
+                                            style: TextStyle(
+                                                color: _colors.textColor,
+                                                fontSize: 10),
+                                          ).tr(),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -236,7 +298,7 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
   Widget cardText(String text, double size) {
     return Text(
       text,
-      style: TextStyle(color: colors.textColor, fontSize: size),
+      style: TextStyle(color: _colors.textColor, fontSize: size),
     );
   }
 

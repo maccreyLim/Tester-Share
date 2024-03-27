@@ -115,7 +115,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                   cardText(boards[index].title, 20),
                                   const SizedBox(width: 10),
                                   cardText(
-                                      '[${boards[index].testerRequest}/${boards[index].testerParticipation}]',
+                                      '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
                                       20),
                                 ],
                               )

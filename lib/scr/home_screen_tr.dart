@@ -12,7 +12,9 @@ import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:icon_badge/icon_badge.dart';
+import 'package:tester_share_app/widget/w.fcm.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
+import 'package:tester_share_app/widget/w.request_permission.dart';
 import 'package:tester_share_app/widget/w.reward_ad.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -35,7 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _getUnreadMessageCount();
+    _checkPermissions();
+    //FCM 초기화
+    FcmManager.initialize();
     super.initState();
+  }
+
+  Future<void> _checkPermissions() async {
+    final requestPermission = RequestPermission();
+    await requestPermission.checkIfPermissionGranted();
   }
 
   void showRewardAd() {
@@ -166,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   cardText(boards[index].title, 20),
                                   const SizedBox(width: 10),
                                   cardText(
-                                      '[${boards[index].testerRequest}/${boards[index].testerParticipation}]',
+                                      '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
                                       20),
                                 ],
                               )

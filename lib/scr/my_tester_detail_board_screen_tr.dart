@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/update_board_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -53,7 +52,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                   children: [
                     cardText(boards.title, 20),
                     cardText(
-                        '[${boards.testerRequest}/${boards.testerParticipation}]',
+                        '[${boards.testerParticipation}/${boards.testerRequest}]',
                         16),
                     const SizedBox(height: 10),
                   ],
@@ -208,7 +207,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 20),
                         cardText(
-                          boards.language![index],
+                          tr(boards.language![index]),
                           20,
                         ),
                       ],

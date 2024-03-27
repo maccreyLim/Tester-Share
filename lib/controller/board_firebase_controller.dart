@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 
 class BoardFirebaseController {
@@ -14,6 +16,8 @@ class BoardFirebaseController {
 // Create (추가)
   Future<void> addBoard(BoardFirebaseModel newPost) async {
     try {
+      // 데이터를 추가하기 전에 로딩 인디케이터를 표시합니다.
+      showLoadingIndicator();
       DocumentReference documentRef = await collectionRef.add(newPost.toMap());
 
       // 문서 ID를 얻어옴
@@ -25,6 +29,9 @@ class BoardFirebaseController {
       print('Board added with ID: $docId');
     } catch (e) {
       print('Error adding board: $e');
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      hideLoadingIndicator();
     }
   }
 
@@ -116,7 +123,7 @@ class BoardFirebaseController {
     }
   }
 
-  // 사용자 데이터를 업데이트하는 메서드
+  // 사용자 데이터(MAP)를 업데이트하는 메서드
   Future<void> updateBoardData(
       String docUid, Map<String, dynamic> newData) async {
     try {
@@ -136,5 +143,44 @@ class BoardFirebaseController {
     } catch (e) {
       print("사용자 데이터 업데이트 중 오류가 발생했습니다: $e");
     }
+  }
+
+  // 리스트를 업데이트하는 메서드
+  Future<void> updateRquestProfileName(String docUid,
+      List<String> currentProfileNames, String newProfileName) async {
+    try {
+      // 현재 사용자 가져오기
+      User? user = _authentication.currentUser;
+      if (user != null) {
+        // Firestore에서 문서 참조 가져오기
+        DocumentReference docRef = _firestore.collection('boards').doc(docUid);
+
+        // 새로운 프로필 이름 추가
+        currentProfileNames.add(newProfileName);
+
+        // 문서 업데이트
+        await docRef.update({'rquestProfileName': currentProfileNames});
+        print("리스트가 업데이트되었습니다.");
+      } else {
+        print("사용자가 로그인되어 있지 않습니다.");
+      }
+    } catch (e) {
+      print("리스트 업데이트 중 오류가 발생했습니다: $e");
+    }
+  }
+
+// 로딩 인디케이터를 표시하는 메서드
+  void showLoadingIndicator() {
+    Get.dialog(
+      Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 다이얼로그 바깥 영역을 터치해도 닫히지 않도록 설정
+    );
+  }
+
+  // 로딩 인디케이터를 숨기는 메서드
+  void hideLoadingIndicator() {
+    Get.back();
   }
 }

@@ -342,7 +342,7 @@ class _DetailUnapprovedPostScreenState
                   Get.back();
                 },
                 child: Text(
-                  widget.boards.isApproval ? tr("Unapporoval") : tr('Approval'),
+                  widget.boards.isApproval ? tr("Unapporoal") : tr('Approval'),
                   style: TextStyle(fontSize: 20, color: colors.iconColor),
                 ),
               ),

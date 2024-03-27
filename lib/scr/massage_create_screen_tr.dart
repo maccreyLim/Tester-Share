@@ -72,8 +72,8 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                       controller: _search,
                       decoration: InputDecoration(
                         hintText: tr("Member Search"),
-                        hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.search),
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        prefixIcon: const Icon(Icons.search),
                         filled: true,
                         fillColor: Colors.black, // 배경색 변경
                         border: const UnderlineInputBorder(

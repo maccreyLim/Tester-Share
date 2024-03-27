@@ -132,8 +132,8 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
           iconImageUrl: iconImageUrl,
           githubUrl: githubUrlController.text,
           appSetupUrl: appSetupUrlController.text,
-          testerRequestProfile: widget.boards.testerRequestProfile,
           language: selectedLanguages,
+          rquestProfileName: widget.boards.rquestProfileName,
         );
 
         // 게시물 업데이트

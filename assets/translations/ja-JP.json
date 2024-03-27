@@ -93,8 +93,9 @@
     "Spanish" : "スペイン語",
     "French" : "フランス語",
     "German" : "ドイツ語",
+    "Other languages" : "その他の言語",
     "here is the email to request to become a tester" : "こちらがテスターになるためのメールアドレスです。",
-    "Unapporoval" : "未承認",
+    "Disapproval" : "未承認",
     "Approval" : "承 認",
     "Please wait until the administrator approves" : "管理者の承認をお待ちください",
     "Notification" : "通 知",
@@ -154,5 +155,6 @@
     "I have met the app tester requirements. What should I do next?" : "アプリのテスター要件を満たしました。次に何をすればよいですか？",
     "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration)." : "アプリのテスター要件を満たした場合、本番 (リリース > 本番) や事前登録 (リリース > テスト > 事前登録) などのオプションを利用できます。",
     "What is internal testing?" : "内部テストとは何ですか？",
-    "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "アプリの設定を完了する前に、信頼できる小規模なテスターグループにビルドを迅速に配布できます\nこれにより、問題を特定し、早期にフィードバックを受けることができます。\nPlay Consoleにビルドを追加すると、通常は数秒以内にテスターに提供されます。\n内部テストはオプションですが、内部テストから始めるのが良いです。"
+    "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "アプリの設定を完了する前に、信頼できる小規模なテスターグループにビルドを迅速に配布できます\nこれにより、問題を特定し、早期にフィードバックを受けることができます。\nPlay Consoleにビルドを追加すると、通常は数秒以内にテスターに提供されます。\n内部テストはオプションですが、内部テストから始めるのが良いです。",
+    "Already participated as a tester" : "すでにテスターとして参加しています"
     }
