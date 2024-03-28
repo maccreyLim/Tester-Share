@@ -10,7 +10,6 @@ import 'package:tester_share_app/scr/detail_unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UnapprovedPostScreen extends StatefulWidget {
