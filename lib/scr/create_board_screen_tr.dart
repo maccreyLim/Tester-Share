@@ -432,6 +432,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         ),
         onPressed: () async {
           adController.loadAndShowAd();
+          Center(child: CircularProgressIndicator());
           _savePost();
         },
         child: Text(

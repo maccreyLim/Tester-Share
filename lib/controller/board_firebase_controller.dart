@@ -15,9 +15,15 @@ class BoardFirebaseController {
 
 // Create (추가)
   Future<void> addBoard(BoardFirebaseModel newPost) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 데이터를 추가하기 전에 로딩 인디케이터를 표시합니다.
-      showLoadingIndicator();
+
       DocumentReference documentRef = await collectionRef.add(newPost.toMap());
 
       // 문서 ID를 얻어옴
@@ -31,12 +37,18 @@ class BoardFirebaseController {
       print('Error adding board: $e');
     } finally {
       // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      hideLoadingIndicator();
+      Get.back();
     }
   }
 
   // Read (조회)
   Future<BoardFirebaseModel?> getBoard(String boardId) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection('boards')
@@ -51,6 +63,9 @@ class BoardFirebaseController {
     } catch (e) {
       print('Error getting board: $e');
       return null;
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
@@ -76,6 +91,12 @@ class BoardFirebaseController {
 
   // Update (수정)
   Future<void> updateBoard(BoardFirebaseModel board) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       await FirebaseFirestore.instance
           .collection('boards')
@@ -83,20 +104,31 @@ class BoardFirebaseController {
           .update(board.toMap());
     } catch (e) {
       print('Error updating board: $e');
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   // Delete (삭제)
   Future<void> deleteBoard(String docId) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       await FirebaseFirestore.instance.collection('boards').doc(docId).delete();
     } catch (e) {
       print('Error deleting board: $e');
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   Stream<List<BoardFirebaseModel>> boardStream({String? currentUserUid}) {
-    print("스트할 ID : $currentUserUid");
     try {
       CollectionReference boardsCollection =
           FirebaseFirestore.instance.collection('boards');
@@ -126,6 +158,12 @@ class BoardFirebaseController {
   // 사용자 데이터(MAP)를 업데이트하는 메서드
   Future<void> updateBoardData(
       String docUid, Map<String, dynamic> newData) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 사용자가 로그인되어 있는지 확인
       User? user = _authentication.currentUser;
@@ -142,12 +180,21 @@ class BoardFirebaseController {
       }
     } catch (e) {
       print("사용자 데이터 업데이트 중 오류가 발생했습니다: $e");
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   // 리스트를 업데이트하는 메서드
   Future<void> updateRquestProfileName(String docUid,
       List<String> currentProfileNames, String newProfileName) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 현재 사용자 가져오기
       User? user = _authentication.currentUser;
@@ -166,21 +213,9 @@ class BoardFirebaseController {
       }
     } catch (e) {
       print("리스트 업데이트 중 오류가 발생했습니다: $e");
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
-  }
-
-// 로딩 인디케이터를 표시하는 메서드
-  void showLoadingIndicator() {
-    Get.dialog(
-      Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 다이얼로그 바깥 영역을 터치해도 닫히지 않도록 설정
-    );
-  }
-
-  // 로딩 인디케이터를 숨기는 메서드
-  void hideLoadingIndicator() {
-    Get.back();
   }
 }

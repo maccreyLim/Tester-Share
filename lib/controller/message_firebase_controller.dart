@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
@@ -10,6 +12,12 @@ class MassageFirebaseController {
 
 //Create
   Future<String> createMessage(MessageModel message, String nickname) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       final docRef = await messagesCollection.add(message.toMap()); // 수정된 부분
       print(docRef);
@@ -24,11 +32,20 @@ class MassageFirebaseController {
     } catch (e) {
       print('메시지 생성 중 오류: $e');
       throw e;
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   //Read
   Future<List<MessageModel>> getMessages(String receiverUid) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       final querySnapshot = await messagesCollection
           .where('receiverUid', isEqualTo: receiverUid)
@@ -42,6 +59,9 @@ class MassageFirebaseController {
     } catch (e) {
       print('메시지 가져오기 오류: $e');
       throw e; // 예외를 호출자에게 다시 던집니다.
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
@@ -69,6 +89,12 @@ class MassageFirebaseController {
 
 //Update
   Future<void> updateMessage(MessageModel message) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     CollectionReference messagesCollection =
         FirebaseFirestore.instance.collection('messages');
     try {
@@ -76,11 +102,20 @@ class MassageFirebaseController {
     } catch (e) {
       print('메시지 업데이트 오류: $e');
       throw e; // 예외를 호출자에게 다시 던집니다.
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
 //Delete
   Future<void> deleteMessage(String messageId) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     CollectionReference messagesCollection =
         FirebaseFirestore.instance.collection('messages');
     try {
@@ -88,6 +123,9 @@ class MassageFirebaseController {
     } catch (e) {
       print('메시지 삭제 오류: $e');
       throw e; // 예외를 호출자에게 다시 던집니다.
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/door_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
@@ -21,6 +22,7 @@ class SettingScreen extends StatelessWidget {
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final InterstitialAdController adController = InterstitialAdController();
   final AuthController _authController = AuthController.instance;
+  final InAppReview inAppReview = InAppReview.instance;
 
   SettingScreen({super.key});
 
@@ -214,6 +216,27 @@ class SettingScreen extends StatelessWidget {
                       },
                       child: Text(
                         "Terms and Privacy",
+                        style: TextStyle(
+                            color: colors.textColor,
+                            fontSize: _fontSizeCollection.settingFontSize),
+                      ).tr()),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.reviews,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                      onPressed: () async {
+                        if (await inAppReview.isAvailable()) {
+                          inAppReview.requestReview();
+                        }
+                      },
+                      child: Text(
+                        "Leave a review on Google Play Store",
                         style: TextStyle(
                             color: colors.textColor,
                             fontSize: _fontSizeCollection.settingFontSize),

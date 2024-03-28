@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
@@ -96,6 +97,12 @@ class AuthController extends GetxController {
     String profileName,
     int deployed,
   ) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       UserCredential userCredential =
           await authentication.createUserWithEmailAndPassword(
@@ -125,11 +132,20 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
       handleAuthException(e);
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   // 로그인
   Future<void> signIn(String email, String password) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     _userData = Rx<Map<String, dynamic>?>(null);
     try {
       await authentication.signInWithEmailAndPassword(
@@ -162,6 +178,9 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
       handleAuthException(e);
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
@@ -205,6 +224,12 @@ class AuthController extends GetxController {
 
   // 로그아웃
   Future<void> signOut() async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // Firebase Authentication을 사용하여 로그아웃
       await authentication.signOut();
@@ -220,11 +245,20 @@ class AuthController extends GetxController {
       print('로그아웃 중 오류 발생: $e');
       // 에러를 사용자에게 알리거나 추가적인 조치를 취할 수 있음
       // 예를 들어, 에러 메시지를 사용자에게 보여주는 토스트 메시지 표시 등
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   // 사용자 계정 삭제 및 관련 데이터 삭제
   Future<void> deleteAccount() async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 현재 사용자 정보를 가져옴
       User? user = authentication.currentUser;
@@ -268,11 +302,20 @@ class AuthController extends GetxController {
       // 오류 처리
       print('계정 삭제 중 오류 발생: $e');
       // 사용자에게 오류 메시지 표시 또는 필요한 추가 작업 수행
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
   // Firebase Storage에서 사용자 데이터 삭제
   Future<void> deleteUserDataFromStorage(String userId) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // Firebase Storage에서 데이터에 대한 참조를 만듭니다.
       final ref = _storage.ref().child('images/$userId');
@@ -291,6 +334,9 @@ class AuthController extends GetxController {
     } catch (e) {
       // 오류를 처리합니다. 예를 들어 오류 메시지를 출력할 수 있습니다.
       print('Firebase Storage에서 데이터를 삭제하는 중 오류 발생: $e');
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
@@ -324,6 +370,12 @@ class AuthController extends GetxController {
   // 비밀번호 변경
   Future<void> changePassword(
       String email, String currentPassword, String newPassword) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 현재 로그인한 사용자 가져오기
       User? user = FirebaseAuth.instance.currentUser;
@@ -344,6 +396,9 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       print('비밀번호 변경 중 오류 발생: $e');
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 
@@ -379,6 +434,12 @@ class AuthController extends GetxController {
 
   // 사용자 데이터를 업데이트하는 메서드
   Future<void> updateUserData(String uid, Map<String, dynamic> newData) async {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+    );
     try {
       // 사용자가 로그인되어 있는지 확인
       User? user = authentication.currentUser;
@@ -394,21 +455,9 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       print("사용자 데이터 업데이트 중 오류가 발생했습니다: $e");
+    } finally {
+      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
+      Get.back();
     }
   }
 }
-
-
-
-// // 사용자 UID (Firebase Authentication에서 가져옴)
-//   String uid = "사용자의 UID";
-
-//   // 업데이트할 데이터
-//   Map<String, dynamic> newData = {
-//     "name": "새로운 이름",
-//     "email": "새로운 이메일@example.com",
-//     // 필요한 경우 다른 필드도 추가할 수 있습니다.
-//   };
-
-//   // 사용자 데이터 업데이트
-//   updateUserData(uid, newData);

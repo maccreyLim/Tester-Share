@@ -10,6 +10,7 @@ import 'package:tester_share_app/scr/detail_unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class UnapprovedPostScreen extends StatefulWidget {
@@ -242,18 +243,21 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                               // Multi image 삭제
                                               await _multiImageFirebaseController
                                                   .deleteImagesUrlFromStorage(
-                                                      boards
-                                                          .first.appImagesUrl);
-                                              print("멀티이미지가 삭제되었습니다.");
+                                                      boards[index]
+                                                          .appImagesUrl);
+                                              print(
+                                                  "멀티이미지가 삭제되었습니다.\n${boards[index].appImagesUrl}");
                                               // Single image 삭제
                                               await _singleImageFirebaseController
-                                                  .deleteImageUrl(boards
-                                                      .first.iconImageUrl);
-                                              print("싱글이미지가 삭제되었습니다.");
+                                                  .deleteImageUrl(boards[index]
+                                                      .iconImageUrl);
+                                              print(
+                                                  "싱글이미지가 삭제되었습니다.\n${boards[index].iconImageUrl}");
                                               // 삭제 구현
                                               _board.deleteBoard(
-                                                  boards.first.docid);
-                                              print("게시판데이타가 삭제되었습니다.");
+                                                  boards[index].docid);
+                                              print(
+                                                  "게시판데이타가 삭제되었습니다.\n${boards[index].docid}");
                                             },
                                             child: Text(
                                               "Delete",

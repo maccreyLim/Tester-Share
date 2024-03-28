@@ -100,7 +100,7 @@ class LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 6),
                   CreateButton(
                     onPressed: () {
-                      // 로그인
+                      // 회원가입
                       Get.to(() => const JoinScreen());
                     },
                     colors: colors,

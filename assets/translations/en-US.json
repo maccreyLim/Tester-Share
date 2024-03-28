@@ -153,5 +153,6 @@
     "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration)." : "If you have met the app tester requirements, you can proceed with options such as production (Release > Production), or pre-registration (Release > Testing > Pre-registration).",
     "What is internal testing?" : "What is internal testing?",
     "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing.",
-    "Already participated as a tester" : "Already participated as a tester"
+    "Already participated as a tester" : "Already participated as a tester",
+    "Leave a review on Google Play Store" : "Leave a review on Google Play Store"
 }
