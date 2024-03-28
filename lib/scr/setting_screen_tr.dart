@@ -232,7 +232,7 @@ class SettingScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () async {
                         if (await inAppReview.isAvailable()) {
-                          inAppReview.requestReview();
+                          inAppReview.openStoreListing();
                         }
                       },
                       child: Text(

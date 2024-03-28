@@ -349,7 +349,7 @@ class DetailBoardScreen extends StatelessWidget {
                       },
                       child: Text(
                         'Apply to be a Tester',
-                        style: TextStyle(fontSize: 20, color: colors.iconColor),
+                        style: TextStyle(fontSize: 16, color: colors.iconColor),
                       ).tr(),
                     )
                   : ElevatedButton(
@@ -362,7 +362,7 @@ class DetailBoardScreen extends StatelessWidget {
                       },
                       child: Text(
                         "Already participated as a tester",
-                        style: TextStyle(fontSize: 20, color: colors.iconColor),
+                        style: TextStyle(fontSize: 16, color: colors.iconColor),
                       ).tr(),
                     ),
             ),

@@ -224,12 +224,6 @@ class AuthController extends GetxController {
 
   // 로그아웃
   Future<void> signOut() async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     try {
       // Firebase Authentication을 사용하여 로그아웃
       await authentication.signOut();
@@ -245,9 +239,6 @@ class AuthController extends GetxController {
       print('로그아웃 중 오류 발생: $e');
       // 에러를 사용자에게 알리거나 추가적인 조치를 취할 수 있음
       // 예를 들어, 에러 메시지를 사용자에게 보여주는 토스트 메시지 표시 등
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 

@@ -69,6 +69,9 @@ class MultiImageFirebaseController {
       ),
       barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
     );
+    String now =
+        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
+
     List<String> imageUrls = [];
 
     for (XFile? imageFile in pickedImages) {
@@ -79,7 +82,7 @@ class MultiImageFirebaseController {
               .ref()
               .child('boards_Images')
               .child(
-                  '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
+                  '$now _${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
           // 파일을 Firebase Storage에 업로드
           await ref.putFile(File(imageFile.path));
@@ -109,6 +112,8 @@ class MultiImageFirebaseController {
       ),
       barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
     );
+    String now =
+        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     try {
       // 이미지 업로드 전에 기존 이미지 삭제
       // await deleteImagesUrlFromStorage(existingImageUrls);
@@ -124,7 +129,7 @@ class MultiImageFirebaseController {
                 .ref()
                 .child('boards_Images')
                 .child(
-                    '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
+                    '$now _${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
             // 파일을 Firebase Storage에 업로드
             await ref.putFile(File(imageFile.path));

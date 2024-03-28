@@ -27,6 +27,8 @@ class SingleImageFirebaseController {
       ),
       barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
     );
+    String now =
+        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     //기존 이미지 삭제 2/22추가
     // deleteSingleImage(pickedImage);
 
@@ -34,7 +36,7 @@ class SingleImageFirebaseController {
       try {
         // Firebase Storage 참조
         Reference ref = FirebaseStorage.instance.ref().child('boards_Images').child(
-            '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
+            '$now _${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
         // 파일을 Firebase Storage에 업로드
         await ref.putFile(File(pickedImage.path));
 
@@ -61,6 +63,8 @@ class SingleImageFirebaseController {
       ),
       barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
     );
+    String now =
+        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     if (pickedImage != null) {
       try {
         // Firebase Storage 참조
@@ -68,8 +72,7 @@ class SingleImageFirebaseController {
             .ref()
             .child('boards_Images')
             .child(
-                '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}_${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
-
+                '$now _${DateTime.now().hour}:${DateTime.now().minute}_Icon_${pickedImage.path.split('/').last}');
         // Firebase Storage에서 이미지 삭제
         await imageRef.delete();
       } catch (e) {
