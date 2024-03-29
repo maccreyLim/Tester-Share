@@ -188,6 +188,7 @@ class _DeveloperMessageCreateScreenState
                             _docUid,
                             widget.boards.rquestProfileName,
                             NewrquestProfileName);
+                        Get.back();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,
