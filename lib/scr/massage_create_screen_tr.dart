@@ -185,6 +185,7 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                               message, sendUserController.text);
                           Get.off(MessageStateScreen());
                         }
+                        Get.back();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,

@@ -119,6 +119,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                           replyMessage, widget.message.receiverNickname);
                       Get.off(const MessageStateScreen());
                     }
+                    Get.back();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _colors.buttonColor,

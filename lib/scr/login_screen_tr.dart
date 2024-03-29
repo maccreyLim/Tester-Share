@@ -5,7 +5,6 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/find_password_secreen_tr.dart';
 import 'package:tester_share_app/scr/join_screen_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:tester_share_app/widget/w.fcm.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,13 +27,6 @@ class LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    //FCM 초기화
-    FcmManager.initialize();
-    super.initState();
   }
 
   @override
