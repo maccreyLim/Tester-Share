@@ -220,8 +220,8 @@ class _ProfileNameInputState extends State<ProfileNameInput> {
           icon: Row(
             // Using Row directly in the icon parameter
             children: [
-              Icon(Icons.check),
-              SizedBox(width: 8.0),
+              const Icon(Icons.check),
+              const SizedBox(width: 8.0),
               Text(
                 tr('Check Availability'), // 중복 확인을 나타내는 텍스트
                 style: TextStyle(

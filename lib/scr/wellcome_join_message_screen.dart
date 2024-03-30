@@ -82,7 +82,7 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                       onPressed: () {
                         //로그아웃
                         //Goto 로그인페이지
-                        Get.to(() => const LoginScreen());
+                        Get.offAll(const LoginScreen());
                       },
                       child: Text(
                         "Confirm",

@@ -6,6 +6,7 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
+import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
@@ -188,7 +189,7 @@ class _DeveloperMessageCreateScreenState
                             _docUid,
                             widget.boards.rquestProfileName,
                             NewrquestProfileName);
-                        Get.back();
+                        Get.offAll(const HomeScreen());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.buttonColor,
