@@ -126,15 +126,14 @@ class AuthController extends GetxController {
         'createAt': DateTime.now(),
         'point': 0,
       });
-
-      // 회원가입 성공 시, 여기에서 다른 동작을 추가할 수 있습니다.
-      Get.to(() => const WellcomeJoinMessageScreen());
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
       handleAuthException(e);
     } finally {
       // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
       Get.back();
+      // 회원가입 성공 시, 여기에서 다른 동작을 추가할 수 있습니다.
+      Get.to(() => const WellcomeJoinMessageScreen());
     }
   }
 

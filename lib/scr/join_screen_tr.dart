@@ -286,7 +286,7 @@ class SignUpButton extends StatelessWidget {
     if (!isProfileNameAvailable) {
       return Text(
         tr("Please verify the availability of the profile name"), // 에러 메시지
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.red, // 에러 메시지 색상
         ),
       );
