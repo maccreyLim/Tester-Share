@@ -15,7 +15,6 @@ import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.fcm.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.request_permission.dart';
-import 'package:tester_share_app/widget/w.reward_ad.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,14 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _checkPermissions() async {
     final requestPermission = RequestPermission();
     await requestPermission.checkIfPermissionGranted();
-  }
-
-  void showRewardAd() {
-    final RewardAdManager _rewardAd = RewardAdManager();
-    _rewardAd.showRewardFullBanner(() {
-      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
-      // 예: 기부하기 또는 다른 작업 수행
-    });
   }
 
 //읽지 않은 메시지를 받아오기
@@ -285,8 +276,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           Divider(),
-                          SizedBox(height: 10),
-                          SizedBox(width: double.infinity, child: BannerAD()),
                         ],
                       ),
                     ),
@@ -303,6 +292,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.to(() => const CreateBoardScreen());
         },
         child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }

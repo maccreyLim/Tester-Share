@@ -42,7 +42,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
           child: Text(
             "My Tester Request Post",
             style: TextStyle(color: _colors.textColor, fontSize: 16),
-          ),
+          ).tr(),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: _colors.background,

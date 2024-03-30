@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 class FAQScreen extends StatelessWidget {
   FAQScreen({super.key});
 
-  final ColorsCollection colors = ColorsCollection();
+  final ColorsCollection _colors = ColorsCollection();
 
   final List<Map<String, String>> qaData = [
     {
@@ -37,10 +38,14 @@ class FAQScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.background,
+      backgroundColor: _colors.background,
       appBar: AppBar(
+        title: Text(
+          "FAQ",
+          style: TextStyle(color: _colors.textColor),
+        ),
         automaticallyImplyLeading: false,
-        backgroundColor: colors.background,
+        backgroundColor: _colors.background,
         actions: [
           IconButton(
             onPressed: () {
@@ -48,9 +53,9 @@ class FAQScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.close,
-              color: colors.iconColor,
+              color: _colors.iconColor,
             ),
-          )
+          ),
         ],
       ),
       body: ListView.builder(
@@ -60,7 +65,7 @@ class FAQScreen extends StatelessWidget {
             title: Text(
               qaData[index]['question']!,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: colors.textColor),
+                  fontWeight: FontWeight.bold, color: _colors.textColor),
             ),
             children: <Widget>[
               Padding(
@@ -68,12 +73,16 @@ class FAQScreen extends StatelessWidget {
                 child: Text(
                   qaData[index]['answer']!,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: colors.iconColor),
+                      fontWeight: FontWeight.bold, color: _colors.iconColor),
                 ),
               ),
             ],
           );
         },
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }
