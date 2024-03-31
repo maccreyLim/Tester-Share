@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -146,17 +145,5 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
         ),
       ),
     );
-  }
-}
-
-Future<void> _deleteMessage(String messageId) async {
-  try {
-    await FirebaseFirestore.instance
-        .collection('messages')
-        .doc(messageId)
-        .delete();
-  } catch (e) {
-    print('메시지 삭제 오류: $e');
-    rethrow;
   }
 }

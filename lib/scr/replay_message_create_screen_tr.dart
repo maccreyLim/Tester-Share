@@ -11,7 +11,8 @@ import 'package:tester_share_app/widget/w.font_size_collection.dart';
 class ReplayMessageCreateScreen extends StatefulWidget {
   final MessageModel message;
 
-  ReplayMessageCreateScreen({required this.message});
+  const ReplayMessageCreateScreen({Key? key, required this.message})
+      : super(key: key);
 
   @override
   _ReplayMessageCreateScreenState createState() =>
@@ -61,28 +62,30 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                   children: [
                     const Text(
                       "Recipient",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent),
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ).tr(),
+                    Text(
+                      ' : ${widget.message.receiverNickname}',
+                      style: const TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 24),
                 const Text(
                   "The original message",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54),
+                      color: Colors.grey),
                 ).tr(),
-                SizedBox(height: 6),
-                Text(
-                  '${widget.message.contents}',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
                 Divider(),
-                SizedBox(height: 20),
+                const SizedBox(height: 6),
+                Text(
+                  widget.message.contents,
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const Divider(),
+                const SizedBox(height: 20),
                 TextFormField(
                   style: TextStyle(fontSize: 16, color: _colors.textColor),
                   cursorHeight: 20,
@@ -104,7 +107,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 80),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

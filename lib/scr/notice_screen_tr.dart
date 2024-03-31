@@ -39,7 +39,7 @@ class NoticeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: Column(
           children: [
@@ -53,7 +53,7 @@ class NoticeScreen extends StatelessWidget {
             Expanded(
               child: noticeStreenBuilder(),
             ),
-            SizedBox(width: 30),
+            const SizedBox(width: 30),
             Align(
               alignment: Alignment.bottomRight,
               child: createFloatingButton(),
@@ -74,8 +74,7 @@ class NoticeScreen extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: FloatingActionButton(
           onPressed: () {
-            print('Click');
-            Get.to(() => CreateNoticeScreen());
+            Get.to(() => const CreateNoticeScreen());
           },
           child: const Icon(
             Icons.add,
@@ -91,34 +90,32 @@ class NoticeScreen extends StatelessWidget {
   }
 
   Widget noticeStreenBuilder() {
-    return Container(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: query.snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Text(
-                    'An error occurred while fetching the announcement data')
-                .tr();
-          }
+    return StreamBuilder<QuerySnapshot>(
+      stream: query.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Text(
+                  'An error occurred while fetching the announcement data')
+              .tr();
+        }
 
-          final querySnapshot = snapshot.data;
-          if (querySnapshot == null || querySnapshot.docs.isEmpty) {
-            return const Text("There are no notices");
-          }
+        final querySnapshot = snapshot.data;
+        if (querySnapshot == null || querySnapshot.docs.isEmpty) {
+          return const Text("There are no notices");
+        }
 
-          final announcementList = querySnapshot.docs
-              .map((doc) => NoticeFirebaseModel.fromMap(
-                  doc.data() as Map<String, dynamic>))
-              .toList();
-          announcementList
-              .sort((a, b) => b.createdAt.compareTo(a.createdAt)); // 내림차순 정렬
-          return SingleChildScrollView(
-            child: buildCommentListView(announcementList),
-          );
-        },
-      ),
+        final announcementList = querySnapshot.docs
+            .map((doc) =>
+                NoticeFirebaseModel.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+        announcementList
+            .sort((a, b) => b.createdAt.compareTo(a.createdAt)); // 내림차순 정렬
+        return SingleChildScrollView(
+          child: buildCommentListView(announcementList),
+        );
+      },
     );
   }
 
@@ -126,58 +123,56 @@ class NoticeScreen extends StatelessWidget {
   Widget buildCommentListView(List<NoticeFirebaseModel> announcementList) {
     final now = DateTime.now();
 
-    return Container(
-      child: SizedBox(
-        height: 200,
-        width: double.infinity,
-        child: ListView.builder(
-          itemCount: announcementList.length,
-          itemBuilder: (context, index) {
-            final comment = announcementList[index];
-            //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
-            final DateTime created = comment.createdAt;
-            final Duration difference = now.difference(created);
+    return SizedBox(
+      height: 200,
+      width: double.infinity,
+      child: ListView.builder(
+        itemCount: announcementList.length,
+        itemBuilder: (context, index) {
+          final comment = announcementList[index];
+          //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
+          final DateTime created = comment.createdAt;
+          final Duration difference = now.difference(created);
 
-            String formattedDate;
-            String minutes = tr("minutes ago");
-            String hours = tr("hours ago");
+          String formattedDate;
+          String minutes = tr("minutes ago");
+          String hours = tr("hours ago");
 
-            if (difference.inHours > 0) {
-              formattedDate = '${difference.inHours} $minutes';
-            } else if (difference.inMinutes > 0) {
-              formattedDate = '${difference.inMinutes} $hours';
-            } else {
-              formattedDate = tr('Just now');
-            }
-            //리스트 타이틀로 구현
-            return ListTile(
-              leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
-              title: Text(
-                "${comment.title} ($formattedDate)",
-                maxLines: 1, // 최대 줄 수를 1로 설정
-                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
-                style: TextStyle(color: colors.iconColor),
-              ),
-              subtitle: Text(
-                comment.content,
-                maxLines: 2, // 최대 줄 수를 1로 설정
-                overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
-                style: TextStyle(color: colors.textColor),
-              ),
-              onTap: () {
-                Get.to(() => DetailNoticeScreen(notice: comment));
-              },
-              trailing: authController.userData!['isAdmin']
-                  ? IconButton(
-                      onPressed: () {
-                        _noticeController.deleteNotice(comment.id);
-                      },
-                      icon: Icon(Icons.close),
-                    )
-                  : null,
-            );
-          },
-        ),
+          if (difference.inHours > 0) {
+            formattedDate = '${difference.inHours} $minutes';
+          } else if (difference.inMinutes > 0) {
+            formattedDate = '${difference.inMinutes} $hours';
+          } else {
+            formattedDate = tr('Just now');
+          }
+          //리스트 타이틀로 구현
+          return ListTile(
+            leading: Icon(Icons.circle, size: 14, color: colors.iconColor),
+            title: Text(
+              "${comment.title} ($formattedDate)",
+              maxLines: 1, // 최대 줄 수를 1로 설정
+              overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)),
+              style: TextStyle(color: colors.iconColor),
+            ),
+            subtitle: Text(
+              comment.content,
+              maxLines: 2, // 최대 줄 수를 1로 설정
+              overflow: TextOverflow.ellipsis, // 오버플로우 처리 설정 (생략 부호 사용)
+              style: TextStyle(color: colors.textColor),
+            ),
+            onTap: () {
+              Get.to(() => DetailNoticeScreen(notice: comment));
+            },
+            trailing: authController.userData!['isAdmin']
+                ? IconButton(
+                    onPressed: () {
+                      _noticeController.deleteNotice(comment.id);
+                    },
+                    icon: const Icon(Icons.close),
+                  )
+                : null,
+          );
+        },
       ),
     );
   }

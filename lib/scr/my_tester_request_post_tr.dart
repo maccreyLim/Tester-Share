@@ -306,7 +306,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
               // 다이얼로그 닫기
               Get.back();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),

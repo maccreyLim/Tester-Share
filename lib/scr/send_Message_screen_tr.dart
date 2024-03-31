@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/send_message_detail_tr.dart';
-import 'package:tester_share_app/widget/w.banner_ad.dart';
 
 class SendMessageScreen extends StatefulWidget {
   const SendMessageScreen({super.key});

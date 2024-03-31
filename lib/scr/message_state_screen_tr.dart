@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tester_share_app/scr/received_message_screen_tr.dart'
     as ReceivedScreen;
 import 'package:tester_share_app/scr/send_Message_screen_tr.dart' as SendScreen;

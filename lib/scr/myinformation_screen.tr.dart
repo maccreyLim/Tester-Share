@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/change_password_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -13,6 +12,8 @@ class MyInformationScreen extends StatelessWidget {
   final ColorsCollection colors = ColorsCollection();
   final AuthController _authController = AuthController.instance;
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+
+  MyInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,22 +50,22 @@ class MyInformationScreen extends StatelessWidget {
                 color: colors.textColor,
               ),
             ).tr(),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             _textForm('email', 'E - mail'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _textForm('formattedDate', 'Registration Date', formattedDate),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _textForm('deployed', tr('Number of App Launch Experiences')),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _textForm('testerRequest', tr('Number of Tester Requests')),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _textForm(
                 'testerParticipation', tr('Number of Tester Participation')),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _textForm('point', 'point'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(child: Container()),
-            ChangePasswordButton(),
+            changePasswordButton(),
           ],
         ),
       ),
@@ -103,11 +104,11 @@ class MyInformationScreen extends StatelessWidget {
         children: [
           TextSpan(
             text: '$subject : ',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           TextSpan(
             text: '$data',
-            style: TextStyle(color: Colors.blue), // 변경하고자 하는 글자색으로 설정
+            style: const TextStyle(color: Colors.blue), // 변경하고자 하는 글자색으로 설정
           ),
         ],
       ),
@@ -118,13 +119,13 @@ class MyInformationScreen extends StatelessWidget {
     return DateFormat(format).format(dateTime);
   }
 
-  Widget ChangePasswordButton() {
-    return Container(
+  Widget changePasswordButton() {
+    return SizedBox(
       height: 40,
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          Get.to(() => ChangePasswordScreen());
+          Get.to(() => const ChangePasswordScreen());
           // _authController.changePassword(email, currentPassword, newPassword)
         },
         style: ButtonStyle(
