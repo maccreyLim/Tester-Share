@@ -159,9 +159,9 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Recipient",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 12, color: Colors.grey),
                                     ).tr(),
                                     Text(
@@ -213,7 +213,6 @@ class _SendMessageScreen extends State<SendMessageScreen> {
             },
           ),
         ),
-        BannerAD()
       ],
     );
   }

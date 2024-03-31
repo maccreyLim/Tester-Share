@@ -276,6 +276,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           Divider(),
+                          SizedBox(
+                            width: double.infinity,
+                            child: BannerAD(),
+                          )
                         ],
                       ),
                     ),
@@ -292,10 +296,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.to(() => const CreateBoardScreen());
         },
         child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: SizedBox(
-        width: double.infinity,
-        child: BannerAD(),
       ),
     );
   }

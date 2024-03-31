@@ -16,7 +16,6 @@ import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
-import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class UpdateBoardScreen extends StatefulWidget {
   final BoardFirebaseModel boards;
@@ -147,14 +146,6 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       print('오류 in _savePost: $e\n$stackTrace');
       // 에러 처리를 위한 추가적인 동작 수행
     }
-  }
-
-  void showRewardAd() {
-    final RewardAdManager _rewardAd = RewardAdManager();
-    _rewardAd.showRewardFullBanner(() {
-      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
-      // 예: 기부하기 또는 다른 작업 수행
-    });
   }
 
 // 선택된 이미지들이 유효한지 검증하는 함수

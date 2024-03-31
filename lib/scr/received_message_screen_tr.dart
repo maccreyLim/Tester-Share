@@ -229,7 +229,6 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
             },
           ),
         ),
-        BannerAD()
       ],
     );
   }

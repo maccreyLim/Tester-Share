@@ -16,7 +16,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
-import 'package:tester_share_app/widget/w.reward_ad.dart';
 
 class CreateBoardScreen extends StatefulWidget {
   const CreateBoardScreen({super.key});
@@ -67,14 +66,6 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     testerRequestController.dispose();
     githubUrlController.dispose();
     testerRequestProfileController.dispose();
-  }
-
-  void showRewardAd() {
-    final RewardAdManager _rewardAd = RewardAdManager();
-    _rewardAd.showRewardFullBanner(() {
-      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
-      // 예: 기부하기 또는 다른 작업 수행
-    });
   }
 
   void _savePost() async {

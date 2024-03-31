@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tester_share_app/scr/received_message_screen_tr.dart'
     as ReceivedScreen;
 import 'package:tester_share_app/scr/send_Message_screen_tr.dart' as SendScreen;
 import 'package:tester_share_app/scr/massage_create_screen_tr.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 
 class MessageStateScreen extends StatefulWidget {
@@ -34,6 +36,10 @@ class _MessageStateScreenState extends State<MessageStateScreen> {
     return Scaffold(
       backgroundColor: _colors.background,
       appBar: AppBar(
+        title: Text(
+          "Message",
+          style: TextStyle(color: _colors.textColor),
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: _colors.background,
         actions: [
@@ -48,8 +54,16 @@ class _MessageStateScreenState extends State<MessageStateScreen> {
           )
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: Column(
+        children: [
+          Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: BannerAD(),
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: _colors.background,
