@@ -158,6 +158,8 @@
     "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "アプリの設定を完了する前に、信頼できる小規模なテスターグループにビルドを迅速に配布できます\nこれにより、問題を特定し、早期にフィードバックを受けることができます。\nPlay Consoleにビルドを追加すると、通常は数秒以内にテスターに提供されます。\n内部テストはオプションですが、内部テストから始めるのが良いです。",
     "Already participated as a tester" : "すでにテスターとして参加しています",
     "Leave a review on Google Play Store" : "Google Play Storeにレビューを残す",
-    "Please enter ProfileName" : "プロフィール名を入力してください"
+    "Please enter ProfileName" : "プロフィール名を入力してください",
+    "Could you explain the deployment process on Tester Share?" : "Tester Shareでのデプロイメントプロセスを説明してもらえますか？",
+    "deployment process" : "1. プロジェクトをTester Shareにアップロードします。 \n2. Tester Share管理者によるプロジェクトの承認後、プロジェクトをアクティブにします。 \n3. テスターの申請者のメールリストをGoogleコンソールに登録します。 \n4. Googleコンソールでテスターとして登録した後、テスター申請者にメッセージを送信します。 \n5. 14日間、最低20人のテスターを維持します。 \n6. プロダクションアクセスをリクエストします。 \n7. プロダクションアクセスを承認します。 \n8. Googleコンソールで最終修正されたアプリビルドをプロダクションにアップロードします。 \n9. Googleコンソールからのデプロイメント承認を取得します。 \n10. デプロイメント完了。"
 
     }

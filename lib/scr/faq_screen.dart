@@ -32,6 +32,11 @@ class FAQScreen extends StatelessWidget {
       'answer': tr(
           "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing.")
     },
+    {
+      'question':
+          tr("Could you explain the deployment process on Tester Share?"),
+      'answer': tr("deployment process")
+    },
     // 다른 질문과 답변들을 여기에 추가할 수 있습니다.
   ];
 

@@ -155,5 +155,7 @@
     "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing." : "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing.",
     "Already participated as a tester" : "Already participated as a tester",
     "Leave a review on Google Play Store" : "Leave a review on Google Play Store",
-    "Please enter ProfileName" : "Please enter ProfileName"
+    "Please enter ProfileName" : "Please enter ProfileName",
+    "Could you explain the deployment process on Tester Share?" : "Could you explain the deployment process on Tester Share?",
+    "deployment process" : "1. Upload the project to Tester Share. \n2. Activate the project after Tester Share administrator review. \n3. Register the email list on the Google Console for tester applications. \n4. Send messages to tester applicants after registering them as testers on Google Console. \n5. Maintain at least 20 testers for 14 days. \n6. Request production access. \n7. Approve production access. \n8. Upload the final modified app build to production in Google Console. \n9. Obtain deployment approval from Google Console. \n10. Deployment completion."
 }
