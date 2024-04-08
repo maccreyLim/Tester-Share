@@ -13,7 +13,7 @@ class FAQScreen extends StatelessWidget {
     {
       'question': tr("What does Tester Share do?"),
       'answer': tr(
-          "After November 13, 2023, if you create a new developer account, you will need more than 20 testers to participate in private testing for 14 days in order to register a new app on Google Play.\nAs a result, new developers are facing a difficult situation of recruiting 20 testers for two weeks.\nIn response to this, developers have deployed Tester Share, where they form mutually secure relationships and become testers for each other to help and receive help.\nThrough this method, developers collaborate to test each other's apps with the aim of fulfilling the mandatory requirements for publishing apps on Google Play.")
+          "After November 13, 2023, a policy was implemented on Google Play requiring new individual developers to have at least 20 testers participate for 14 days before registering an app.\nIn response to this, developers have deployed Tester Share, where they form mutually secure relationships and become testers for each other to help and receive help.\nThrough this method, developers collaborate to test each other's apps with the aim of fulfilling the mandatory requirements for publishing apps on Google Play.")
     },
     {
       'question':

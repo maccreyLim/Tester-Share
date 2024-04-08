@@ -1,8 +1,8 @@
 {
-    "Starting from November 13, 2023, new developers are required to have at least 20 testers participate for a duration of 14 days to register an app on Google Play. This policy has been implemented." : "2023年11月13日以降、新しい開発者はGoogle Playでアプリを登録するために、少なくとも20人のテスターが14日間参加する必要があります。この方針が実施されました。",
+    "After November 13, 2023, a policy was implemented on Google Play requiring new individual developers to have at least 20 testers participate for 14 days before registering an app." : "2023年11月13日以降、新しい個人開発者がGoogle Playにアプリを登録するためには、20人以上のテスターが14日間参加する必要があるという方針が導入されました。",
     "In response to this, developers, facing difficulties in gathering a sufficient number of testers, are forming mutually beneficial relationships and collaborating through Tester Share to test each other's apps." : "これに対応して、十分な数のテスターを集めるのに苦労している開発者たちは、互恵的な関係を築き、お互いのアプリをテストするためにTester Shareを通じて協力しています。",
     "This is an effort to explore ways for developers to successfully register their apps while complying with Google Play policies." : "これは、Google Playのポリシーを遵守しながら開発者がアプリを正常に登録する方法を探る取り組みです。",
-    "[Flutter developer] Maccrey" : "[Flutterデベロッパー] Maccrey",
+    "[ Flutter developer ] Maccrey" : "[Flutterデベロッパー] Maccrey",
     "Find Your Password": "パスワードを見つける",
     "Google Play Store ID": "Google PlayストアID",
     "Please enter your Google Play Store ID":"Google PlayストアIDを入力してください",
@@ -149,7 +149,8 @@
     "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. It is mandatory to complete the verification process for login." : "登録時に提供されたメールアドレスに確認メールを送信しました。\nログインするには、受信トレイを確認して、確認プロセスを完了してください。ログインするには確認プロセスを完了する必要があります。",
     "Confirm" : "確 認",
     "What does Tester Share do?" : "Tester Shareは何をするアプリですか？",
-    "After November 13, 2023, if you create a new developer account, you will need more than 20 testers to participate in private testing for 14 days in order to register a new app on Google Play.\nAs a result, new developers are facing a difficult situation of recruiting 20 testers for two weeks.\nIn response to this, developers have deployed Tester Share, where they form mutually secure relationships and become testers for each other to help and receive help.\nThrough this method, developers collaborate to test each other's apps with the aim of fulfilling the mandatory requirements for publishing apps on Google Play." : "2023年11月13日以降、新しい開発者アカウントを作成する場合、Google Playに新しいアプリを登録するには、20人以上のテスターが14日間にわたって非公開テストに参加する必要があります。\nその結果、新しい開発者は2週間で20人のテスターを募集するという困難な状況に直面しています。\nこれに対応して、開発者は相互に安全な関係を構築し、お互いにテスターとして役立ち、助け合うためのTester Shareを展開しました。\nこの方法により、開発者はお互いのアプリをテストし、Google Playでのアプリの公開のための必須要件を満たすことを目指して協力しています。",
+    "After November 13, 2023, a policy was implemented on Google Play requiring new individual developers to have at least 20 testers participate for 14 days before registering an app.\nIn response to this, developers have deployed Tester Share, where they form mutually secure relationships and become testers for each other to help and receive help.\nThrough this method, developers collaborate to test each other's apps with the aim of fulfilling the mandatory requirements for publishing apps on Google Play." : 
+    "2023年11月13日以降、新しい個人開発者がGoogle Playにアプリを登録するためには、20人以上のテスターが14日間参加する必要があるという方針が導入されました。",
     "What are the app testing requirements for developer accounts?" : "開発者アカウントのアプリのテスト要件とは何ですか？",
     "After November 13, 2023, new registrants to Google Console must meet specific testing requirements for 20 testers over a two-week period in order to publish an app on Google Play.\nIt's important to note that for each new app registration, testers must be recruited to meet these requirements." : "2023年11月13日以降、Google Consoleに新規登録した方は、Google Playにアプリを公開するためには、2週間にわたって20人のテスターが特定のテスト要件を満たす必要があります\nここで重要なのは、新しいアプリを登録するたびに、これらの要件を満たすためにテスターを募集しなければならないという点です。",
     "I have met the app tester requirements. What should I do next?" : "アプリのテスター要件を満たしました。次に何をすればよいですか？",

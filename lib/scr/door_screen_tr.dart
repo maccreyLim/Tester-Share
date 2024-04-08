@@ -33,16 +33,16 @@ class DoorScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 100),
             createText(tr(
-                "Starting from November 13, 2023, new developers are required to have at least 20 testers participate for a duration of 14 days to register an app on Google Play. This policy has been implemented.")),
+                "After November 13, 2023, a policy was implemented on Google Play requiring new individual developers to have at least 20 testers participate for 14 days before registering an app.")),
             createText(tr(
-                "In response to this, developers, facing difficulties in gathering a sufficient number of testers, are forming mutually beneficial relationships and collaborating through Tester Share to test each other's apps.")),
+                "In response to this, developers, facing difficulty in gathering testers, have formed mutually beneficial relationships and are collaborating through Tester Share to test each other's apps.")),
             createText(tr(
                 "This is an effort to explore ways for developers to successfully register their apps while complying with Google Play policies.")),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                createText("[ Flutter developer ] Maccrey", fontSize: 16),
+                createText("[ Flutter developer ] Maccrey".tr(), fontSize: 16),
               ],
             ),
             const SizedBox(height: 40),
