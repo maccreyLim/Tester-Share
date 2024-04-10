@@ -137,7 +137,7 @@ class MyInformationScreen extends StatelessWidget {
               fontSize: _fontSizeCollection.buttonFontSize,
               // fontWeight: FontWeight.bold,
               color: colors.iconColor),
-        ),
+        ).tr(),
       ),
     );
   }

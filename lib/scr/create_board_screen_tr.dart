@@ -124,6 +124,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         _authController.updateUserData(_uid, _userNewData);
 
         // 저장이 완료되면 홈 화면으로 이동
+        Get.back(); // _savePost() 실행 후에 다이얼로그 닫기
         Get.off(() => const HomeScreen());
         Get.dialog(
           getXDialog(Get.context!,
@@ -131,6 +132,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         );
       } catch (e) {
         print("Post 저장에 실패 : $e");
+        Get.back();
       }
       // Firestore에 게시물 추가
     }
@@ -422,9 +424,14 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () async {
+          Get.dialog(
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+            barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+          );
           adController.loadAndShowAd();
-          Center(child: CircularProgressIndicator());
-          _savePost();
+          _savePost(); // _savePost()가 완료될 때까지 대기
         },
         child: Text(
           'Create Post',

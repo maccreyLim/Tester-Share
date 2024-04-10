@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/notice_controller.dart';
@@ -50,7 +52,8 @@ class NoticeScreen extends StatelessWidget {
                 color: colors.textColor,
               ),
             ).tr(),
-            Expanded(
+            SizedBox(
+              height: 574,
               child: noticeStreenBuilder(),
             ),
             const SizedBox(width: 30),
@@ -124,7 +127,7 @@ class NoticeScreen extends StatelessWidget {
     final now = DateTime.now();
 
     return SizedBox(
-      height: 200,
+      height: 300,
       width: double.infinity,
       child: ListView.builder(
         itemCount: announcementList.length,

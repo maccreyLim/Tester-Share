@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SingleImageFirebaseController {
@@ -21,12 +19,6 @@ class SingleImageFirebaseController {
 
   // 선택한 단일 이미지를 Firebase Storage에 업로드
   Future<String?> uploadSingleImage(XFile? pickedImage) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     String now =
         '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     //기존 이미지 삭제 2/22추가
@@ -46,9 +38,6 @@ class SingleImageFirebaseController {
       } catch (e) {
         print('단일 이미지 업로드 오류: $e');
         return null;
-      } finally {
-        // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-        Get.back();
       }
     } else {
       return null;
@@ -57,12 +46,6 @@ class SingleImageFirebaseController {
 
   // Firebase Storage에서 선택한 단일 이미지 삭제
   Future<void> deleteSingleImage(XFile? pickedImage) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     String now =
         '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     if (pickedImage != null) {
@@ -77,30 +60,18 @@ class SingleImageFirebaseController {
         await imageRef.delete();
       } catch (e) {
         print('단일 이미지 삭제 오류: $e');
-      } finally {
-        // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-        Get.back();
       }
     }
   }
 
 // Url로 Firebase Storage에서 선택한 단일 이미지 삭제
   Future<void> deleteImageUrl(String iconImageUrl) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     try {
       // Firebase Storage에서 이미지 삭제
       await FirebaseStorage.instance.refFromURL(iconImageUrl).delete();
     } catch (e) {
       print('이미지 삭제 오류: $e');
       // 예외 처리를 위한 추가적인 동작 수행
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 }

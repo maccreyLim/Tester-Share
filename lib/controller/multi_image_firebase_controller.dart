@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MultiImageFirebaseController {
@@ -63,12 +61,6 @@ class MultiImageFirebaseController {
 
   /// 선택한 다중 이미지들을 Firebase Storage에 업로드하고 imageUrls를 반환하는 메서드
   Future<List<String>> uploadMultiImages(List<XFile?> pickedImages) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     String now =
         '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
 
@@ -92,9 +84,6 @@ class MultiImageFirebaseController {
           imageUrls.add(downloadURL);
         } catch (e) {
           print('다중 이미지 업로드 오류: $e');
-        } finally {
-          // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-          Get.back();
         }
       }
     }
@@ -106,12 +95,6 @@ class MultiImageFirebaseController {
   /// 이미지 업로드 전에 기존 이미지를 삭제하고, 새로 선택한 이미지들을 업로드하여 새로운 URL 목록을 반환하는 메서드
   Future<List<String>> updateMultiImages(
       List<XFile?> pickedImages, List<String> existingImageUrls) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     String now =
         '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
     try {
@@ -150,21 +133,12 @@ class MultiImageFirebaseController {
     } catch (e) {
       print('이미지 업로드 및 삭제 중 오류 발생: $e');
       return [];
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 
 // Storage Delete
 //리스트에 있는 주소로 모든 파일을 삭제
   Future<void> deleteImagesUrlFromStorage(List<String> appImagesUrls) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     try {
       for (String imageUrl in appImagesUrls) {
         try {
@@ -184,9 +158,6 @@ class MultiImageFirebaseController {
       }
     } catch (e) {
       print('Firebase Storage에서 이미지 삭제 오류: $e');
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 
@@ -195,12 +166,6 @@ class MultiImageFirebaseController {
     int index,
     List<String> existingImageUrls,
   ) async {
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
-    );
     try {
       // list 복사본 생성
       // List<String> updatedImageUrls = List.from(existingImageUrls);
@@ -240,9 +205,6 @@ class MultiImageFirebaseController {
 
       // 오류가 발생한 경우 원래 리스트를 그대로 반환
       return existingImageUrls;
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 }
