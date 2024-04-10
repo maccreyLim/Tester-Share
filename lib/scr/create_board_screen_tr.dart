@@ -6,15 +6,15 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
+import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/controller/multi_image_firebase_controller.dart';
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
-import 'package:tester_share_app/scr/home_screen_tr.dart';
+import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
-import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class CreateBoardScreen extends StatefulWidget {
@@ -37,6 +37,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
   final BoardFirebaseController _boardFirebaseController =
       BoardFirebaseController();
   final InterstitialAdController adController = InterstitialAdController();
+  final MassageFirebaseController _mfirebase = MassageFirebaseController();
   TextEditingController titleController = TextEditingController();
   TextEditingController introductionTextController = TextEditingController();
   TextEditingController testerRequestController = TextEditingController();
@@ -68,7 +69,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     testerRequestProfileController.dispose();
   }
 
-  void _savePost() async {
+  Future<void> _savePost() async {
     if (_authController.currentUser?.uid == null) {
       // 사용자 데이터가 없으면 예외 처리 또는 다른 조치를 취할 수 있습니다.
       print('Error: 유저데이타가 없습니다.');
@@ -122,17 +123,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         };
         // 사용자 데이터 업데이트
         _authController.updateUserData(_uid, _userNewData);
-
-        // 저장이 완료되면 홈 화면으로 이동
-        Get.back(); // _savePost() 실행 후에 다이얼로그 닫기
-        Get.off(() => const HomeScreen());
-        Get.dialog(
-          getXDialog(Get.context!,
-              tr("The project has been registered\n You can check it in Setting -> My Tester Request Post")),
-        );
       } catch (e) {
         print("Post 저장에 실패 : $e");
-        Get.back();
       }
       // Firestore에 게시물 추가
     }
@@ -428,10 +420,25 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
             const Center(
               child: CircularProgressIndicator(),
             ),
-            barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
+            barrierDismissible: false,
           );
           adController.loadAndShowAd();
-          _savePost(); // _savePost()가 완료될 때까지 대기
+          await _savePost(); // _savePost()가 완료될 때까지 대기
+          // 저장이 완료되면 홈 화면으로 이동
+          Get.back();
+          Get.back();
+          MessageModel message = MessageModel(
+              senderUid: "17sgMj5H7qMh7JyZ81SlESYRGV52",
+              receiverUid: _authController.userData!['uid'],
+              contents: tr(
+                  "The project has been registered\n\n You can check it in Setting -> My Tester Request Post"),
+              timestamp: DateTime.now());
+          _mfirebase.createMessage(message, tr("Admin"));
+          // Get.off(MyTesterRequestPostScreen());
+          // Get.dialog(
+          //   getXDialog(Get.context!,
+          //       tr("The project has been registered\n\n You can check it in Setting -> My Tester Request Post")),
+          // );
         },
         child: Text(
           'Create Post',
