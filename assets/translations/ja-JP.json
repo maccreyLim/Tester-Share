@@ -116,6 +116,7 @@
     "An error occurred while fetching the announcement data" : "お知らせデータの取得中にエラーが発生しました",
     "Just now" : "たった今",
     "hours ago" : "時間前",
+    "days ago" : "日前",
     "minutes ago" : "分前",
     "year" : "年",
     "month" : "月",

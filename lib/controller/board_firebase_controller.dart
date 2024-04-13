@@ -14,10 +14,8 @@ class BoardFirebaseController {
 // Create (추가)
   Future<void> addBoard(BoardFirebaseModel newPost) async {
     try {
-      // 데이터를 추가하기 전에 로딩 인디케이터를 표시합니다.
-
       DocumentReference documentRef = await collectionRef.add(newPost.toMap());
-
+      // DocumentReference documentRef = await collectionRef.add(newPost);
       // 문서 ID를 얻어옴
       String docId = documentRef.id;
 

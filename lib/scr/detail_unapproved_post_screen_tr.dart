@@ -239,35 +239,37 @@ class _DetailUnapprovedPostScreenState
                   child: Container(
                     color: colors.boxColor,
                     child: TextButton(
-                      onPressed: () {
-                        try {
-                          final inputUrl = widget.boards.githubUrl;
+                      onPressed: widget.boards.githubUrl != null
+                          ? () {
+                              try {
+                                final inputUrl = widget.boards.githubUrl!;
 
-                          // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
-                          final hasProtocol = inputUrl.startsWith('http://') ||
-                              inputUrl.startsWith('https://');
+                                // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
+                                final hasProtocol =
+                                    inputUrl.startsWith('http://') ||
+                                        inputUrl.startsWith('https://');
 
-                          // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
-                          final urlWithProtocol =
-                              hasProtocol ? inputUrl : 'https://$inputUrl';
+                                // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
+                                final urlWithProtocol = hasProtocol
+                                    ? inputUrl
+                                    : 'https://$inputUrl';
 
-                          // URL을 Uri 객체로 변환
-                          final url = Uri.parse(urlWithProtocol);
+                                // URL을 Uri 객체로 변환
+                                final url = Uri.parse(urlWithProtocol);
 
-                          // 생성된 Uri를 사용하여 브라우저 열기
-                          launchUrl(url);
-                        } catch (e) {
-                          // URL이 유효하지 않거나 열 수 없는 경우 처리
-                          print('URL 열기 오류: $e');
-                        }
-                      },
+                                // 생성된 Uri를 사용하여 브라우저 열기
+                                launchUrl(url);
+                              } catch (e) {
+                                // URL이 유효하지 않거나 열 수 없는 경우 처리
+                                print('URL 열기 오류: $e');
+                              }
+                            }
+                          : null,
                       style: TextButton.styleFrom(
-                        backgroundColor:
-                            colors.boxColor, // Set button color to black
-                        elevation:
-                            8, // Add some elevation for a raised appearance
+                        backgroundColor: colors.boxColor,
+                        elevation: 8,
                       ),
-                      child: cardText(widget.boards.githubUrl, 20),
+                      child: cardText(widget.boards.githubUrl ?? '', 20),
                     ),
                   ),
                 ),

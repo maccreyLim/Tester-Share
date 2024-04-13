@@ -292,9 +292,11 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return tr('Please enter GitHub repository URL');
+                      return null;
                     }
                     return null;
+                    // 그 외의 경우는 GitHub repository URL이 입력되었는지 확인
+// 유효성 검사 통과
                   }),
               const SizedBox(height: 20),
               TextFormField(
@@ -310,8 +312,8 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      // return tr(
-                      //     'Please enter the download address of the Test App.');
+                      return tr(
+                          'Please enter the download address of the Test App.');
                     }
                     return null;
                   }),
@@ -416,6 +418,11 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () async {
+          // 유효성 검사를 수행
+          if (!_formKey.currentState!.validate()) {
+            // 하나 이상의 필수 항목이 비어 있음을 알림
+            return;
+          }
           Get.dialog(
             const Center(
               child: CircularProgressIndicator(),

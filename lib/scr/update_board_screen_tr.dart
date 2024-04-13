@@ -77,7 +77,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
     titleController.text = widget.boards.title;
     introductionTextController.text = widget.boards.introductionText;
     testerRequestController.text = widget.boards.testerRequest.toString();
-    githubUrlController.text = widget.boards.githubUrl;
+    githubUrlController.text = widget.boards.githubUrl ?? '';
     appSetupUrlController.text = widget.boards.appSetupUrl;
     selectedLanguages = widget.boards.language!.whereType<String>().toList();
     pickedImage = File(widget.boards.iconImageUrl);

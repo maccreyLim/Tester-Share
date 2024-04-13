@@ -133,18 +133,22 @@ class NoticeScreen extends StatelessWidget {
         itemCount: announcementList.length,
         itemBuilder: (context, index) {
           final comment = announcementList[index];
-          //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
+// Function implementation to display elapsed time since creation
           final DateTime created = comment.createdAt;
           final Duration difference = now.difference(created);
 
           String formattedDate;
           String minutes = tr("minutes ago");
           String hours = tr("hours ago");
+          String days = tr("days ago");
 
-          if (difference.inHours > 0) {
-            formattedDate = '${difference.inHours} $minutes';
+          if (difference.inDays > 0) {
+            // Display the number of days elapsed
+            formattedDate = '${difference.inDays} $days';
+          } else if (difference.inHours > 0) {
+            formattedDate = '${difference.inHours} $hours';
           } else if (difference.inMinutes > 0) {
-            formattedDate = '${difference.inMinutes} $hours';
+            formattedDate = '${difference.inMinutes} $minutes';
           } else {
             formattedDate = tr('Just now');
           }

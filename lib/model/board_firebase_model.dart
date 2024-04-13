@@ -13,7 +13,7 @@ class BoardFirebaseModel {
   int testerParticipation; // 테스터 참여자 수
   List<String> appImagesUrl; // App 이미지
   String iconImageUrl; // AppIcon 이미지
-  String githubUrl; // github 주소
+  String? githubUrl; // github 주소
   String appSetupUrl; // app 설치 주소
   List<dynamic>? language; // 사용 가능 언어 (nullable로 변경)
   List<String> rquestProfileName; // App 이미지
@@ -32,7 +32,7 @@ class BoardFirebaseModel {
       required this.testerParticipation,
       required this.appImagesUrl,
       required this.iconImageUrl,
-      required this.githubUrl,
+      this.githubUrl,
       required this.appSetupUrl,
       this.language,
       required this.rquestProfileName});
@@ -64,7 +64,7 @@ class BoardFirebaseModel {
   // toMap 메서드 수정
   Map<String, dynamic> toMap() {
     return {
-      'docUid': docid,
+      'docid': docid,
       'isApproval': isApproval,
       'createUid': createUid,
       'developer': developer,

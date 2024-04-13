@@ -116,6 +116,7 @@
   "An error occurred while fetching the announcement data" : "공지사항 데이터를 가져오는 중 오류가 발생했습니다",
   "Just now" : "방금 전",
   "hours ago" : "분 전",
+  "days ago" : "일 전",
   "minutes ago" : "시간 전",
   "year" : "년",
   "month" : "월",

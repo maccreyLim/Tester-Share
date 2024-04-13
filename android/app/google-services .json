@@ -9,7 +9,26 @@
       "client_info": {
         "mobilesdk_app_id": "1:647763543576:android:6ecabb776f52f51ad1656d",
         "android_client_info": {
-          "package_name": "com.example.tester_share_app"
+          "package_name": "com.maccrey.tester_share_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAczroEmMdl79IhHm89Bo8jJWmE4P8Hfzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647763543576:android:fd984e10c42d3ce1d1656d",
+        "android_client_info": {
+          "package_name": "com.maccrey.tester_share_release"
         }
       },
       "oauth_client": [],
