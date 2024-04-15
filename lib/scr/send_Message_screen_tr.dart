@@ -143,13 +143,17 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                     String formattedDate;
                     String minutes = tr("minutes ago");
                     String hours = tr("hours ago");
+                    String days = tr("days ago");
 
-                    if (difference.inHours > 0) {
-                      formattedDate = '${difference.inHours} $minutes';
+                    if (difference.inDays > 0) {
+                      // Display the number of days elapsed
+                      formattedDate = '${difference.inDays} $days';
+                    } else if (difference.inHours > 0) {
+                      formattedDate = '${difference.inHours} $hours';
                     } else if (difference.inMinutes > 0) {
-                      formattedDate = '${difference.inMinutes} $hours';
+                      formattedDate = '${difference.inMinutes} $minutes';
                     } else {
-                      formattedDate = tr("Just now");
+                      formattedDate = tr('Just now');
                     }
                     return ListTile(
                       title: message.isRead

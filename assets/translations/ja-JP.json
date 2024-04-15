@@ -147,7 +147,7 @@
     "wellcome" : "ようこそ",
     "Thank you for signing up for Tester Share.\n\n" : "Tester Shareにサインアップしていただきありがとうございます。\n\n ",
     "-- IMPORTANT --\n" : "-- 重 要 --\n ",
-    "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. It is mandatory to complete the verification process for login." : "登録時に提供されたメールアドレスに確認メールを送信しました。\nログインするには、受信トレイを確認して、確認プロセスを完了してください。ログインするには確認プロセスを完了する必要があります。",
+    "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. \nIt is mandatory to complete the verification process for login." : "登録時に提供されたメールアドレスに確認メールを送信しました。\nログインするには、受信トレイを確認して、確認プロセスを完了してください。\nログインするには確認プロセスを完了する必要があります。",
     "Confirm" : "確 認",
     "What does Tester Share do?" : "Tester Shareは何をするアプリですか？",
     "After November 13, 2023, a policy was implemented on Google Play requiring new individual developers to have at least 20 testers participate for 14 days before registering an app.\nIn response to this, developers have deployed Tester Share, where they form mutually secure relationships and become testers for each other to help and receive help.\nThrough this method, developers collaborate to test each other's apps with the aim of fulfilling the mandatory requirements for publishing apps on Google Play." : 

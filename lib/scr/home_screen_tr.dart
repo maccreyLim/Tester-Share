@@ -94,12 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.to(const MessageStateScreen());
                 },
               )),
-//           IconButton(
-//               onPressed: () {
-
-// 테스트
-//               },
-//               icon: const Icon(Icons.article)),
+          // IconButton(
+          //     onPressed: () {
+          //     //버그 수정 리스트
+          //     },
+          //     icon: const Icon(Icons.bug_report)),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());

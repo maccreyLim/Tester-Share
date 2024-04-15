@@ -35,13 +35,13 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Thank you for signing up for \nTester Share.\n\n",
+                    "Thank you for signing up for Tester Share.\n\n",
                     style: TextStyle(
                         fontSize: 20,
                         color: colors.textColor,
                         fontWeight: FontWeight.bold,
                         height: 2),
-                  ),
+                  ).tr(),
                 ],
               ),
               Center(
@@ -58,7 +58,7 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. It is mandatory to complete the verification process for login.",
+                "We have sent a verification email to the email address you provided during registration. \nPlease check your inbox and complete the verification process to log in. \nIt is mandatory to complete the verification process for login.",
                 style: TextStyle(
                   fontSize: 20,
                   color: colors.textColor,
