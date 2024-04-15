@@ -127,7 +127,7 @@ class NoticeScreen extends StatelessWidget {
     final now = DateTime.now();
 
     return SizedBox(
-      height: 300,
+      height: 572,
       width: double.infinity,
       child: ListView.builder(
         itemCount: announcementList.length,
