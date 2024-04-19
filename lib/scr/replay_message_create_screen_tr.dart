@@ -80,7 +80,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
                 ).tr(),
-                Divider(),
+                const Divider(),
                 const SizedBox(height: 6),
                 Text(
                   widget.message.contents,

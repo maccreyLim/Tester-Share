@@ -94,11 +94,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.to(const MessageStateScreen());
                 },
               )),
-          // IconButton(
-          //     onPressed: () {
-          //     //버그 수정 리스트
-          //     },
-          //     icon: const Icon(Icons.bug_report)),
+          IconButton(
+            onPressed: () {
+              //버그체크리스트
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Notification").tr(),
+                    content: const Text(
+                            "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.")
+                        .tr(),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.bug_report),
+          ),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());
@@ -134,7 +154,18 @@ class _HomeScreenState extends State<HomeScreen> {
             }
 
             List<BoardFirebaseModel> boards = snapshot.data!;
-            print(boards.first.createAt);
+            boards.sort((a, b) {
+              if (a.testerRequest > a.testerParticipation &&
+                  b.testerRequest <= b.testerParticipation) {
+                return -1; // a를 b보다 앞으로 배치
+              } else if (a.testerRequest <= a.testerParticipation &&
+                  b.testerRequest > b.testerParticipation) {
+                return 1; // b를 a보다 앞으로 배치
+              } else {
+                // testerRequest와 testerParticipation이 같거나 모두 크거나 작을 경우 createAt으로 비교
+                return b.createAt.compareTo(a.createAt);
+              }
+            });
 
             // 여기에서 boards 리스트를 사용하여 UI를 업데이트하세요.
 
@@ -152,6 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               Image.network(
@@ -274,11 +306,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          Divider(),
+                          const SizedBox(height: 10),
+                          const Divider(),
+                          const SizedBox(height: 4),
                           SizedBox(
                             width: double.infinity,
                             child: BannerAD(),
-                          )
+                          ),
+                          const SizedBox(height: 4),
                         ],
                       ),
                     ),

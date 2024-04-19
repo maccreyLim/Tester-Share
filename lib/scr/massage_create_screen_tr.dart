@@ -166,7 +166,7 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   SizedBox(
@@ -183,7 +183,7 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                               timestamp: DateTime.now());
                           _mfirebase.createMessage(
                               message, sendUserController.text);
-                          Get.off(MessageStateScreen());
+                          Get.off(const MessageStateScreen());
                         }
                         Get.back();
                       },

@@ -136,9 +136,11 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                   itemBuilder: (context, index) {
                     MessageModel message = messages[index];
                     //작성시간과 얼마나 지났는지 표시를 위한 함수 구현
+                    // 작성시간과 얼마나 지났는지 표시를 위한 함수 구현
                     final now = DateTime.now();
                     final DateTime created = message.timestamp;
                     final Duration difference = now.difference(created);
+                    print("difference : $difference");
 
                     String formattedDate;
                     String minutes = tr("minutes ago");
@@ -150,11 +152,12 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                       formattedDate = '${difference.inDays} $days';
                     } else if (difference.inHours > 0) {
                       formattedDate = '${difference.inHours} $hours';
-                    } else if (difference.inMinutes > 0) {
+                    } else if (difference.inMinutes >= 20) {
                       formattedDate = '${difference.inMinutes} $minutes';
                     } else {
                       formattedDate = tr('Just now');
                     }
+
                     return ListTile(
                       title: message.isRead
                           ? Column(

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class BoardFirebaseModel {
   String docid; // 문서 Doc 명
   bool isApproval; // 승인 여부
+  bool isDeploy; // 배포(출시)여부
   String createUid; // 작성자 uid
   String developer; // 개발자 프로필
   DateTime createAt; // 작성일자
@@ -22,6 +23,7 @@ class BoardFirebaseModel {
   BoardFirebaseModel(
       {required this.docid,
       required this.isApproval,
+      required this.isDeploy,
       required this.createUid,
       required this.developer,
       required this.createAt,
@@ -44,6 +46,7 @@ class BoardFirebaseModel {
     return BoardFirebaseModel(
       docid: doc.id,
       isApproval: data?['isApproval'] ?? false,
+      isDeploy: data?['isDeploy'] ?? false,
       createUid: data?['createUid'] ?? '',
       developer: data?['developer'] ?? '',
       createAt: (data?['createAt'] as Timestamp).toDate(),
@@ -66,6 +69,7 @@ class BoardFirebaseModel {
     return {
       'docid': docid,
       'isApproval': isApproval,
+      'isDeploy': isDeploy,
       'createUid': createUid,
       'developer': developer,
       'createAt': createAt,

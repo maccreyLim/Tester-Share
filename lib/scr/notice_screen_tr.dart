@@ -147,7 +147,7 @@ class NoticeScreen extends StatelessWidget {
             formattedDate = '${difference.inDays} $days';
           } else if (difference.inHours > 0) {
             formattedDate = '${difference.inHours} $hours';
-          } else if (difference.inMinutes > 0) {
+          } else if (difference.inMinutes >= 30) {
             formattedDate = '${difference.inMinutes} $minutes';
           } else {
             formattedDate = tr('Just now');

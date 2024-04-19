@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
+import 'package:tester_share_app/scr/re_wellcome_message_screen.dart';
 import 'package:tester_share_app/scr/wellcome_join_message_screen.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
@@ -64,7 +65,7 @@ class AuthController extends GetxController {
         }
       } else {
         // 이메일이 인증되지 않은 경우에는 이메일 인증 안내페이지로 이동
-        Get.off(() => const WellcomeJoinMessageScreen());
+        Get.off(() => const ReWellcomeMessageScreen());
       }
     }
   }
@@ -156,9 +157,9 @@ class AuthController extends GetxController {
 
       print("로그인이 되어 user정보를 받음 $user");
       if (user != null && user.emailVerified == false) {
-        signOut();
+        // 인증 이메일 보내기
+        await user.sendEmailVerification();
         // 이메일이 인증되지 않았다면 인증 안내페이지로 이동
-        Get.to(() => const WellcomeJoinMessageScreen());
       } else {
         // Firestore에서 사용자 정보 가져오기
         Map<String, dynamic>? userData = await _getUserData(user!.uid);
@@ -168,7 +169,7 @@ class AuthController extends GetxController {
           loginChange();
           _userData.value = userData;
           // 사용자 정보가 로드되면 홈 화면으로 이동
-          Get.offAll(() => HomeScreen());
+          Get.off(() => HomeScreen());
         } else {
           // 사용자 정보가 없는 경우
           print("사용자 정보가 없습니다.");
@@ -177,9 +178,6 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
       handleAuthException(e);
-    } finally {
-      // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
-      Get.back();
     }
   }
 
@@ -189,34 +187,36 @@ class AuthController extends GetxController {
 
     switch (e.code) {
       case 'email-already-in-use':
-        errorMessage = '이미 사용 중인 이메일 주소입니다.';
+        errorMessage = 'The email address is already in use.';
         break;
       case 'network-request-failed':
-        errorMessage = '네트워크 오류가 발생했습니다.';
+        errorMessage = 'A network error occurred.';
         break;
       case 'invalid-email':
-        errorMessage = '유효하지 않은 이메일 주소입니다.';
+        errorMessage = 'The email address is invalid.';
         break;
       case 'user-not-found':
-        errorMessage = '사용자를 찾을 수 없습니다.';
+        errorMessage = 'User not found.';
         break;
       case 'email-not-verified':
-        errorMessage = '이메일이 인증되지 않았습니다. 인증 이메일을 다시 보내시겠습니까?';
-        // 사용자에게 확인 다이얼로그 또는 메시지를 표시하여 인증 이메일 재전송 기능 추가
-        Get.to(() => const WellcomeJoinMessageScreen());
+        errorMessage =
+            'The email address is not verified. Resending the verification email.';
+        // Additional functionality to prompt user to resend verification email
         break;
       case 'wrong-password':
-        errorMessage = '잘못된 비밀번호입니다.';
+        errorMessage = 'Incorrect password.';
         break;
       case 'user-not-found':
-        errorMessage = '등록되지 않은 이메일 주소입니다.';
+        errorMessage = 'The email address is not registered.';
         break;
       case 'network-request-failed':
-        errorMessage = '네트워크 오류가 발생했습니다. 인터넷 연결을 확인하세요.';
+        errorMessage =
+            'A network error occurred. Please check your internet connection.';
         break;
       default:
-        errorMessage = '알 수 없는 오류가 발생했습니다: ${e.code}';
+        errorMessage = 'An unknown error occurred: ${e.code}';
     }
+
     // 오류 메시지를 보여주는 토스트 또는 다른 방식의 알림을 사용할 수 있습니다.
     showToast(errorMessage, 2);
   }

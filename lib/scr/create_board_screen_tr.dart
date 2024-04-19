@@ -97,6 +97,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       BoardFirebaseModel newPost = BoardFirebaseModel(
           docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
           isApproval: false,
+          isDeploy: false,
           createUid: userUid.toString(), // 현재 사용자의 UID로 설정
           developer: _authController.userData?['profileName'],
           createAt: DateTime.now(),
@@ -123,6 +124,15 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         };
         // 사용자 데이터 업데이트
         _authController.updateUserData(_uid, _userNewData);
+
+        //관리자에게 새 프로젝트 생성 알림
+        final nickname = _authController.userData!['profileName'] as String;
+        MessageModel message = MessageModel(
+            senderUid: userUid.toString(),
+            receiverUid: "17sgMj5H7qMh7JyZ81SlESYRGV52",
+            contents: "미승인된 $nickname님의 새로운 프로젝트가 있습니다.",
+            timestamp: DateTime.now());
+        _mfirebase.createMessage(message, nickname);
       } catch (e) {
         print("Post 저장에 실패 : $e");
       }

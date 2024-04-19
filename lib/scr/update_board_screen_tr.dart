@@ -119,6 +119,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         BoardFirebaseModel newPost = BoardFirebaseModel(
           docid: widget.boards.docid,
           isApproval: widget.boards.isApproval,
+          isDeploy: widget.boards.isDeploy,
           createUid: userUid.toString(),
           developer: _authController.userData?['profileName'],
           createAt: widget.boards.createAt,

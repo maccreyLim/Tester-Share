@@ -77,9 +77,18 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
               }
 
               List<BoardFirebaseModel> boards = snapshot.data!;
-              print(boards.first.createAt);
-
-              // 여기에서 boards 리스트를 사용하여 UI를 업데이트하세요.
+              boards.sort((a, b) {
+                if (a.testerRequest > a.testerParticipation &&
+                    b.testerRequest <= b.testerParticipation) {
+                  return -1; // a를 b보다 앞으로 배치
+                } else if (a.testerRequest <= a.testerParticipation &&
+                    b.testerRequest > b.testerParticipation) {
+                  return 1; // b를 a보다 앞으로 배치
+                } else {
+                  // testerRequest와 testerParticipation이 같거나 모두 크거나 작을 경우 createAt으로 비교
+                  return b.createAt.compareTo(a.createAt);
+                }
+              });
 
               return ListView.builder(
                 itemCount: boards.length,
@@ -218,8 +227,10 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                     14),
                               ],
                             ),
-                            Divider(),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 10),
+                            const Divider(),
+                            const SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

@@ -115,9 +115,9 @@
   "There are no notices" : "공지사항이 없습니다",
   "An error occurred while fetching the announcement data" : "공지사항 데이터를 가져오는 중 오류가 발생했습니다",
   "Just now" : "방금 전",
-  "hours ago" : "분 전",
+  "hours ago" : "시간 전",
   "days ago" : "일 전",
-  "minutes ago" : "시간 전",
+  "minutes ago" : "분 전",
   "year" : "년",
   "month" : "월",
   "day" : "일",
@@ -162,6 +162,9 @@
   "Please enter ProfileName" : "프로필 이름을 입력해주세요",
   "Could you explain the deployment process on Tester Share?" : "Tester Share에서 배포과정을 설명해줘?",
   "deployment process" : "1. 구글콘솔 비공개테스트에 앱번들 업로드 \n2. Tester Share에 프로젝트 업로드. \n2. Tester Share 관리자검토후 프로젝트 활성화. \n3. 테스터신청받은 구글콘솔에 이메일목록등록. \n4.구글콘솔에서 테스터등록 후 테스트신청자에게 메시지 보내기. \n5. 테스터 20명 이상 14일유지. \n6. 프로덕션 액세스 신청. \n7. 프로덕션 액세스 승인. \n 8.구글콘솔에서 프로덕션에 최종수정 앱빌드 업로드. \n9. 구글콘솧에서 배포승인. \n10. 배포완료.",
-  "Admin" : "관리자"
+  "Admin" : "관리자",
+  "Email Resend Notification\n" : "이메일 재방송 안내\n",
+  "We have resent the email as your email verification was not completed. \nPlease check your email titled 'Verify your email for Share Tester' \nand click the link to log in." : "이메일 검증이 되지 않아 이메일을 재방송해드렸습니다.\n'Verify your email for Share Tester.'\n제목에 메일을 확인하시어 링크를 클릭해주시고 로그인해주세요",
+  "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "현재 버그체크ToDo 기능을 구현중입니다.\n조금만 기다려 주세요" 
   }
   
