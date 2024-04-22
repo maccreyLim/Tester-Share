@@ -152,12 +152,12 @@ class _MessageCreateScreenState extends State<MessageCreateScreen> {
                     maxLines: 10,
                     controller: messageController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       labelText: tr("Message"),
                     ),
-                    maxLength: 100,
+                    maxLength: 250,
                     keyboardType: TextInputType.multiline,
                     validator: (value) {
                       if (value!.isEmpty) {

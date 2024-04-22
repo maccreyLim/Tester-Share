@@ -186,11 +186,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              Image.network(
-                                boards[index].iconImageUrl,
-                                width: 80,
-                                height: 80,
-                              ),
+                              boards[index].iconImageUrl == ""
+                                  ? Image.asset(
+                                      "assets/images/no-image.png",
+                                      width: 80,
+                                      height: 80,
+                                    )
+                                  : Image.network(
+                                      boards[index].iconImageUrl,
+                                      width: 80,
+                                      height: 80,
+                                    ),
                               const SizedBox(width: 10),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,8 +280,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .testerParticipation) {
                                             return colors
                                                 .stateIsIng; // 상태가 "진행중"일 때의 배경색
+                                          } else if (boards[index].isDeploy ==
+                                              true) {
+                                            return colors
+                                                .Deploymentcompleted; // 배포가 완료된 상태의 배경색
                                           } else {
-                                            // 다른 상태에는 기본 배경색을 설정합니다.
+                                            // 완료 상태에는 기본 배경색을 설정합니다.
                                             return colors.stateIsClose;
                                           }
                                         },
@@ -290,7 +300,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       boards[index].testerRequest >
                                               boards[index].testerParticipation
                                           ? "In progress"
-                                          : "Completed",
+                                          : boards[index].isDeploy
+                                              ? "Released"
+                                              : "Completed",
                                       style: TextStyle(
                                           color: colors.iconColor,
                                           fontSize: 12,

@@ -18,4 +18,5 @@ class ColorsCollection {
   Color get stateIsClose => Colors.red;
   Color get importantMessage => Colors.red;
   Color get boxColor => Color.fromARGB(221, 31, 30, 30);
+  Color get Deploymentcompleted => Colors.amber;
 }

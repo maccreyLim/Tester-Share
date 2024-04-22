@@ -122,7 +122,7 @@ class _DeveloperMessageCreateScreenState
                       ),
                       labelText: tr("Message"),
                     ),
-                    maxLength: 100,
+                    maxLength: 250,
                     keyboardType: TextInputType.multiline,
                     validator: (value) {
                       if (value!.isEmpty) {

@@ -163,5 +163,8 @@
     "Admin" : "Admin",
     "Email Resend Notification\n" : "Email Resend Notification\n",
     "We have resent the email as your email verification was not completed. \nPlease check your email titled 'Verify your email for Share Tester' \nand click the link to log in." : "We have resent the email as your email verification was not completed. \nPlease check your email titled 'Verify your email for Share Tester' \nand click the link to log in.",
-    "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.": "We are currently implementing the bug check To-Do feature.\nPlease wait a moment."
+    "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.": "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.",
+    "Google Play Deployment Completed" : "Google Play Deployment Completed",
+    "Is Google Play deployment done?" : "Is Google Play deployment done?",
+    "Released" : "출시 완료"
 }

@@ -8,6 +8,7 @@ class BoardFirebaseModel {
   String developer; // 개발자 프로필
   DateTime createAt; // 작성일자
   DateTime? updateAt; // 수정일자 (nullable로 변경)
+  DateTime? deployAt; //배포날짜
   String title; // App 이름
   String introductionText; // App 소개글
   int testerRequest; // 테스터에 필요한 요청수
@@ -28,6 +29,7 @@ class BoardFirebaseModel {
       required this.developer,
       required this.createAt,
       this.updateAt,
+      this.deployAt,
       required this.title,
       required this.introductionText,
       required this.testerRequest,
@@ -51,6 +53,8 @@ class BoardFirebaseModel {
       developer: data?['developer'] ?? '',
       createAt: (data?['createAt'] as Timestamp).toDate(),
       updateAt: (data?['updateAt'] as Timestamp?)?.toDate(), // nullable로 변경
+      deployAt:
+          (data?['deployAt'] as Timestamp?)?.toDate(), //배포완료일 nullable로 변경
       title: data?['title'] ?? '',
       introductionText: data?['introductionText'] ?? '',
       testerRequest: data?['testerRequest'] ?? 0,
@@ -74,6 +78,7 @@ class BoardFirebaseModel {
       'developer': developer,
       'createAt': createAt,
       'updateAt': updateAt,
+      'deployAt': deployAt,
       'title': title,
       'introductionText': introductionText,
       'testerRequest': testerRequest,

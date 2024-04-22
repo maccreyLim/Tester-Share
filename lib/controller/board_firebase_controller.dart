@@ -117,7 +117,7 @@ class BoardFirebaseController {
 
   // 사용자 데이터(MAP)를 업데이트하는 메서드
   Future<void> updateBoardData(
-      String docUid, Map<String, dynamic> newData) async {
+      String docUid, Map<dynamic, dynamic> newData) async {
     try {
       // 사용자가 로그인되어 있는지 확인
       User? user = _authentication.currentUser;

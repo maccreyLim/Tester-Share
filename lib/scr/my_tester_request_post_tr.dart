@@ -105,11 +105,17 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Image.network(
-                                boards[index].iconImageUrl,
-                                width: 80,
-                                height: 80,
-                              ),
+                              boards[index].iconImageUrl == ""
+                                  ? Image.asset(
+                                      "assets/images/no-image.png",
+                                      width: 80,
+                                      height: 80,
+                                    )
+                                  : Image.network(
+                                      boards[index].iconImageUrl,
+                                      width: 80,
+                                      height: 80,
+                                    ),
                               const SizedBox(width: 10),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,6 +274,46 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                 ),
                               ),
                             ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              boards[index].isApproval &&
+                                      boards[index].isDeploy == false
+                                  ? ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize:
+                                            const Size(320, 30), // 버튼의 최소 크기 설정
+                                        // 다른 스타일 설정
+                                      ),
+                                      onPressed: () {
+                                        String docUid = boards[index].docid;
+                                        Map<String, dynamic> newData = {
+                                          "isDeploy": true,
+                                          "deployAt": DateTime.now(),
+                                          // 필드와 값 추가
+                                        };
+                                        _board.updateBoardData(docUid, newData);
+                                        print("배포 변경 데이터 : $docUid , $newData");
+                                      },
+                                      child: const Text(
+                                              "Is Google Play deployment done?")
+                                          .tr())
+                                  : boards[index].isApproval &&
+                                          boards[index].isDeploy
+                                      ? ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: const Size(
+                                                320, 30), // 버튼의 최소 크기 설정
+                                            // 다른 스타일 설정
+                                            backgroundColor: Colors.amber,
+                                          ),
+                                          onPressed: () {},
+                                          child: const Text(
+                                                  "Google Play Deployment Completed")
+                                              .tr())
+                                      : Container()
+                            ],
                           )
                         ],
                       ),
@@ -288,10 +334,6 @@ class MyTesterRequestPostScreen extends StatelessWidget {
           },
           child: const Icon(Icons.add),
         ),
-      ),
-      bottomNavigationBar: SizedBox(
-        width: double.infinity,
-        child: BannerAD(),
       ),
     );
   }

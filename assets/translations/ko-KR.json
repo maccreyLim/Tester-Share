@@ -165,6 +165,9 @@
   "Admin" : "관리자",
   "Email Resend Notification\n" : "이메일 재방송 안내\n",
   "We have resent the email as your email verification was not completed. \nPlease check your email titled 'Verify your email for Share Tester' \nand click the link to log in." : "이메일 검증이 되지 않아 이메일을 재방송해드렸습니다.\n'Verify your email for Share Tester.'\n제목에 메일을 확인하시어 링크를 클릭해주시고 로그인해주세요",
-  "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "현재 버그체크ToDo 기능을 구현중입니다.\n조금만 기다려 주세요" 
+  "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "현재 버그체크ToDo 기능을 구현중입니다.\n조금만 기다려 주세요",
+  "Google Play Deployment Completed": "구글플레이 배포 완료",
+  "Is Google Play deployment done?" : "구글플레이에 배포 완료 되셨나요?",
+  "Released" : "출시 완료"
   }
   

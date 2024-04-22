@@ -166,5 +166,8 @@
     "Admin" : "管理者",
     "Email Resend Notification\n" : "メール再送通知\n",
     "We have resent the email as your email verification was not completed. \nPlease check your email titled 'Verify your email for Share Tester' \nand click the link to log in." :"メールの検証が完了していないため、メールを再送しました。\n件名が 'Verify your email for Share Tester' \nです。\nメールを確認し、リンクをクリックしてログインしてください。",
-    "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "現在、バグチェックTo Doを実装中です。\n少々お待ちください。"
+    "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "現在、バグチェックTo Doを実装中です。\n少々お待ちください。",
+    "Google Play Deployment Completed" : "グーグルプレイ配布完了",
+    "Is Google Play deployment done?" : "グーグルプレイの配布は完了しましたか？",
+    "Released" : "リリース完了"
     }

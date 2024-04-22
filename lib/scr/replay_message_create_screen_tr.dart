@@ -92,7 +92,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                   style: TextStyle(fontSize: 16, color: _colors.textColor),
                   cursorHeight: 20,
                   maxLines: 10,
-                  maxLength: 100,
+                  maxLength: 250,
                   controller: messageController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
