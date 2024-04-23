@@ -14,7 +14,6 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.fcm.dart';
-import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.request_permission.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -119,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               );
             },
-            icon: Icon(Icons.bug_report),
+            icon: const Icon(Icons.bug_report),
           ),
           IconButton(
               onPressed: () {
