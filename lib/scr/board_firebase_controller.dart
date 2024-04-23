@@ -138,14 +138,15 @@ class BoardFirebaseController {
   }
 
   // 리스트를 업데이트하는 메서드
-  Future<void> updateRquestProfileName(String docUid,
+  Future<void> updateRquestProfileName(String circlular,
       List<String> currentProfileNames, String newProfileName) async {
     try {
       // 현재 사용자 가져오기
       User? user = _authentication.currentUser;
       if (user != null) {
         // Firestore에서 문서 참조 가져오기
-        DocumentReference docRef = _firestore.collection('boards').doc(docUid);
+        DocumentReference docRef =
+            _firestore.collection('boards').doc(circlular);
 
         // 새로운 프로필 이름 추가
         currentProfileNames.add(newProfileName);

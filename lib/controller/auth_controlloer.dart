@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tester_share_app/model/user_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
 import 'package:tester_share_app/scr/re_wellcome_message_screen.dart';
@@ -172,6 +173,7 @@ class AuthController extends GetxController {
           Get.off(() => HomeScreen());
         } else {
           // 사용자 정보가 없는 경우
+          Get.back();
           print("사용자 정보가 없습니다.");
         }
       }
@@ -216,7 +218,7 @@ class AuthController extends GetxController {
       default:
         errorMessage = 'An unknown error occurred: ${e.code}';
     }
-
+    Get.back();
     // 오류 메시지를 보여주는 토스트 또는 다른 방식의 알림을 사용할 수 있습니다.
     showToast(errorMessage, 2);
   }
@@ -448,6 +450,54 @@ class AuthController extends GetxController {
     } finally {
       // 데이터 추가가 완료된 후에 로딩 인디케이터를 숨깁니다.
       Get.back();
+    }
+  }
+
+  //uid를 통해 userData를 가지고 오는 메소드
+  Future<UserFirebaseModel?> getUserData(String uid) async {
+    try {
+      // 로딩 인디케이터 표시
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
+      // Firebase에서 사용자 데이터 가져오기
+      DocumentSnapshot userDataSnapshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+      // 사용자 데이터가 있는지 확인
+      if (userDataSnapshot.exists) {
+        // 사용자 데이터를 UserFirebaseModel 객체로 변환하여 반환
+        Get.back(); // 로딩 인디케이터 닫기
+        return UserFirebaseModel(
+          uid: uid,
+          email: userDataSnapshot['email'], // email 가져오기
+          isAdmin: userDataSnapshot['isAdmin'], // isAdmin 가져오기
+          profileName: userDataSnapshot['profileName'], // profileName 가져오기
+          // profileImageUrl:
+          //     userDataSnapshot['profileImageUrl'] ?? "", // profileImageUrl 가져오기
+          deployed: userDataSnapshot['deployed'], // deployed 가져오기
+          testerParticipation: userDataSnapshot[
+              'testerParticipation'], // testerParticipation 가져오기 (nullable)
+          testerRequest: userDataSnapshot[
+              'testerRequest'], // testerRequest 가져오기 (nullable)
+          createAt: userDataSnapshot['createAt'].toDate(), // createAt 가져오기
+          // updateAt: userDataSnapshot['updateAt'] != null
+          //     ? userDataSnapshot['updateAt'].toDate()
+          //     : null, // updateAt 가져오기 (nullable)
+          point: userDataSnapshot['point'], // point 가져오기 (nullable)
+        );
+      } else {
+        // 사용자 데이터가 없으면 null 반환
+        Get.back(); // 로딩 인디케이터 닫기
+        return null;
+      }
+    } catch (e) {
+      // 오류 발생 시 예외 처리
+      Get.back(); // 로딩 인디케이터 닫기
+      print("사용자 데이터를 가져오는 중 오류 발생 : $e");
+      return null;
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/detail_unapproved_post_screen_tr.dart';
-import 'package:tester_share_app/widget/w.banner_ad.dart';
+
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
@@ -117,15 +117,15 @@ class _UnapprovedPostScreenState extends State<UnapprovedPostScreen> {
                                       width: 80,
                                       height: 80,
                                     ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 20),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   cardText(boards[index].title, 20),
-                                  const SizedBox(width: 10),
                                   cardText(
                                       '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
-                                      20),
+                                      16),
+                                  const SizedBox(height: 10),
                                 ],
                               )
                             ],

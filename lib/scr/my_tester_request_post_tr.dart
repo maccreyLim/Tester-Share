@@ -283,7 +283,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                   ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         minimumSize:
-                                            const Size(320, 30), // 버튼의 최소 크기 설정
+                                            const Size(290, 30), // 버튼의 최소 크기 설정
                                         // 다른 스타일 설정
                                       ),
                                       onPressed: () {
@@ -294,7 +294,18 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                           // 필드와 값 추가
                                         };
                                         _board.updateBoardData(docUid, newData);
-                                        print("배포 변경 데이터 : $docUid , $newData");
+                                        String uid =
+                                            _authController.userData!['uid'];
+                                        int deployed = _authController
+                                                .userData!['deployed'] +
+                                            1;
+                                        Map<String, dynamic> userData = {
+                                          'deployed': deployed
+                                        };
+
+                                        _authController.updateUserData(
+                                            uid, userData);
+                                        print("배포 변경 데이터 : $uid , $deployed");
                                       },
                                       child: const Text(
                                               "Is Google Play deployment done?")
@@ -304,7 +315,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                       ? ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             minimumSize: const Size(
-                                                320, 30), // 버튼의 최소 크기 설정
+                                                290, 30), // 버튼의 최소 크기 설정
                                             // 다른 스타일 설정
                                             backgroundColor: Colors.amber,
                                           ),

@@ -51,11 +51,17 @@ class _DetailUnapprovedPostScreenState
           children: [
             Row(
               children: [
-                Image.network(
-                  widget.boards.iconImageUrl,
-                  width: 120,
-                  height: 120,
-                ),
+                widget.boards.iconImageUrl == ""
+                    ? Image.asset(
+                        "assets/images/no-image.png",
+                        width: 80,
+                        height: 80,
+                      )
+                    : Image.network(
+                        widget.boards.iconImageUrl,
+                        width: 80,
+                        height: 80,
+                      ),
                 const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +81,7 @@ class _DetailUnapprovedPostScreenState
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         'Creation date',

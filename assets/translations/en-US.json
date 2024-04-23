@@ -166,5 +166,9 @@
     "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.": "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.",
     "Google Play Deployment Completed" : "Google Play Deployment Completed",
     "Is Google Play deployment done?" : "Is Google Play deployment done?",
-    "Released" : "출시 완료"
+    "Released" : "Released",
+    "Project Developer Information" : "Project Developer Information",
+    "DeveloperTextButton" : "Developer : {}",
+    "contentText" : "Release experience: {}\n\nNumber of test participations: {}"
+
 }

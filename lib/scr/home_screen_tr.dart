@@ -5,6 +5,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
+import 'package:tester_share_app/model/user_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
@@ -13,6 +14,7 @@ import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.fcm.dart';
+import 'package:tester_share_app/widget/w.get_dialog_tr.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.request_permission.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -311,9 +313,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Row(
                                 children: [
-                                  cardText(
-                                      'Developer : ${boards[index].developer}',
-                                      14),
+                                  cardTextButton(
+                                      context,
+                                      "Project Developer Information",
+                                      14,
+                                      boards[index].developer,
+                                      _authController.userData!['deployed'],
+                                      _authController
+                                          .userData!['testerParticipation'],
+                                      boards[index].createUid),
                                 ],
                               ),
                             ],
@@ -355,6 +363,84 @@ class _HomeScreenState extends State<HomeScreen> {
     return Text(
       text,
       style: TextStyle(color: colors.textColor, fontSize: size),
+    );
+  }
+
+// getXDialog 함수 정의
+  Widget cardTextButton(
+    BuildContext context,
+    String title,
+    double size,
+    String buttontext,
+    int releaseExperience,
+    int numberOfTestParticipations,
+    String uid,
+  ) {
+    return TextButton(
+      onPressed: () async {
+        try {
+          // 사용자 데이터 가져오기
+          UserFirebaseModel? userPost = await _authController.getUserData(uid);
+          if (userPost != null) {
+            // AlertDialog에 사용자 데이터 표시
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.black,
+                  title: Text(
+                    tr(title),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tr("contentText"),
+                        style: TextStyle(color: Colors.grey, fontSize: size),
+                      ).tr(args: [
+                        userPost.deployed.toString(),
+                        userPost.testerParticipation.toString()
+                      ]),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        "Close",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ).tr(),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            // 사용자 데이터가 없는 경우에 대한 처리
+            // 이 예제에서는 아무 작업도 수행하지 않음
+          }
+        } catch (e) {
+          // 오류 발생 시 예외 처리
+          print("오류 발생: $e");
+          // 사용자에게 오류 메시지 표시 등의 추가 작업 가능
+        }
+      },
+      child: Text(
+        "DeveloperTextButton",
+        style: TextStyle(color: Colors.purple[300]),
+      ).tr(args: [buttontext]),
     );
   }
 }

@@ -42,11 +42,17 @@ class DetailBoardScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.network(
-                  boards.iconImageUrl,
-                  width: 120,
-                  height: 120,
-                ),
+                boards.iconImageUrl == ""
+                    ? Image.asset(
+                        "assets/images/no-image.png",
+                        width: 80,
+                        height: 80,
+                      )
+                    : Image.network(
+                        boards.iconImageUrl,
+                        width: 80,
+                        height: 80,
+                      ),
                 const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

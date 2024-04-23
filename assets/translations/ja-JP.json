@@ -169,5 +169,8 @@
     "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "現在、バグチェックTo Doを実装中です。\n少々お待ちください。",
     "Google Play Deployment Completed" : "グーグルプレイ配布完了",
     "Is Google Play deployment done?" : "グーグルプレイの配布は完了しましたか？",
-    "Released" : "リリース完了"
+    "Released" : "リリース完了",
+    "Project Developer Information" : "プロジェクト開発者情報",
+    "DeveloperTextButton" : "開 発 者 : {}",
+    "contentText" : "リリース経験: {}\n\nテスト参加回数: {}"
     }

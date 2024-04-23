@@ -168,6 +168,9 @@
   "We are currently implementing the bug check To-Do feature.\nPlease wait a moment." : "현재 버그체크ToDo 기능을 구현중입니다.\n조금만 기다려 주세요",
   "Google Play Deployment Completed": "구글플레이 배포 완료",
   "Is Google Play deployment done?" : "구글플레이에 배포 완료 되셨나요?",
-  "Released" : "출시 완료"
+  "Released" : "출시 완료",
+  "Project Developer Information" : "프로젝트 개발자 정보",
+  "DeveloperTextButton" : "Developer : {}",
+  "contentText" : "출시 경험 : {}\n\n테스트 참여 횟수 : {}"
   }
   
