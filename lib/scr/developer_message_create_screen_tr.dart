@@ -97,7 +97,7 @@ class _DeveloperMessageCreateScreenState
                     maxLines: 1,
                     controller: sendUserController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       labelText: tr("Recipient"),
@@ -119,7 +119,7 @@ class _DeveloperMessageCreateScreenState
                     maxLines: 10,
                     controller: messageController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       labelText: tr("Message"),

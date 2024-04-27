@@ -172,5 +172,6 @@
     "Released" : "リリース完了",
     "Project Developer Information" : "プロジェクト開発者情報",
     "DeveloperTextButton" : "開 発 者 : {}",
-    "contentText" : "リリース経験: {}\n\nテスト参加回数: {}"
+    "contentText" : "リリース経験: {}\n\nテスト参加回数: {}",
+    "Release completed" : "リリースが完了しました"
     }

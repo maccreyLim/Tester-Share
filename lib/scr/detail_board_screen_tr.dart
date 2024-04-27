@@ -331,52 +331,66 @@ class DetailBoardScreen extends StatelessWidget {
                   color: colors.boxColor,
                   child: cardText(boards.introductionText, 16)),
             ),
-            SizedBox(height: 20),
-            Divider(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 20),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: !boards.rquestProfileName
-                      .contains(_authController.userData!['profileName'])
+              child: boards.isDeploy == true
                   ? ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue),
+                            MaterialStateProperty.all<Color>(Colors.yellow),
                       ),
-                      onPressed: () {
-                        String testApplyMessage =
-                            "아래의 메일 주소로 테스터를 신청합니다. \nhere is the email to request to become a tester. \nこちらがテスターになるためのメールアドレスです。";
-                        // 테스터 신청 이메일 메시지를 구성합니다.
-                        String emailMessage =
-                            "$testApplyMessage\n${_authController.userData!['email']}";
-                        //테스터 신청
-                        Get.to(DeveloperMessageCreateScreen(
-                          receiverUid: boards.createUid,
-                          developer: boards.developer,
-                          message: emailMessage,
-                          boards: boards,
-                          func: true,
-                        ));
-                      },
+                      onPressed: () => Get.back(),
                       child: Text(
-                        'Apply to be a Tester',
+                        'Release completed',
                         style: TextStyle(fontSize: 16, color: colors.iconColor),
                       ).tr(),
                     )
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.grey),
-                      ),
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Text(
-                        "Already participated as a tester",
-                        style: TextStyle(fontSize: 16, color: colors.iconColor),
-                      ).tr(),
-                    ),
+                  : !boards.rquestProfileName
+                          .contains(_authController.userData!['profileName'])
+                      ? ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                          onPressed: () {
+                            String testApplyMessage =
+                                "아래의 메일 주소로 테스터를 신청합니다. \nhere is the email to request to become a tester. \nこちらがテスターになるためのメールアドレスです。";
+                            // 테스터 신청 이메일 메시지를 구성합니다.
+                            String emailMessage =
+                                "$testApplyMessage\n${_authController.userData!['email']}";
+                            //테스터 신청
+                            Get.to(DeveloperMessageCreateScreen(
+                              receiverUid: boards.createUid,
+                              developer: boards.developer,
+                              message: emailMessage,
+                              boards: boards,
+                              func: true,
+                            ));
+                          },
+                          child: Text(
+                            'Apply to be a Tester',
+                            style: TextStyle(
+                                fontSize: 16, color: colors.iconColor),
+                          ).tr(),
+                        )
+                      : ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.grey),
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text(
+                            "Already participated as a tester",
+                            style: TextStyle(
+                                fontSize: 16, color: colors.iconColor),
+                          ).tr(),
+                        ),
             ),
           ],
         ),

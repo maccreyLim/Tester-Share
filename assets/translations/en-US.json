@@ -169,6 +169,6 @@
     "Released" : "Released",
     "Project Developer Information" : "Project Developer Information",
     "DeveloperTextButton" : "Developer : {}",
-    "contentText" : "Release experience: {}\n\nNumber of test participations: {}"
-
+    "contentText" : "Release experience: {}\n\nNumber of test participations: {}",
+    "Release completed" : "Release completed"
 }
