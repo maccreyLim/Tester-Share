@@ -131,13 +131,14 @@ class DetailBoardScreen extends StatelessWidget {
                                   Get.to(DeveloperMessageCreateScreen(
                                       receiverUid: boards.createUid,
                                       developer: boards.developer,
-                                      boards: boards));
+                                      boards: boards,
+                                      func: false));
                                 },
                                 child: Row(
                                   children: [
                                     const Icon(Icons.message,
                                         color: Colors.white),
-                                    SizedBox(width: 20),
+                                    const SizedBox(width: 20),
                                     Text(
                                       "Send a message",
                                       style: TextStyle(
@@ -355,6 +356,7 @@ class DetailBoardScreen extends StatelessWidget {
                           developer: boards.developer,
                           message: emailMessage,
                           boards: boards,
+                          func: true,
                         ));
                       },
                       child: Text(

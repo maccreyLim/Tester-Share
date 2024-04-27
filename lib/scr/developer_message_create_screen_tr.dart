@@ -18,10 +18,12 @@ class DeveloperMessageCreateScreen extends StatefulWidget {
       required this.receiverUid,
       required this.developer,
       required this.boards,
-      this.message});
+      this.message,
+      required this.func});
   final String receiverUid; // 수신자의 UID를 저장하는 변수
   final String developer; // 수신자 이름
   final String? message;
+  final bool func; //업데이트 작동여부
   final BoardFirebaseModel
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
 
@@ -149,46 +151,47 @@ class _DeveloperMessageCreateScreenState
                               message, sendUserController.text);
                           Get.off(const MessageStateScreen());
                         }
+                        if (widget.func == true) {
+                          //UserDate에서 testerParticipation +1증가
+                          String _uid = _authController.userData!['uid'];
+                          int value = ++_authController
+                              .userData!['testerParticipation']; // 전위 증가 연산자 사용
+                          // 현재 사용자의 프로필 이름 가져오기
+                          String _profileName =
+                              _authController.userData!['profileName'];
 
-                        //UserDate에서 testerParticipation +1증가
-                        String _uid = _authController.userData!['uid'];
-                        int value = ++_authController
-                            .userData!['testerParticipation']; // 전위 증가 연산자 사용
-                        // 현재 사용자의 프로필 이름 가져오기
-                        String _profileName =
-                            _authController.userData!['profileName'];
+                          // 업데이트할 데이터
+                          Map<String, dynamic> _userNewData = {
+                            "testerParticipation": value,
+                          };
+                          // 사용자 데이터 업데이트
+                          _authController.updateUserData(_uid, _userNewData);
 
-                        // 업데이트할 데이터
-                        Map<String, dynamic> _userNewData = {
-                          "testerParticipation": value,
-                        };
-                        // 사용자 데이터 업데이트
-                        _authController.updateUserData(_uid, _userNewData);
+                          //board에서 testerParticipation +증가
+                          String _docUid = widget.boards.docid;
+                          int _value = ++widget.boards.testerParticipation;
+                          List<dynamic> existingProfileNames = _authController
+                                  .userData!['testerRequestProfile'] ??
+                              [];
+                          existingProfileNames.add(_profileName);
+                          // 업데이트할 데이터
+                          Map<String, dynamic> _boardNewData = {
+                            "testerParticipation": _value,
+                            // 기존 프로필 이름을 포함한 리스트를 사용하여 새로운 리스트 생성
+                            //추후 리스트로 업데이트변경하고 READ부분까지 손봐야 함
+                            // "testerRequestProfile": existingProfileNames,
+                          };
+                          // 사용자 데이터 업데이트
+                          _board.updateBoardData(_docUid, _boardNewData);
 
-                        //board에서 testerParticipation +증가
-                        String _docUid = widget.boards.docid;
-                        int _value = ++widget.boards.testerParticipation;
-                        List<dynamic> existingProfileNames =
-                            _authController.userData!['testerRequestProfile'] ??
-                                [];
-                        existingProfileNames.add(_profileName);
-                        // 업데이트할 데이터
-                        Map<String, dynamic> _boardNewData = {
-                          "testerParticipation": _value,
-                          // 기존 프로필 이름을 포함한 리스트를 사용하여 새로운 리스트 생성
-                          //추후 리스트로 업데이트변경하고 READ부분까지 손봐야 함
-                          // "testerRequestProfile": existingProfileNames,
-                        };
-                        // 사용자 데이터 업데이트
-                        _board.updateBoardData(_docUid, _boardNewData);
-
-                        //board에 rquestProfileName 리스트에 업데이트
-                        String NewrquestProfileName =
-                            _authController.userData!['profileName'];
-                        _board.updateRquestProfileName(
-                            _docUid,
-                            widget.boards.rquestProfileName,
-                            NewrquestProfileName);
+                          //board에 rquestProfileName 리스트에 업데이트
+                          String NewrquestProfileName =
+                              _authController.userData!['profileName'];
+                          _board.updateRquestProfileName(
+                              _docUid,
+                              widget.boards.rquestProfileName,
+                              NewrquestProfileName);
+                        }
                         Get.offAll(const HomeScreen());
                       },
                       style: ElevatedButton.styleFrom(

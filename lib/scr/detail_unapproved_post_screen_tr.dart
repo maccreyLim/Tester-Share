@@ -137,7 +137,8 @@ class _DetailUnapprovedPostScreenState
                                 Get.to(DeveloperMessageCreateScreen(
                                     receiverUid: widget.boards.createUid,
                                     developer: widget.boards.developer,
-                                    boards: widget.boards));
+                                    boards: widget.boards,
+                                    func: false));
                               },
                               icon: Icon(Icons.message),
                             ),
