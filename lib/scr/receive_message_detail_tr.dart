@@ -86,19 +86,19 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                 ),
               ),
               const SizedBox(height: 40),
-              SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  color: _colors.background,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.message.contents,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: _colors.textColor,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Container(
+                    color: _colors.background,
+                    width: MediaQuery.of(context).size.height * 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.message.contents,
+                        style:
+                            TextStyle(fontSize: 20, color: _colors.textColor),
                       ),
                     ),
                   ),

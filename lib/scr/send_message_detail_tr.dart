@@ -79,7 +79,7 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: Container(
                     color: _colors.background,
                     width: MediaQuery.of(context).size.height * 1,
