@@ -358,7 +358,7 @@ class DetailBoardScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             String testApplyMessage =
-                                "아래의 메일 주소로 테스터를 신청합니다. \nhere is the email to request to become a tester. \nこちらがテスターになるためのメールアドレスです。";
+                                "아래의 메일 주소로 테스터를 신청합니다.\n 프로젝트 관리자분은 구글콘솔에서 테스터 등록후 '등록되었습니다.'라고 신청하신 유저에게 답장을 주세요!! \n\nI am applying as a tester to the email address below. \nProject administrators, please reply to the user who applied with 'You have been registered.' after registering as a tester in the Google Console!!\n\n以下のメールアドレスにテスターとして申し込みます。\nプロジェクト管理者は、Googleコンソールでテスターに登録した後、'登録されました'と申請したユーザーに返信してください！!\n\n";
                             // 테스터 신청 이메일 메시지를 구성합니다.
                             String emailMessage =
                                 "$testApplyMessage\n${_authController.userData!['email']}";

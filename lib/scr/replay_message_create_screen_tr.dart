@@ -112,7 +112,6 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    adController.loadAndShowAd();
                     if (_formKey.currentState!.validate()) {
                       MessageModel replyMessage = MessageModel(
                         senderUid: widget.message.receiverUid,
@@ -120,6 +119,7 @@ class _ReplayMessageCreateScreenState extends State<ReplayMessageCreateScreen> {
                         contents: messageController.text,
                         timestamp: DateTime.now(),
                       );
+                      adController.loadAndShowAd();
                       // MessageFirebase에서 답장 메시지 등록
                       MassageFirebaseController().createMessage(
                           replyMessage, widget.message.receiverNickname);

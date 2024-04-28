@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/receive_message_detail_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
@@ -19,6 +20,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   // Property
   final AuthController _authController = AuthController.instance;
   final ColorsCollection _color = ColorsCollection();
+  final InterstitialAdManager adController = InterstitialAdManager();
 
 //파이어베이스 읽음 변경
   Future<void> updateisReadMessage(MessageModel message) async {
@@ -27,8 +29,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
     try {
       await messagesCollection.doc(message.id).update({'isRead': true});
     } catch (e) {
-      print('메시지 업데이트 오류: $e');
-      throw e; // 예외를 호출자에게 다시 던집니다.
+      rethrow; // 예외를 호출자에게 다시 던집니다.
     }
   }
 
@@ -40,8 +41,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
           .doc(messageId)
           .delete();
     } catch (e) {
-      print('메시지 삭제 오류: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -59,7 +59,6 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
         return 'Unknown';
       }
     } catch (e) {
-      print('Error fetching sender nickName: $e');
       return 'Unknown';
     }
   }
@@ -78,7 +77,6 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
         return 'Unknown';
       }
     } catch (e) {
-      print('Error fetching sender profileName: $e');
       return 'Unknown';
     }
   }
@@ -110,7 +108,6 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
         return messages;
       });
     } catch (e) {
-      print('메시지 가져오기 오류: $e');
       return Stream.value([]);
     }
   }
@@ -215,6 +212,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
                       ), // 최대 줄 수를 3로 설정),
                       trailing: IconButton(
                         onPressed: () async {
+                          adController.loadAndShowAd();
                           await _deleteMessage(message.id);
                           showToast(tr("The message has been deleted"), 1);
                         },

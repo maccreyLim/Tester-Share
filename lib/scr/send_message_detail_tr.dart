@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
+import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -20,8 +21,9 @@ class SendMessageDetail extends StatefulWidget {
 
 class _SendMessageDetailState extends State<SendMessageDetail> {
   final bool isSend = false;
-  ColorsCollection _colors = ColorsCollection();
+  final ColorsCollection _colors = ColorsCollection();
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+  final InterstitialAdManager adController = InterstitialAdManager();
   // bool isLongPressed = true;
 
   @override
@@ -48,17 +50,12 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
         child: Center(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   '받는 사람 : ${widget.message.senderNickname}',
-                    //   style: const TextStyle(fontSize: 20, color: Colors.grey),
-                    //   // textAlign: TextAlign.start,
-                    // ),
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -89,16 +86,17 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                       style: TextStyle(fontSize: 20, color: _colors.textColor),
                     )),
               ),
-              SizedBox(height: 50),
-              SizedBox(
+              const SizedBox(height: 50),
+              const SizedBox(
                 height: 40,
               ),
               ElevatedButton.icon(
                   onPressed: () async {
+                    adController.loadAndShowAd();
                     await _deleteMessage(widget.message.id);
                     showToast(tr("The message has been deleted"), 1);
 
-                    Get.to(MessageStateScreen());
+                    Get.to(const MessageStateScreen());
                   },
                   label: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -112,11 +110,11 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                           ).tr()
                         : const Text(
                             "The unread messages",
-                            style: TextStyle(fontSize: 20, color: Colors.grey),
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
                           ).tr(),
                   ),
                   icon: const Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Icon(Icons.delete, color: Colors.redAccent),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -131,16 +129,15 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
       ),
     );
   }
-}
 
-Future<void> _deleteMessage(String messageId) async {
-  try {
-    await FirebaseFirestore.instance
-        .collection('messages')
-        .doc(messageId)
-        .delete();
-  } catch (e) {
-    print('메시지 삭제 오류: $e');
-    throw e;
+  Future<void> _deleteMessage(String messageId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('messages')
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
