@@ -76,15 +76,23 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
                 ),
               ),
               const SizedBox(height: 40),
-              SingleChildScrollView(
-                child: Container(
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Container(
                     color: _colors.background,
-                    height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.height * 1,
-                    child: Text(
-                      widget.message.contents,
-                      style: TextStyle(fontSize: 20, color: _colors.textColor),
-                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.message.contents,
+                        style:
+                            TextStyle(fontSize: 20, color: _colors.textColor),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 50),
               const SizedBox(
