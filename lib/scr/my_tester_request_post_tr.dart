@@ -11,6 +11,7 @@ import 'package:tester_share_app/scr/my_tester_detail_board_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class MyTesterRequestPostScreen extends StatelessWidget {
   final ColorsCollection _colors = ColorsCollection();
@@ -21,7 +22,7 @@ class MyTesterRequestPostScreen extends StatelessWidget {
   final SingleImageFirebaseController _singleImageFirebaseController =
       SingleImageFirebaseController();
   final AuthController _authController = AuthController.instance;
-  final InterstitialAdManager adController = InterstitialAdManager();
+  final InterstitialAdController adController = InterstitialAdController();
   MyTesterRequestPostScreen({super.key});
 
   @override
@@ -381,8 +382,4 @@ class MyTesterRequestPostScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class InterstitialAdManager {
-  void loadAndShowAd() {}
 }

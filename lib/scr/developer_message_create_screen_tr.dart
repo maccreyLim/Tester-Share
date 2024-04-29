@@ -8,10 +8,10 @@ import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
-import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class DeveloperMessageCreateScreen extends StatefulWidget {
   DeveloperMessageCreateScreen(
@@ -27,7 +27,6 @@ class DeveloperMessageCreateScreen extends StatefulWidget {
   final bool func; //업데이트 작동여부
   final BoardFirebaseModel
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
- 
 
   @override
   State<DeveloperMessageCreateScreen> createState() =>
@@ -48,7 +47,7 @@ class _DeveloperMessageCreateScreenState
   Map<String, dynamic> searchResults = {}; // 검색 결과를 저장할 변수
   final AuthController _authController = AuthController.instance;
   final BoardFirebaseController _board = BoardFirebaseController();
-   final InterstitialAdManager adController = InterstitialAdManager();
+  final InterstitialAdController adController = InterstitialAdController();
 
   @override
   void dispose() {
@@ -143,7 +142,6 @@ class _DeveloperMessageCreateScreenState
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        adController.loadAndShowAd();
                         //  Todo: MessageFirebase에서 메시지 등록
                         if (_formkey.currentState!.validate()) {
                           MessageModel message = MessageModel(
@@ -151,10 +149,12 @@ class _DeveloperMessageCreateScreenState
                               receiverUid: widget.receiverUid,
                               contents: messageController.text,
                               timestamp: DateTime.now());
+
                           _mfirebase.createMessage(
                               message, sendUserController.text);
                           Get.off(const MessageStateScreen());
                         }
+                        adController.loadAndShowAd();
                         if (widget.func == true) {
                           //UserDate에서 testerParticipation +1증가
                           String _uid = _authController.userData!['uid'];
@@ -168,10 +168,9 @@ class _DeveloperMessageCreateScreenState
                           Map<String, dynamic> _userNewData = {
                             "testerParticipation": value,
                           };
-                          
+
                           // 사용자 데이터 업데이트
                           _authController.updateUserData(_uid, _userNewData);
-                        
 
                           //board에서 testerParticipation +증가
                           String _docUid = widget.boards.docid;

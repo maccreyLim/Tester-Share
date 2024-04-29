@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
-import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
 class SendMessageDetail extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SendMessageDetailState extends State<SendMessageDetail> {
   final bool isSend = false;
   final ColorsCollection _colors = ColorsCollection();
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
-  final InterstitialAdManager adController = InterstitialAdManager();
+  final InterstitialAdController adController = InterstitialAdController();
   // bool isLongPressed = true;
 
   @override

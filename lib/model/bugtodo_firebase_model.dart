@@ -6,6 +6,7 @@ class BugTodoFirebaseModel {
   String projectName; // 프로젝트 이름
   DateTime createAt; // 생성일
   DateTime? updateAt; // 수정일
+  String title; // 주제
   String contents; // 내용
   bool isDone; // 완료 체크
 
@@ -15,6 +16,7 @@ class BugTodoFirebaseModel {
     required this.projectName,
     required this.createAt,
     this.updateAt,
+    required this.title,
     required this.contents,
     required this.isDone,
   });
@@ -26,6 +28,7 @@ class BugTodoFirebaseModel {
       'projectName': projectName,
       'createAt': createAt,
       'updateAt': updateAt,
+      'title': title,
       'contents': contents,
       'isDone': isDone,
     };
@@ -40,6 +43,7 @@ class BugTodoFirebaseModel {
       updateAt: map['updateAt'] != null
           ? (map['updateAt'] as Timestamp).toDate()
           : null,
+      title: map['title'],
       contents: map['contents'],
       isDone: map['isDone'],
     );

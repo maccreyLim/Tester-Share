@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
-import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/receive_message_detail_tr.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 import 'package:tester_share_app/widget/w.show_toast.dart';
 
 class ReceivedMessageScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
   // Property
   final AuthController _authController = AuthController.instance;
   final ColorsCollection _color = ColorsCollection();
-  final InterstitialAdManager adController = InterstitialAdManager();
+  final InterstitialAdController adController = InterstitialAdController();
 
 //파이어베이스 읽음 변경
   Future<void> updateisReadMessage(MessageModel message) async {

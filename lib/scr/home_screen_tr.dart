@@ -6,6 +6,7 @@ import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/model/user_firebase_model.dart';
+import 'package:tester_share_app/scr/bugtodos_screen.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
@@ -98,6 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {
               //버그체크리스트
+              // Get.to(() => BugTodosScreen());
+              // 론칭전 쇼다이얼로그
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
