@@ -173,5 +173,12 @@
     "Project Developer Information" : "プロジェクト開発者情報",
     "DeveloperTextButton" : "開 発 者 : {}",
     "contentText" : "リリース経験: {}\n\nテスト参加回数: {}",
-    "Release completed" : "リリースが完了しました"
+    "Release completed" : "リリースが完了しました",
+    "Please write the Contents" : "内容を書いてください",
+    "Content is required" : "コンテンツは必須です",
+    "Project Name" : "プロジェクト名",
+    "Please write the Project Name" : "プロジェクト名を入力してください",
+    "Project Name is required" : "プロジェクト名は必須です",
+    "Create Todo" : "タスクを作成する",
+    "P r i o r i t y" : "優     先     度"
     }

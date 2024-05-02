@@ -59,6 +59,7 @@
               android:name="com.google.firebase.messaging.default_notification_channel_id"
               android:value="high_importance_channel"
               />
+              
 
             <!-- 인텐트 필터 설정 -->
             <intent-filter>

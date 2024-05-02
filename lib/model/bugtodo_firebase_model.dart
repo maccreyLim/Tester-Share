@@ -1,17 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Timestamp 클래스 import
 
 class BugTodoFirebaseModel {
-  String docid; // 문서 Doc 명
-  String createUid; // 생성한 유저 uid
-  String projectName; // 프로젝트 이름
-  DateTime createAt; // 생성일
-  DateTime? updateAt; // 수정일
-  String title; // 주제
-  String contents; // 내용
-  bool isDone; // 완료 체크
+  String? docid;
+  String createUid;
+  String projectName;
+  DateTime createAt;
+  DateTime? updateAt;
+  String title;
+  String contents;
+  bool isDone;
+  int level;
 
   BugTodoFirebaseModel({
-    required this.docid,
+    this.docid,
     required this.createUid,
     required this.projectName,
     required this.createAt,
@@ -19,7 +20,25 @@ class BugTodoFirebaseModel {
     required this.title,
     required this.contents,
     required this.isDone,
+    required this.level,
   });
+
+  factory BugTodoFirebaseModel.fromMap(Map<String, dynamic> map) {
+    return BugTodoFirebaseModel(
+      docid: map['docid'],
+      createUid: map['createUid'],
+      projectName: map['projectName'],
+      createAt:
+          (map['createAt'] as Timestamp).toDate(), // Timestamp -> DateTime 변환
+      updateAt: map['updateAt'] != null
+          ? (map['updateAt'] as Timestamp).toDate()
+          : null, // Timestamp -> DateTime 변환
+      title: map['title'],
+      contents: map['contents'],
+      isDone: map['isDone'],
+      level: map['level'],
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -31,21 +50,7 @@ class BugTodoFirebaseModel {
       'title': title,
       'contents': contents,
       'isDone': isDone,
+      'level': level,
     };
-  }
-
-  factory BugTodoFirebaseModel.fromMap(Map<String, dynamic> map) {
-    return BugTodoFirebaseModel(
-      docid: map['docid'],
-      createUid: map['createUid'],
-      projectName: map['projectName'],
-      createAt: (map['createAt'] as Timestamp).toDate(),
-      updateAt: map['updateAt'] != null
-          ? (map['updateAt'] as Timestamp).toDate()
-          : null,
-      title: map['title'],
-      contents: map['contents'],
-      isDone: map['isDone'],
-    );
   }
 }

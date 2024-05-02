@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
 
 class BugTodoFirebaseController {
@@ -10,108 +8,86 @@ class BugTodoFirebaseController {
   Future<void> createBugTodo(
       String uid, String projectName, BugTodoFirebaseModel bugTodo) async {
     try {
-      Get.dialog(
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-      await _firestore
-          .collection('bug_todos')
+      DocumentReference docRef = await _firestore
+          .collection('users')
           .doc(uid)
-          .collection(projectName)
+          .collection('bug_todos')
           .add(bugTodo.toMap());
-      Get.back();
+
+      // 반환된 문서의 ID를 bugTodo의 docid 필드에 할당
+      bugTodo.docid = docRef.id;
+
+      // 업데이트할 문서의 참조를 만들고 해당 문서를 업데이트
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('bug_todos')
+          .doc(bugTodo.docid)
+          .update({'docid': bugTodo.docid});
+      print("Todo 생성완료 : $bugTodo.docid");
     } catch (e) {
-      Get.back();
-      throw Exception('Bug Todo 생성 실패: $e');
+      throw Exception('Bug Todo 생성 및 업데이트 실패: $e');
     }
   }
 
   //Todo Read
-  Stream<List<BugTodoFirebaseModel>> getBugTodos(
-      String uid, String projectName) {
-    try {
-      Get.dialog(
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-      return _firestore
-          .collection('bug_todos')
-          .doc(uid)
-          .collection(projectName)
-          .snapshots()
-          .map((snapshot) => snapshot.docs
-              .map((doc) => BugTodoFirebaseModel.fromMap(doc.data()))
-              .toList());
-    } catch (e) {
-      Get.back();
-      throw Exception('Bug Todo 읽기 실패: $e');
-    }
-  }
-
-// ProjectCollectionsRead
-  Stream<List<String>> getProjectCollections(String uid) {
-    try {
-      return _firestore
-          .collection('bug_todos')
-          .doc(uid)
-          .snapshots()
-          .map((snapshot) {
-        final data = snapshot.data();
-        if (data != null && data.isNotEmpty) {
-          // 문서의 데이터가 존재하고 비어 있지 않은 경우
-          return data.keys.toList();
-        } else {
-          // 데이터가 없거나 비어 있는 경우 빈 리스트 반환
-          return [];
-        }
-      });
-    } catch (e) {
-      throw Exception('프로젝트 컬렉션 목록 읽기 실패: $e');
-    }
+  Stream<List<BugTodoFirebaseModel>> getAllBugTodos(String uid) {
+    return _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('bug_todos')
+        .where('isDone', isEqualTo: false) // Filter where isDone is false
+        .orderBy('level') // Sort by level field
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs
+            .map((doc) => BugTodoFirebaseModel.fromMap(doc.data()))
+            .toList())
+        .handleError((error) {
+      throw Exception('Bug Todos 읽기 실패: $error');
+    });
   }
 
   // Update
   Future<void> updateBugTodo(String uid, String projectName, String docId,
-      Map<String, dynamic> data) async {
+      BugTodoFirebaseModel data) async {
     try {
-      Get.dialog(
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
       await _firestore
-          .collection('bug_todos')
+          .collection('users')
           .doc(uid)
-          .collection(projectName)
+          .collection('bug_todos')
           .doc(docId)
-          .update(data);
-      Get.back();
+          .update(data.toMap());
     } catch (e) {
-      Get.back();
       throw Exception('Bug Todo 업데이트 실패: $e');
     }
   }
 
-// Delete
+  //Update isDone
+  Future<void> updateBugTodoIsDone(
+      String uid, String docId, bool isDone) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('bug_todos')
+          .doc(docId)
+          .update({'isDone': isDone});
+    } catch (e) {
+      throw Exception('Bug Todo isDone 업데이트 실패: $e');
+    }
+  }
+
+  // Delete
   Future<void> deleteBugTodo(
       String uid, String projectName, String docId) async {
     try {
-      Get.dialog(
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
       await _firestore
-          .collection('bug_todos')
+          .collection('users')
           .doc(uid)
-          .collection(projectName)
+          .collection('bug_todos')
           .doc(docId)
           .delete();
-      Get.back();
     } catch (e) {
-      Get.back();
       throw Exception('Bug Todo 삭제 실패: $e');
     }
   }

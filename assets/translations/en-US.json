@@ -170,5 +170,14 @@
     "Project Developer Information" : "Project Developer Information",
     "DeveloperTextButton" : "Developer : {}",
     "contentText" : "Release experience: {}\n\nNumber of test participations: {}",
-    "Release completed" : "Release completed"
+    "Release completed" : "Release completed",
+    "Please write the Contents" : "Please write the Contents",
+    "Content is required" : "Content is required",
+    "Project Name" : "Project Name",
+    "Please write the Project Name" : "Please write the Project Name",
+    "Project Name is required" : "Project Name is required",
+    "Create Todo" : "Create Todo",
+    "P r i o r i t y" : "P r i o r i t y"
+
+
 }

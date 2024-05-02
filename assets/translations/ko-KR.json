@@ -172,6 +172,13 @@
   "Project Developer Information" : "프로젝트 개발자 정보",
   "DeveloperTextButton" : "Developer : {}",
   "contentText" : "출시 경험 : {}\n\n테스트 참여 횟수 : {}",
-  "Release completed" : "출시가 완료되었습니다"
+  "Release completed" : "출시가 완료되었습니다",
+  "Please write the Contents" : "내용을 작성해주세요",
+  "Content is required" : "프로젝트 내용은 필수입니다",
+  "Project Name" : "프로젝트 이름",
+  "Please write the Project Name" : "프로젝트 이름을 입력해주세요",
+  "Project Name is required" :  "프로젝트 이름은 필수입니다",
+  "Create Todo" : "할 일 만들기",
+  "P r i o r i t y" : "우  선   순   위"
   }
   
