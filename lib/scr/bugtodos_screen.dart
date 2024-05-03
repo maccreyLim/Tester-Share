@@ -9,6 +9,7 @@ import 'package:tester_share_app/scr/update_bugtodos_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class BugTodosScreen extends StatefulWidget {
   const BugTodosScreen({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
   final AuthController _authController = AuthController.instance;
   final BugTodoFirebaseController _bugTodoFirebaseController =
       BugTodoFirebaseController();
+  final InterstitialAdController adController = InterstitialAdController();
   late String uid; // uid 변수를 선언
 
   @override
@@ -183,7 +185,8 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
-                                        //Todo :삭제로직 구현
+                                        adController
+                                            .loadAndShowAd(); //Todo :삭제로직 구현
                                         _bugTodoFirebaseController
                                             .deleteBugTodo(
                                                 uid,

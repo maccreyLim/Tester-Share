@@ -7,6 +7,7 @@ import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
+import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class CreateBugTodoScreen extends StatefulWidget {
   const CreateBugTodoScreen({Key? key});
@@ -21,6 +22,7 @@ class _CreateBugTodoScreenState extends State<CreateBugTodoScreen> {
   final AuthController authController = AuthController.instance;
   final BugTodoFirebaseController _bugTodoFirebaseController =
       BugTodoFirebaseController();
+  final InterstitialAdController adController = InterstitialAdController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contectsController = TextEditingController();
   TextEditingController projectNameController = TextEditingController();
@@ -108,16 +110,15 @@ class _CreateBugTodoScreenState extends State<CreateBugTodoScreen> {
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                                minimumSize:
-                                    const Size(120, 30), // 최소 너비와 높이 설정
+                                minimumSize: const Size(60, 30), // 최소 너비와 높이 설정
                                 backgroundColor: level == 1
                                     ? Colors.red
                                     : Colors.grey // 버튼의 배경색 설정
                                 ),
-                            child: Text(
+                            child: const Text(
                               "High",
                               style: TextStyle(
-                                  fontSize: _fontSizeCollection.buttonFontSize,
+                                  fontSize: 12,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.bold),
                             ).tr(),
@@ -129,16 +130,15 @@ class _CreateBugTodoScreenState extends State<CreateBugTodoScreen> {
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                                minimumSize:
-                                    const Size(120, 30), // 최소 너비와 높이 설정
+                                minimumSize: const Size(60, 30), // 최소 너비와 높이 설정
                                 backgroundColor: level == 2
                                     ? Colors.yellow
                                     : Colors.grey // 버튼의 배경색 설정
                                 ),
-                            child: Text(
+                            child: const Text(
                               "Middle",
                               style: TextStyle(
-                                  fontSize: _fontSizeCollection.buttonFontSize,
+                                  fontSize: 12,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.bold),
                             ).tr(),
@@ -150,15 +150,15 @@ class _CreateBugTodoScreenState extends State<CreateBugTodoScreen> {
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(120, 30), // 최소 너비와 높이 설정
+                              minimumSize: const Size(60, 30), // 최소 너비와 높이 설정
                               backgroundColor: level == 3
                                   ? Colors.blue
                                   : Colors.grey, // 버튼의 배경색 설정
                             ),
-                            child: Text(
+                            child: const Text(
                               "Low",
                               style: TextStyle(
-                                  fontSize: _fontSizeCollection.buttonFontSize,
+                                  fontSize: 12,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.bold),
                             ).tr(),
@@ -207,6 +207,7 @@ class _CreateBugTodoScreenState extends State<CreateBugTodoScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      adController.loadAndShowAd();
                       Get.dialog(
                         const Center(
                           child: CircularProgressIndicator(),

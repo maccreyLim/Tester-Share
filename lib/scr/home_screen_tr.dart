@@ -99,40 +99,26 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {
               //버그체크리스트
-              Get.to(() => BugTodosScreen());
-              // 론칭전 쇼다이얼로그
-              // showDialog(
-              //   context: context,
-              //   builder: (BuildContext context) {
-              //     return AlertDialog(
-              //       title: const Text("Notification").tr(),
-              //       content: const Text(
-              //               "We are currently implementing the bug check To-Do feature.\nPlease wait a moment.")
-              //           .tr(),
-              //       actions: [
-              //         TextButton(
-              //           onPressed: () {
-              //             Navigator.pop(context);
-              //           },
-              //           child: const Text('OK'),
-              //         ),
-              //       ],
-              //     );
-              //   },
-              // );
+              Get.to(() => const BugTodosScreen());
             },
-            icon: const Icon(Icons.bug_report),
+            icon: const Icon(
+              Icons.bug_report,
+              color: Colors.red,
+            ),
           ),
           IconButton(
               onPressed: () {
                 Get.to(() => SettingScreen());
               },
-              icon: const Icon(Icons.settings)),
+              icon: const Icon(Icons.settings, color: Colors.yellow)),
           IconButton(
               onPressed: () {
                 _authController.signOut();
               },
-              icon: const Icon(Icons.logout_outlined)),
+              icon: const Icon(
+                Icons.logout_outlined,
+                color: Colors.white,
+              )),
         ],
       ),
       backgroundColor: colors.background,
