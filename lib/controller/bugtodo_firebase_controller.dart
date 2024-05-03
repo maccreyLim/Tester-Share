@@ -36,12 +36,20 @@ class BugTodoFirebaseController {
         .collection('users')
         .doc(uid)
         .collection('bug_todos')
-        .where('isDone', isEqualTo: false) // Filter where isDone is false
-        .orderBy('level') // Sort by level field
+        .orderBy('isDone') // 먼저 isDone으로 정렬
+        .orderBy('level') // 그 다음 level로 정렬
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((doc) => BugTodoFirebaseModel.fromMap(doc.data()))
-            .toList())
+            .map((doc) => BugTodoFirebaseModel.fromMap(
+                doc.data() as Map<String, dynamic>))
+            .toList()
+          // 클라이언트 측에서 isDone이 false인 항목을 먼저, true인 항목을 나중에 오도록 재정렬
+          ..sort((a, b) {
+            if (a.isDone == b.isDone) {
+              return a.level.compareTo(b.level); // isDone 상태가 같다면 level로 정렬
+            }
+            return a.isDone ? 1 : -1; // isDone이 false인 항목을 먼저 위치시킴
+          }))
         .handleError((error) {
       throw Exception('Bug Todos 읽기 실패: $error');
     });

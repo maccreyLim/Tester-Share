@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/bugtodo_firebase_controller.dart';
 import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
-import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/create_bugtodos_screen.dart';
 import 'package:tester_share_app/scr/update_bugtodos_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -86,7 +85,13 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                             fontWeight: FontWeight.bold,
                             color: bugTodo.isDone
                                 ? const Color.fromARGB(255, 47, 47, 47)
-                                : colors.textColor,
+                                : bugTodo.isDone
+                                    ? Colors.grey
+                                    : bugTodo.level == 1
+                                        ? Colors.red
+                                        : bugTodo.level == 2
+                                            ? Colors.yellow
+                                            : Colors.blue,
                           ),
                         ),
                         leading: Container(
