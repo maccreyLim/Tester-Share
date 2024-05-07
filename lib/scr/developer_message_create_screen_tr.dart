@@ -14,7 +14,7 @@ import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
 class DeveloperMessageCreateScreen extends StatefulWidget {
-  DeveloperMessageCreateScreen(
+  const DeveloperMessageCreateScreen(
       {super.key,
       required this.receiverUid,
       required this.developer,
@@ -160,6 +160,8 @@ class _DeveloperMessageCreateScreenState
                           String _uid = _authController.userData!['uid'];
                           int value = ++_authController
                               .userData!['testerParticipation']; // 전위 증가 연산자 사용
+                          int pointValue = ++_authController
+                              .userData!['point']; // 전위 증가 연산자 사용
                           // 현재 사용자의 프로필 이름 가져오기
                           String _profileName =
                               _authController.userData!['profileName'];
@@ -167,6 +169,7 @@ class _DeveloperMessageCreateScreenState
                           // 업데이트할 데이터
                           Map<String, dynamic> _userNewData = {
                             "testerParticipation": value,
+                            "point": pointValue,
                           };
 
                           // 사용자 데이터 업데이트

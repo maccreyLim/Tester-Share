@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -8,22 +9,36 @@ import 'package:tester_share_app/controller/single_image_firebase_controller.dar
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_detail_board_screen_tr.dart';
+import 'package:tester_share_app/scr/send_registration_message.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.interstitle_ad.dart';
 
-class MyTesterRequestPostScreen extends StatelessWidget {
+class MyTesterRequestPostScreen extends StatefulWidget {
+  const MyTesterRequestPostScreen({super.key});
+
+  @override
+  State<MyTesterRequestPostScreen> createState() =>
+      _MyTesterRequestPostScreenState();
+}
+
+class _MyTesterRequestPostScreenState extends State<MyTesterRequestPostScreen> {
   final ColorsCollection _colors = ColorsCollection();
+
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
+
   final BoardFirebaseController _board = BoardFirebaseController();
+
   final MultiImageFirebaseController _multiImageFirebaseController =
       MultiImageFirebaseController();
+
   final SingleImageFirebaseController _singleImageFirebaseController =
       SingleImageFirebaseController();
+
   final AuthController _authController = AuthController.instance;
+
   final InterstitialAdController adController = InterstitialAdController();
-  MyTesterRequestPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -172,16 +187,16 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
                                           if (!boards[index].isApproval) {
-                                            return _colors.stateIsClose;
+                                            return _colors.stateIsClose; // 미승인
                                           } else if (boards[index]
-                                                  .testerRequest >
+                                                  .testerRequest <=
                                               boards[index]
                                                   .testerParticipation) {
                                             return _colors
-                                                .stateIsIng; // Background color when the state is "In Progress"
+                                                .finish; // Background color when the state is "In Progress"
                                           } else {
                                             // Default background color for other states
-                                            return _colors.stateIsClose;
+                                            return _colors.stateIsIng;
                                           }
                                         },
                                       ),
@@ -216,12 +231,34 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           const Divider(),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Get.to(() => SendRegistrationMessage(
+                                    boards: boards[index]));
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Send Registration Message to Tester Applicants",
+                                  style: TextStyle(color: _colors.iconColor),
+                                ).tr(),
+                                const SizedBox(width: 20),
+                                const Icon(
+                                  Icons.send,
+                                  color: Colors.blueAccent,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Divider(),
                           const SizedBox(height: 4),
                           SizedBox(
                             width: double.infinity,
                             child: BannerAD(),
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -229,8 +266,8 @@ class MyTesterRequestPostScreen extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: SizedBox(
-                                  width: 220,
-                                  height: 26,
+                                  width: 294,
+                                  height: 28,
                                   child: !(boards[index].isApproval)
                                       ? ElevatedButton(
                                           style: ButtonStyle(

@@ -76,7 +76,6 @@
     "The post does not exist": "The post does not exist",
     "Tester Share is?": "Tester Share is?",
     "To send a reply": "To send a reply",
-    "The project has been registered\n\n You can check it in Setting -> My Tester Request Post": "The project has been registered\n\n You can check it in Setting -> My Tester Request Post",
     "Close": "Close",
     "Developer": "Developer",
     "Setting": "Setting",
@@ -177,7 +176,11 @@
     "Please write the Project Name" : "Please write the Project Name",
     "Project Name is required" : "Project Name is required",
     "Create Todo" : "Create Todo",
-    "P r i o r i t y" : "P r i o r i t y"
-
-
+    "P r i o r i t y" : "P r i o r i t y",
+    "Update Todo" : "Update Todo",
+    "The person who reported the bug" : "The person who reported the bug",
+    "Report has been filed" : "Report has been filed",
+    "Please report the bug" : "Please report the bug",
+    "Unapproval" : "Unapproval",
+    "Send Registration Message to Tester Applicants" : "Send Registration Message to Tester Applicants"
 }

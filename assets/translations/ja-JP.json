@@ -79,7 +79,6 @@
     "The post does not exist" : "投稿が存在しません",
     "Tester Share is?" : "テスターシェアとは？",
     "To send a reply" : "返信を送信する",
-    "The project has been registered\n\n You can check it in Setting -> My Tester Request Post" : "プロジェクトが登録されました\n\n 設 定 -> 私のテスター要求投稿で確認できます",
     "Close" : "閉じる",
     "Developer" : "開発者",
     "Setting" : "設 定",
@@ -180,5 +179,11 @@
     "Please write the Project Name" : "プロジェクト名を入力してください",
     "Project Name is required" : "プロジェクト名は必須です",
     "Create Todo" : "タスクを作成する",
-    "P r i o r i t y" : "優     先     度"
+    "P r i o r i t y" : "優     先     度",
+    "Update Todo" : "タスクを更新",
+    "The person who reported the bug" : "バグを報告された方",
+    "Report has been filed" : "レポートが報告されました",
+    "Please report the bug" : "バグを報告してください",
+    "Unapproval" : "未 承 認",
+    "Send Registration Message to Tester Applicants" : "テスター申請者に登録メッセージを送る"
     }

@@ -79,7 +79,6 @@
   "The post does not exist" : "게시물이 존재하지 않습니다",
   "Tester Share is?" : "테스트쉐어란 무엇인가?",
   "To send a reply" : " 답장 보내기",
-  "The project has been registered\n\n You can check it in Setting -> My Tester Request Post" : "프로젝트가 등록되었습니다 \n\n 설정 -> 나의 테스터 요청 게시물에서 확인하실 수 있습니다",
   "Close" : "닫 기",
   "Developer" : "개발자",
   "Setting" : "설 정",
@@ -179,6 +178,12 @@
   "Please write the Project Name" : "프로젝트 이름을 입력해주세요",
   "Project Name is required" :  "프로젝트 이름은 필수입니다",
   "Create Todo" : "할 일 만들기",
-  "P r i o r i t y" : "우  선   순   위"
+  "P r i o r i t y" : "우  선   순   위",
+  "Update Todo" : "수    정",
+  "The person who reported the bug" : "리포팅 하신 분",
+  "Report has been filed" : "리포트가 보고되었습니다",
+  "Please report the bug" : "버그를 리포트해주세요",
+  "Unapproval" : "미 승 인",
+  "Send Registration Message to Tester Applicants" : "테스터신청자에게 등록메시지 보내기"
   }
   

@@ -45,12 +45,6 @@ Future<void> main() async {
         path: 'assets/translations',
         //fallbackLocale supportedLocales에 설정한 언어가 없는 경우 설정되는 언어
         fallbackLocale: const Locale('en', 'US'),
-        // startLocale: const Locale('en', 'US'),
-        //startLocale을 지정하면 초기 언어가 설정한 언어로 변경됨
-        //만일 이 설정을 하지 않으면 OS 언어를 따라 기본 언어가 설정됨
-        // startLocale: const Locale('ko', 'KR'),
-        // ('en', 'US')
-
         child: const MyApp()),
   );
 }

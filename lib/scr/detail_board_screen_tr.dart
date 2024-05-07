@@ -2,18 +2,29 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
+import 'package:tester_share_app/controller/bugtodo_firebase_controller.dart';
+import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
+import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
+import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/developer_message_create_screen_tr.dart';
 
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:tester_share_app/widget/w.show_toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class DetailBoardScreen extends StatelessWidget {
   final BoardFirebaseModel
       boards; // List<BoardFirebaseModel> 대신 BoardFirebaseModel을 사용
   final ColorsCollection colors = ColorsCollection();
   final AuthController _authController = AuthController.instance;
+  final BugTodoFirebaseController _bugTodoFirebaseController =
+      BugTodoFirebaseController();
+  final MassageFirebaseController _massageFirebaseController =
+      MassageFirebaseController();
+  late String bugReport = ''; // TextField에서 입력받은 데이터를 저장할 변수
 
   DetailBoardScreen({Key? key, required this.boards}) : super(key: key);
 
@@ -176,10 +187,10 @@ class DetailBoardScreen extends StatelessWidget {
                               hasProtocol ? inputUrl : 'https://$inputUrl';
 
                           // URL을 Uri 객체로 변환
-                          final _url = Uri.parse(urlWithProtocol);
+                          final url0 = Uri.parse(urlWithProtocol);
 
                           // 생성된 Uri를 사용하여 브라우저 열기
-                          launchUrl(_url);
+                          launchUrl(url0);
                         } catch (e) {
                           // URL이 유효하지 않거나 열 수 없는 경우 처리
                           print('URL 열기 오류: $e');
@@ -332,8 +343,69 @@ class DetailBoardScreen extends StatelessWidget {
                   child: cardText(boards.introductionText, 16)),
             ),
             const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 50,
+                    width: 310,
+                    child: TextField(
+                      style: const TextStyle(
+                        color: Colors.white, // 입력된 글자의 색상을 파란색으로 지정
+                      ),
+                      decoration: InputDecoration(
+                        hintText: '버그 리포트해주세요', // 입력창에 힌트 텍스트 표시
+                        labelText: tr('Please report the bug'), // 입력창 옆에 라벨 표시
+
+                        border: const OutlineInputBorder(), // 입력창에 테두리 추가
+                      ),
+                      onChanged: (text) {
+                        // 입력값이 변경될 때마다 호출되는 콜백 함수
+                        print('Entered text: $text');
+                        // 입력값을 처리하거나 저장하는 로직을 추가할 수 있습니다.
+                        bugReport = text;
+                      },
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        String _m = tr("Report has been filed");
+                        _bugTodoFirebaseController.createBugTodo(
+                            boards.createUid,
+                            boards.title,
+                            BugTodoFirebaseModel(
+                                createUid: _authController.userData!['uid'],
+                                projectName: boards.title,
+                                reportprofileName:
+                                    _authController.userData!['profileName'],
+                                createAt: DateTime.now(),
+                                title:
+                                    "Report : ${_authController.userData!['profileName']}",
+                                contents: bugReport,
+                                isDone: false,
+                                level: 4));
+
+                        _massageFirebaseController.createMessage(
+                            MessageModel(
+                                senderUid: boards.createUid,
+                                receiverUid: _authController.userData!['uid'],
+                                contents:
+                                    "We have received a bug report from ${_authController.userData!['profileName']}. Please check it on BugTodo.\n\n ${_authController.userData!['profileName']}님으로 부터 버그리포트를 받았습니다.BugTodo에서 확인해주세요.\n\n${_authController.userData!['profileName']}さんからバグレポートを受け取りました。BugTodoで確認してください。",
+                                timestamp: DateTime.now()),
+                            _authController.userData!['profileName']);
+                        showToast(_m, 1);
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.send,
+                        color: Colors.blue,
+                      )),
+                ],
+              ),
+            ),
             const Divider(),
-            const SizedBox(height: 20),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),

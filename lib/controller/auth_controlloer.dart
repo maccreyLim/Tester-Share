@@ -126,7 +126,7 @@ class AuthController extends GetxController {
         'testerParticipation': 0,
         'testerRequest': 0,
         'createAt': DateTime.now(),
-        'point': 0,
+        'point': 20,
       });
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
@@ -497,6 +497,39 @@ class AuthController extends GetxController {
       // 오류 발생 시 예외 처리
       Get.back(); // 로딩 인디케이터 닫기
       print("사용자 데이터를 가져오는 중 오류 발생 : $e");
+      return null;
+    }
+  }
+
+//프로필이름으로 uid가지고 오기
+  Future<String?> getUidFromProfileName(String profileName) async {
+    try {
+      // 로딩 인디케이터 표시
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
+      // Firebase에서 사용자 데이터 가져오기
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('profileName', isEqualTo: profileName)
+          .get();
+
+      // 쿼리 결과 확인
+      if (querySnapshot.docs.isNotEmpty) {
+        // 사용자 데이터가 있는 경우 첫 번째 문서의 UID 반환
+        Get.back(); // 로딩 인디케이터 닫기
+        return querySnapshot.docs.first.id;
+      } else {
+        // 사용자 데이터가 없으면 null 반환
+        Get.back(); // 로딩 인디케이터 닫기
+        return null;
+      }
+    } catch (e) {
+      // 오류 발생 시 예외 처리
+      Get.back(); // 로딩 인디케이터 닫기
+      print("사용자 UID를 가져오는 중 오류 발생 : $e");
       return null;
     }
   }

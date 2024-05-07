@@ -97,15 +97,20 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                           ),
                         ),
                         leading: Container(
-                          color: bugTodo.isDone
-                              ? Colors.grey
-                              : bugTodo.level == 1
-                                  ? Colors.red
-                                  : bugTodo.level == 2
-                                      ? Colors.yellow
-                                      : Colors.blue,
                           width: 50,
                           height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: bugTodo.isDone
+                                ? Colors.grey
+                                : bugTodo.level == 1
+                                    ? Colors.red
+                                    : bugTodo.level == 2
+                                        ? Colors.yellow
+                                        : bugTodo.level == 3
+                                            ? Colors.blue
+                                            : Colors.purpleAccent,
+                          ),
                           child: Center(
                             child: Text(
                               bugTodo.isDone
@@ -114,7 +119,9 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                       ? "High"
                                       : bugTodo.level == 2
                                           ? "Middle"
-                                          : "Low",
+                                          : bugTodo.level == 3
+                                              ? "Low"
+                                              : "Repot",
                               style: bugTodo.isDone
                                   ? const TextStyle(color: Colors.black)
                                   : const TextStyle(
@@ -125,8 +132,8 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                         ),
                         trailing: IconButton(
                           icon: bugTodo.isDone
-                              ? Icon(Icons.check_box)
-                              : Icon(Icons.check_box_outline_blank),
+                              ? const Icon(Icons.check_box)
+                              : const Icon(Icons.check_box_outline_blank),
                           onPressed: () {
                             _bugTodoFirebaseController.updateBugTodoIsDone(
                               uid,
@@ -135,20 +142,11 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                             );
                           },
                         ),
-                        // onExpansionChanged: (expanded) {
-                        //   if (expanded) {
-                        //     print('Tile is expanded');
-                        //     // 타일이 확장되었을 때 실행할 작업 추가
-                        //   } else {
-                        //     print('Tile is collapsed');
-                        //     // 타일이 축소되었을 때 실행할 작업 추가
-                        //   }
-                        // },
                         children: [
                           ListTile(
                             title: bugTodo.updateAt == null
                                 ? Text(
-                                    bugTodo.createAt.toString(),
+                                    '${bugTodo.createAt.year}-${bugTodo.createAt.month}-${bugTodo.createAt.day} ${bugTodo.createAt.hour}:${bugTodo.createAt.minute}',
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: bugTodo.isDone
@@ -158,7 +156,7 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                     ),
                                   )
                                 : Text(
-                                    bugTodo.updateAt.toString(),
+                                    '${bugTodo.updateAt!.year}-${bugTodo.updateAt!.month}-${bugTodo.updateAt!.day} ${bugTodo.updateAt!.hour}:${bugTodo.updateAt!.minute}',
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: bugTodo.isDone
@@ -168,7 +166,9 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                     ),
                                   ),
                             subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 16),
                                 Text(
                                   bugTodo.contents,
                                   style: TextStyle(
@@ -178,6 +178,35 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                         : colors.textColor,
                                   ),
                                 ),
+                                const SizedBox(height: 20),
+                                bugTodo.level == 4
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "The person who reported the bug",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: bugTodo.isDone
+                                                  ? const Color.fromARGB(
+                                                      255, 47, 47, 47)
+                                                  : colors.textColor,
+                                            ),
+                                          ).tr(),
+                                          Text(
+                                            " : ${bugTodo.reportprofileName}",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: bugTodo.isDone
+                                                  ? const Color.fromARGB(
+                                                      255, 47, 47, 47)
+                                                  : colors.textColor,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                                 const SizedBox(height: 20),
                                 Row(
                                   mainAxisAlignment:

@@ -9,6 +9,7 @@ class MessageModel {
   bool isRead; //읽음여부
   String senderNickname;
   String receiverNickname;
+  String? appUrl;
 
   MessageModel({
     this.id = '',
@@ -19,6 +20,7 @@ class MessageModel {
     this.isRead = false,
     this.senderNickname = '',
     this.receiverNickname = '',
+    this.appUrl,
   });
 
   factory MessageModel.fromMap(Map<String, dynamic> data, String id) {
@@ -29,6 +31,7 @@ class MessageModel {
       contents: data['contents'],
       timestamp: (data['timestamp'] as Timestamp).toDate(),
       isRead: data['isRead'],
+      appUrl: data['appUrl'],
     );
   }
 
@@ -39,6 +42,7 @@ class MessageModel {
       'contents': contents,
       'timestamp': timestamp,
       'isRead': false,
+      'appUrl': appUrl
     };
   }
 
@@ -51,6 +55,7 @@ class MessageModel {
       contents: json['contents'],
       timestamp: DateTime.parse(json['timestamp']), // 문자열을 DateTime으로 역직렬화
       isRead: json['isRead'],
+      appUrl: json['appUrl'],
     );
   }
 

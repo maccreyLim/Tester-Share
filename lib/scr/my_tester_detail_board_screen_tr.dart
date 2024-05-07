@@ -180,7 +180,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '-  Supported Languages  -',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ).tr(),

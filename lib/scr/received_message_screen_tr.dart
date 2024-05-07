@@ -86,12 +86,15 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
     CollectionReference messagesCollection =
         FirebaseFirestore.instance.collection('messages');
     try {
+      // receiverUid가 null이 아닌 경우에만 처리
       return messagesCollection
           .where('receiverUid', isEqualTo: receiverUid)
           .orderBy('timestamp', descending: true)
           .snapshots()
           .asyncMap((querySnapshot) async {
-        List<MessageModel> messages = [];
+        List<MessageModel> unreadMessages = [];
+        List<MessageModel> readMessages = [];
+
         for (var doc in querySnapshot.docs) {
           MessageModel message =
               MessageModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
@@ -103,9 +106,17 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
               await getReceiverNickname(message.senderUid);
           message.receiverNickname = receiverNickname;
 
-          messages.add(message);
+          if (message.isRead == false) {
+            unreadMessages.add(message);
+          } else {
+            readMessages.add(message);
+          }
         }
-        return messages;
+
+        // isRead가 false인 메시지를 먼저 표시하고, 그 다음에 isRead가 true인 메시지를 표시
+        unreadMessages.addAll(readMessages);
+
+        return unreadMessages;
       });
     } catch (e) {
       return Stream.value([]);
@@ -123,6 +134,7 @@ class _ReceivedMessageScreen extends State<ReceivedMessageScreen> {
             stream: getMessagesStream(_authController.userData!['uid']),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
+                print('메시지 가져오기 오류: ${snapshot.error}');
                 return Text('메시지 가져오기 오류: ${snapshot.error}');
               }
 

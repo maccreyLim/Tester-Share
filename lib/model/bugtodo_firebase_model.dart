@@ -10,6 +10,7 @@ class BugTodoFirebaseModel {
   String contents;
   bool isDone;
   int level;
+  String? reportprofileName;
 
   BugTodoFirebaseModel({
     this.docid,
@@ -21,6 +22,7 @@ class BugTodoFirebaseModel {
     required this.contents,
     required this.isDone,
     required this.level,
+    this.reportprofileName,
   });
 
   factory BugTodoFirebaseModel.fromMap(Map<String, dynamic> map) {
@@ -28,6 +30,7 @@ class BugTodoFirebaseModel {
       docid: map['docid'],
       createUid: map['createUid'],
       projectName: map['projectName'],
+      reportprofileName: map['reportprofileName'],
       createAt:
           (map['createAt'] as Timestamp).toDate(), // Timestamp -> DateTime 변환
       updateAt: map['updateAt'] != null
@@ -45,6 +48,7 @@ class BugTodoFirebaseModel {
       'docid': docid,
       'createUid': createUid,
       'projectName': projectName,
+      'reportprofileName': reportprofileName,
       'createAt': createAt,
       'updateAt': updateAt,
       'title': title,

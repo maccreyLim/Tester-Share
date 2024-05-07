@@ -5,6 +5,7 @@ import 'package:tester_share_app/model/massage_firebase_model.dart';
 import 'package:tester_share_app/scr/replay_message_create_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReceiveMessageDetail extends StatefulWidget {
   const ReceiveMessageDetail({Key? key, required this.message, required isSend})
@@ -50,22 +51,6 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // Row(
-                    //   children: [
-                    //     const Text(
-                    //       "Sender",
-                    //       style:
-                    //           const TextStyle(fontSize: 24, color: Colors.grey),
-                    //       // textAlign: TextAlign.start,
-                    //     ).tr(),
-                    //     Text(
-                    //       ': ${widget.message.senderNickname}',
-                    //       style:
-                    //           const TextStyle(fontSize: 24, color: Colors.grey),
-                    //       // textAlign: TextAlign.start,
-                    //     ),
-                    //   ],
-                    // ),
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -104,7 +89,37 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                   ),
                 ),
               ),
-              const SizedBox(height: 80),
+              widget.message.appUrl != null
+                  ? TextButton(
+                      onPressed: () {
+                        try {
+                          final inputUrl = widget.message.appUrl;
+
+                          // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
+                          final hasProtocol = inputUrl!.startsWith('http://') ||
+                              inputUrl.startsWith('https://');
+
+                          // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
+                          final urlWithProtocol =
+                              hasProtocol ? inputUrl : 'https://$inputUrl';
+
+                          // URL을 Uri 객체로 변환
+                          final _url = Uri.parse(urlWithProtocol);
+
+                          // 생성된 Uri를 사용하여 브라우저 열기
+                          launchUrl(_url);
+                        } catch (e) {
+                          // URL이 유효하지 않거나 열 수 없는 경우 처리
+                          print('URL 열기 오류: $e');
+                        }
+                      },
+                      child: Text(tr("Click to become a tester")),
+                    )
+                  : SizedBox(
+                      height:
+                          30), // 또는 Container() 대신에 SizedBox.shrink()를 사용하여 아무것도 차지하지 않는 위젯을 반환합니다.
+
+              const SizedBox(height: 40),
               ElevatedButton.icon(
                   onPressed: () {
                     //firebase에서 답장

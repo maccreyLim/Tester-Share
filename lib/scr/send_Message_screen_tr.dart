@@ -78,7 +78,9 @@ class _SendMessageScreen extends State<SendMessageScreen> {
           .orderBy('timestamp', descending: true)
           .snapshots()
           .asyncMap((querySnapshot) async {
-        List<MessageModel> messages = [];
+        List<MessageModel> unreadMessages = [];
+        List<MessageModel> readMessages = [];
+
         for (var doc in querySnapshot.docs) {
           MessageModel message =
               MessageModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
@@ -90,9 +92,17 @@ class _SendMessageScreen extends State<SendMessageScreen> {
               await getReceiverNickname(message.receiverUid);
           message.receiverNickname = receiverNickname;
 
-          messages.add(message);
+          if (message.isRead == false) {
+            unreadMessages.add(message);
+          } else {
+            readMessages.add(message);
+          }
         }
-        return messages;
+
+        // isRead가 false인 메시지를 먼저 표시하고, 그 다음에 isRead가 true인 메시지를 표시
+        unreadMessages.addAll(readMessages);
+
+        return unreadMessages;
       });
     } catch (e) {
       print('메시지 가져오기 오류: $e');
@@ -129,7 +139,7 @@ class _SendMessageScreen extends State<SendMessageScreen> {
                 padding: const EdgeInsets.all(12.0),
                 child: ListView.separated(
                   itemCount: messages.length,
-                  separatorBuilder: (context, index) => Divider(
+                  separatorBuilder: (context, index) => const Divider(
                     color: Colors.grey,
                     thickness: 1.0,
                   ),

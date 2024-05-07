@@ -447,15 +447,10 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
           MessageModel message = MessageModel(
               senderUid: "17sgMj5H7qMh7JyZ81SlESYRGV52",
               receiverUid: _authController.userData!['uid'],
-              contents: tr(
-                  "The project has been registered\n\n You can check it in Setting -> My Tester Request Post"),
+              contents:
+                  "The project has been registered\nYou can check it in Setting -> My Tester Request Post\nPlease wait momentarily while the administrator reviews and approves the project\n\n프로젝트가 등록되었습니다.\n설정 -> 내 테스터 요청 게시물에서 확인할 수 있습니다.\n관리자가 프로젝트를 검토하고 승인할 때까지 잠시만 기다려 주십시오.\n\nプロジェクトが登録されました。\n設定 -> 私のテスター要求投稿で確認できます。\n管理者がプロジェクトをレビューし、承認するまでしばらくお待ちください。",
               timestamp: DateTime.now());
           _mfirebase.createMessage(message, tr("Admin"));
-          // Get.off(MyTesterRequestPostScreen());
-          // Get.dialog(
-          //   getXDialog(Get.context!,
-          //       tr("The project has been registered\n\n You can check it in Setting -> My Tester Request Post")),
-          // );
         },
         child: Text(
           'Create Post',
