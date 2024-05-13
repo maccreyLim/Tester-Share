@@ -59,7 +59,7 @@
     "- Introduction -": "- Introduction -",
     "- Developer -": "- Developer -",
     "Send a message to the developer": "Send a message to the developer",
-    "After watching the advertisement, \nsupport us": "After watching the advertisement, \nsupport us",
+    "Earn points by watching \nadvertisements": "Earn points by watching \nadvertisements",
     "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n": "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n",
     "Inquiry and Partnership Inquiry Regarding Tester Share": "Inquiry and Partnership Inquiry Regarding Tester Share",
     "Confirmation": "Confirmation",
@@ -168,7 +168,7 @@
     "Released" : "Released",
     "Project Developer Information" : "Project Developer Information",
     "DeveloperTextButton" : "Developer : {}",
-    "contentText" : "Release experience: {}\n\nNumber of test participations: {}",
+    "contentText" : "Release experience: {}\n\nNumber of test participations: {}\n\nPoint: {}",
     "Release completed" : "Release completed",
     "Please write the Contents" : "Please write the Contents",
     "Content is required" : "Content is required",
@@ -182,5 +182,10 @@
     "Report has been filed" : "Report has been filed",
     "Please report the bug" : "Please report the bug",
     "Unapproval" : "Unapproval",
-    "Send Registration Message to Tester Applicants" : "Send Registration Message to Tester Applicants"
+    "Send Registration Message to Tester Applicants" : "Send Registration Message to Tester Applicants",
+    "( You can request recruitment of up to {} testers currently. )" : "( You can request recruitment of up to {} testers currently. )",
+    "What are points and how can I earn them?" : "What are points and how can I earn them?",
+    "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements"  : "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements",
+    "What do I do after registering as a tester on Google Console?" : "What do I do after registering as a tester on Google Console?",
+    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message."
 }

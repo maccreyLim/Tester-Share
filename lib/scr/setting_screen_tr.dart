@@ -10,6 +10,7 @@ import 'package:tester_share_app/scr/notice_screen_tr.dart';
 import 'package:tester_share_app/scr/faq_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen_tr.dart';
+import 'package:tester_share_app/widget/w.RewardAdManager.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -213,6 +214,7 @@ class SettingScreen extends StatelessWidget {
                       ).tr()),
                 ],
               ),
+              //원스토어 업로드시 삭제 할 것
               Row(
                 children: [
                   Icon(
@@ -234,47 +236,33 @@ class SettingScreen extends StatelessWidget {
                       ).tr()),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
 
               //Google 광고정책에 위반되는 것 같아서 일단은 Kill
-              // Row(
-              //   children: [
-              //     Icon(
-              //       Icons.tv,
-              //       color: colors.iconColor,
-              //     ),
-              //     const SizedBox(width: 10),
-              //     TextButton(
-              //       onPressed: () {
-              //         // InterstitialAdExample();
-
-              //         adController.loadAndShowAd();
-              //         //UserDate에서 point +1증가
-
-              //         String _uid = _authController.userData!['uid'];
-              //         int value =
-              //             ++_authController.userData!['point']; // 전위 증가 연산자 사용
-
-              //         // 업데이트할 데이터
-              //         Map<String, dynamic> _userNewData = {
-              //           "point": value,
-              //           // 필요한 경우 다른 필드도 추가할 수 있습니다.
-              //         };
-              //         // 사용자 데이터 업데이트
-              //         _authController.updateUserData(_uid, _userNewData);
-              //       },
-              //       child: Text(
-              //         "After watching the advertisement, \nsupport us",
-              //         style: TextStyle(
-              //           color: colors.textColor,
-              //           fontSize: _fontSizeCollection.settingFontSize,
-              //         ),
-              //       ).tr(),
-              //     ),
-              //   ],
-              // ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.tv,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                    onPressed: () {
+                      // 리워드광고
+                      showRewardAd();
+                    },
+                    child: Text(
+                      "Earn points by watching \nadvertisements",
+                      style: TextStyle(
+                        color: colors.textColor,
+                        fontSize: _fontSizeCollection.settingFontSize,
+                      ),
+                    ).tr(),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -309,5 +297,23 @@ class SettingScreen extends StatelessWidget {
         onConfirm: Get.back,
       );
     }
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      String _uid = _authController.userData!['uid'];
+      int value = ++_authController.userData!['point']; // 전위 증가 연산자 사용
+
+      // 업데이트할 데이터
+      Map<String, dynamic> _userNewData = {
+        "point": value,
+        // 필요한 경우 다른 필드도 추가할 수 있습니다.
+      };
+      // 사용자 데이터 업데이트
+      _authController.updateUserData(_uid, _userNewData);
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 }

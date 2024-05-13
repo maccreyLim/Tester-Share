@@ -62,7 +62,7 @@
     "- Introduction -" : "- 紹 介 -",
     "- Developer -" : "- 開発者 -",
     "Send a message" : "メッセージを送る",
-    "After watching the advertisement, \nsupport us" : "広告を見た後、\nサポートしてください",
+    "Earn points by watching \nadvertisements" : "広告を視聴してポイントを\n獲得する",
     "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n" : "支援のために以下の情報を提供してください。\nID：\nOSバージョン：\nデバイスモデル：\n以下にお問い合わせ内容を記入してください。\n",
     "Inquiry and Partnership Inquiry Regarding Tester Share": "テスターシェアに関するお問い合わせと提携のお問い合わせ",
     "Confirmation" : "確 認",
@@ -171,7 +171,7 @@
     "Released" : "リリース完了",
     "Project Developer Information" : "プロジェクト開発者情報",
     "DeveloperTextButton" : "開 発 者 : {}",
-    "contentText" : "リリース経験: {}\n\nテスト参加回数: {}",
+    "contentText" : "リリース経験: {}\n\nテスト参加回数: {}\n\nポイント: {}",
     "Release completed" : "リリースが完了しました",
     "Please write the Contents" : "内容を書いてください",
     "Content is required" : "コンテンツは必須です",
@@ -185,5 +185,10 @@
     "Report has been filed" : "レポートが報告されました",
     "Please report the bug" : "バグを報告してください",
     "Unapproval" : "未 承 認",
-    "Send Registration Message to Tester Applicants" : "テスター申請者に登録メッセージを送る"
+    "Send Registration Message to Tester Applicants" : "テスター申請者に登録メッセージを送る",
+    "( You can request recruitment of up to {} testers currently. )" : "( 現在{}名のテスター募集をリクエストできます )",
+    "What are points and how can I earn them?" : "ポイントとは何ですか？どのように獲得できますか？",
+    "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements" : "ポイントは、募集できるテスターの数を表します。\n他の人のプロジェクトにテスターとして参加したり、「設定 -> 広告を視聴してポイントを獲得する」または「マイページ -> 広告を視聴してポイントを獲得する」ことでポイントを獲得することができます。",
+    "What do I do after registering as a tester on Google Console?" :"Googleコンソールでテスターとして登録した後、何をすればいいですか?",
+    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'私のテスター要求投稿' -> '進行中' の下にある '青いアイコンを送る' -> テスト アプリケーション プロファイル名の横にある '青いアイコンを送る' をクリックして、メッセージと共にダウンロード アドレスを自動的に送信します。"
     }

@@ -10,6 +10,7 @@ import 'package:tester_share_app/scr/bugtodos_screen.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
+import 'package:tester_share_app/scr/send_registration_message.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
@@ -316,6 +317,36 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 10),
                           const Divider(),
+                          _authController.userData!['uid'] ==
+                                  boards[index].createUid
+                              ? GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      Get.to(() => SendRegistrationMessage(
+                                            boards: boards[index],
+                                          ));
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Send Registration Message to Tester Applicants",
+                                        style:
+                                            TextStyle(color: colors.iconColor),
+                                      ).tr(),
+                                      const SizedBox(width: 20),
+                                      const Icon(
+                                        Icons.send,
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
+                          _authController.userData!['uid'] ==
+                                  boards[index].createUid
+                              ? const Divider()
+                              : Container(),
                           const SizedBox(height: 4),
                           SizedBox(
                             width: double.infinity,
@@ -393,7 +424,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(color: Colors.grey, fontSize: size),
                       ).tr(args: [
                         userPost.deployed.toString(),
-                        userPost.testerParticipation.toString()
+                        userPost.testerParticipation.toString(),
+                        userPost.point.toString()
                       ]),
                     ],
                   ),

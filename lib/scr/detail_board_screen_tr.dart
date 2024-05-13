@@ -356,7 +356,7 @@ class DetailBoardScreen extends StatelessWidget {
                         color: Colors.white, // 입력된 글자의 색상을 파란색으로 지정
                       ),
                       decoration: InputDecoration(
-                        hintText: '버그 리포트해주세요', // 입력창에 힌트 텍스트 표시
+                        hintText: tr('Please report the bug'), // 입력창에 힌트 텍스트 표시
                         labelText: tr('Please report the bug'), // 입력창 옆에 라벨 표시
 
                         border: const OutlineInputBorder(), // 입력창에 테두리 추가

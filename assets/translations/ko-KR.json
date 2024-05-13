@@ -62,7 +62,7 @@
   "-  Introduction  -" :"-  소 개  -",
   "-  Developer  -" : "-  개 발 자  -",
   "Send a message" : "개발자에게 메시지 보내기",
-  "After watching the advertisement, \nsupport us" : "광고보고 후원하기",
+  "Earn points by watching \nadvertisements" : "광고보고 포인트 얻기",
   "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n" : "아래 내용을 함께 보내주시면 큰 도움이 됩니다.\n 아이디 : \n OS 버전: \n기기 : \n 아래에 문의 내용을 적어주세요.\n",
   "Inquiry and Partnership Inquiry Regarding Tester Share": "Tester Share에 관한 문의 및 제휴문의",
   "Confirmation" : "확 인",
@@ -170,7 +170,7 @@
   "Released" : "출시 완료",
   "Project Developer Information" : "프로젝트 개발자 정보",
   "DeveloperTextButton" : "Developer : {}",
-  "contentText" : "출시 경험 : {}\n\n테스트 참여 횟수 : {}",
+  "contentText" : "출시 경험 : {}\n\n테스트 참여 횟수 : {}\n\n포인트 : {}",
   "Release completed" : "출시가 완료되었습니다",
   "Please write the Contents" : "내용을 작성해주세요",
   "Content is required" : "프로젝트 내용은 필수입니다",
@@ -184,6 +184,11 @@
   "Report has been filed" : "리포트가 보고되었습니다",
   "Please report the bug" : "버그를 리포트해주세요",
   "Unapproval" : "미 승 인",
-  "Send Registration Message to Tester Applicants" : "테스터신청자에게 등록메시지 보내기"
+  "Send Registration Message to Tester Applicants" : "테스터신청자에게 등록메시지 보내기",
+  "( You can request recruitment of up to {} testers currently. )" : "( 현재 {}명의 테스터 모집을 요청할 수 있습니다. )",
+  "What are points and how can I earn them?" : "포인트란 무엇이고 어떻게 얻을 수 있나요? ",
+  "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements" : "포인트는 모집할 수 있는 테스터의 수를 나타냅니다.\n다른 사람의 프로젝트에 테스터로 참여하거나 '설정 -> 광고보고 포인트 얻기' 또는 '마이 페이지 -> 광고보고 포인트 얻기'를 통해 포인트를 얻을 수 있습니다.",
+  "What do I do after registering as a tester on Google Console?" : "Google 콘솔에서 테스터로 등록한 후에는 어떻게 해야 하나요?",
+  "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message." : "'나의 테스터 요청 게시물' -> '진행 중' 아래 '파란 아이콘 보내기' -> 테스트 애플리케이션 프로필 이름 옆의 '파란 아이콘 보내기'를 클릭하여 메시지와 함께 다운로드 주소를 자동으로 보냅니다." 
   }
   

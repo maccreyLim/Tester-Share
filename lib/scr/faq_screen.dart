@@ -33,10 +33,22 @@ class FAQScreen extends StatelessWidget {
           "Before completing app setup, you can quickly deploy builds to a trusted small-scale tester group. This allows you to identify issues and receive feedback early.\nBuilds added to Play Console are typically provided to testers within seconds.\nInternal testing is optional, but it's a good practice to start with internal testing.")
     },
     {
+      'question': tr("What are points and how can I earn them?"),
+      'answer': tr(
+          "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements")
+    },
+    {
+      'question':
+          tr("What do I do after registering as a tester on Google Console?"),
+      'answer': tr(
+          "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.")
+    },
+    {
       'question':
           tr("Could you explain the deployment process on Tester Share?"),
       'answer': tr("deployment process")
     },
+
     // 다른 질문과 답변들을 여기에 추가할 수 있습니다.
   ];
 
@@ -77,8 +89,8 @@ class FAQScreen extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   qaData[index]['answer']!,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: _colors.iconColor),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.amber),
                 ),
               ),
             ],

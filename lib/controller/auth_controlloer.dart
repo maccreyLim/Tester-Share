@@ -38,36 +38,47 @@ class AuthController extends GetxController {
 
     _user.bindStream(authentication.userChanges());
 
-    // ever(_user, (User? user)
-    _user.listen((User? user) {
-      print('_user changed: $user');
-      print('_userData value: ${_userData.value}');
-      _moveToPage(user);
+    // 사용자 데이터에 대한 Firestore 스트림 구독
+    _user.stream.listen((user) {
+      if (user != null && user.emailVerified) {
+        _updateUserData(user);
+      } else {
+        Get.off(() => const LoginScreen());
+      }
     });
   }
 
-  // 사용자가 로그인하거나 로그아웃할 때 호출되는 함수
-  _moveToPage(User? user) async {
+  void _updateUserData(User? user) async {
+    if (user != null) {
+      try {
+        // Firestore에서 사용자 데이터 스트림 구독
+        _firestore
+            .collection('users')
+            .doc(user.uid)
+            .snapshots()
+            .listen((snapshot) async {
+          if (snapshot.exists) {
+            // 스트림에서 데이터가 변경되었을 때 _getUserData 호출하여 업데이트
+            Map<String, dynamic>? userData = await _getUserData(user.uid);
+            if (userData != null) {
+              _userData.value = userData;
+              update();
+            } else {
+              print("사용자 정보가 없습니다.");
+            }
+          }
+        });
+      } catch (e) {
+        print('사용자 데이터 스트림 구독 중 오류 발생: $e');
+      }
+    }
+  }
+
+  void _moveToPage(User? user) async {
     if (user == null) {
-      // 로그아웃 상태일 때 로그인 화면으로 이동
       Get.off(() => const LoginScreen());
     } else {
-      if (user.emailVerified) {
-        // 이메일이 인증된 경우에만 사용자 데이터 가져오기 시도
-        Map<String, dynamic>? userData = await _getUserData(user.uid);
-
-        if (userData != null) {
-          // 사용자 데이터가 존재하면 업데이트하고 홈 화면으로 이동
-          _userData.value = userData;
-          Get.offAll(() => const HomeScreen());
-        } else {
-          // 사용자 데이터가 없는 경우
-          print("사용자 정보가 없습니다.");
-        }
-      } else {
-        // 이메일이 인증되지 않은 경우에는 이메일 인증 안내페이지로 이동
-        Get.off(() => const ReWellcomeMessageScreen());
-      }
+      _updateUserData(user);
     }
   }
 
@@ -126,7 +137,7 @@ class AuthController extends GetxController {
         'testerParticipation': 0,
         'testerRequest': 0,
         'createAt': DateTime.now(),
-        'point': 20,
+        'point': 10,
       });
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리
@@ -161,6 +172,7 @@ class AuthController extends GetxController {
         // 인증 이메일 보내기
         await user.sendEmailVerification();
         // 이메일이 인증되지 않았다면 인증 안내페이지로 이동
+        Get.to(() => ReWellcomeMessageScreen);
       } else {
         // Firestore에서 사용자 정보 가져오기
         Map<String, dynamic>? userData = await _getUserData(user!.uid);
