@@ -187,5 +187,8 @@
     "What are points and how can I earn them?" : "What are points and how can I earn them?",
     "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements"  : "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements",
     "What do I do after registering as a tester on Google Console?" : "What do I do after registering as a tester on Google Console?",
-    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message."
+    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.",
+    "Insufficient points." : "Insufficient points.",
+    "Earn points by watching advertisements" : "광고보고 포인트 얻기",
+    "Please select at least one language" : "Please select at least one language"
 }

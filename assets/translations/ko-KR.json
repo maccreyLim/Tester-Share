@@ -189,6 +189,9 @@
   "What are points and how can I earn them?" : "포인트란 무엇이고 어떻게 얻을 수 있나요? ",
   "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements" : "포인트는 모집할 수 있는 테스터의 수를 나타냅니다.\n다른 사람의 프로젝트에 테스터로 참여하거나 '설정 -> 광고보고 포인트 얻기' 또는 '마이 페이지 -> 광고보고 포인트 얻기'를 통해 포인트를 얻을 수 있습니다.",
   "What do I do after registering as a tester on Google Console?" : "Google 콘솔에서 테스터로 등록한 후에는 어떻게 해야 하나요?",
-  "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message." : "'나의 테스터 요청 게시물' -> '진행 중' 아래 '파란 아이콘 보내기' -> 테스트 애플리케이션 프로필 이름 옆의 '파란 아이콘 보내기'를 클릭하여 메시지와 함께 다운로드 주소를 자동으로 보냅니다." 
+  "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message." : "'나의 테스터 요청 게시물' -> '진행 중' 아래 '파란 아이콘 보내기' -> 테스트 애플리케이션 프로필 이름 옆의 '파란 아이콘 보내기'를 클릭하여 메시지와 함께 다운로드 주소를 자동으로 보냅니다.",
+  "Insufficient points." : "포인트가 부족합니다.",
+  "Earn points by watching advertisements" : "광고보고 포인트 얻기",
+  "Please select at least one language" : "적어도 한 가지 언어를 선택해주세요"
   }
   

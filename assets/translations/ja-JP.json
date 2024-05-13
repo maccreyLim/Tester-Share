@@ -190,5 +190,8 @@
     "What are points and how can I earn them?" : "ポイントとは何ですか？どのように獲得できますか？",
     "Points represent the number of testers you can recruit.\nYou can participate as a tester in other people's projects or earn points by 'Settings -> Earn points by watching dvertisements' or 'My Page -> Earn points by watching dvertisements" : "ポイントは、募集できるテスターの数を表します。\n他の人のプロジェクトにテスターとして参加したり、「設定 -> 広告を視聴してポイントを獲得する」または「マイページ -> 広告を視聴してポイントを獲得する」ことでポイントを獲得することができます。",
     "What do I do after registering as a tester on Google Console?" :"Googleコンソールでテスターとして登録した後、何をすればいいですか?",
-    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'私のテスター要求投稿' -> '進行中' の下にある '青いアイコンを送る' -> テスト アプリケーション プロファイル名の横にある '青いアイコンを送る' をクリックして、メッセージと共にダウンロード アドレスを自動的に送信します。"
+    "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message.": "'私のテスター要求投稿' -> '進行中' の下にある '青いアイコンを送る' -> テスト アプリケーション プロファイル名の横にある '青いアイコンを送る' をクリックして、メッセージと共にダウンロード アドレスを自動的に送信します。",
+    "Insufficient points." : "ポイントが不足しています。",
+    "Earn points by watching advertisements" : "広告を視聴してポイントを獲得する",
+    "Please select at least one language" : "少なくとも1つの言語を選択してください"
     }

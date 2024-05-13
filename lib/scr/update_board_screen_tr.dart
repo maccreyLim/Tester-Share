@@ -11,6 +11,7 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
+import 'package:tester_share_app/widget/w.RewardAdManager.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
@@ -311,6 +312,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
                 ),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 style: const TextStyle(color: Colors.white),
+                enabled: false, // 수정 불가능하도록 설정
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
@@ -490,5 +492,23 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
         ).tr(),
       ),
     );
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      String _uid = _authController.userData!['uid'];
+      int value = ++_authController.userData!['point']; // 전위 증가 연산자 사용
+
+      // 업데이트할 데이터
+      Map<String, dynamic> _userNewData = {
+        "point": value,
+        // 필요한 경우 다른 필드도 추가할 수 있습니다.
+      };
+      // 사용자 데이터 업데이트
+      _authController.updateUserData(_uid, _userNewData);
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 }

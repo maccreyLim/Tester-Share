@@ -83,9 +83,7 @@ class _MyInformationScreenState extends State<MyInformationScreen> {
               return Text(
                 "( You can request recruitment of up to {} testers currently. )",
                 style: TextStyle(color: colors.textColor),
-              ).tr(args: [
-                '$maxTester'
-              ]).tr(); // 변경 사항을 반영해야 할 화면 요소가 있는 위젯을 반환합니다.
+              ).tr(args: ['$maxTester']); // 변경 사항을 반영해야 할 화면 요소가 있는 위젯을 반환합니다.
             }),
             const SizedBox(height: 20),
             ElevatedButton(

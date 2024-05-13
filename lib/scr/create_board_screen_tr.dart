@@ -11,6 +11,7 @@ import 'package:tester_share_app/controller/multi_image_firebase_controller.dart
 import 'package:tester_share_app/controller/single_image_firebase_controller.dart';
 import 'package:tester_share_app/model/board_firebase_model.dart';
 import 'package:tester_share_app/model/massage_firebase_model.dart';
+import 'package:tester_share_app/widget/w.RewardAdManager.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:image_picker/image_picker.dart';
@@ -58,6 +59,19 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
   List<String> selectedLanguages = [];
   File? pickedImage; //이미지를 담는 변수
   List<XFile?> pickedImages = []; // 이미지 File을 저장할 리스트
+  int point = 0;
+
+  @override
+  void initState() {
+    _initializeForm();
+    super.initState();
+  }
+
+  void _initializeForm() {
+    testerRequestController.text =
+        _authController.userData!['point'].toString();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -79,6 +93,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
     List<String> appImagesUrl = [];
     String iconImageUrl = "";
     String? userUid = _authController.currentUser!.uid;
+
     print("저장할 uid : userUid");
 
     if (pickedImage != null) {
@@ -95,32 +110,37 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       // 게시물 저장 로직을 여기에 추가
       // BoardFirebaseModel을 활용하여 새로운 게시물을 생성
       BoardFirebaseModel newPost = BoardFirebaseModel(
-          docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
-          isApproval: false,
-          isDeploy: false,
-          createUid: userUid.toString(), // 현재 사용자의 UID로 설정
-          developer: _authController.userData?['profileName'],
-          createAt: DateTime.now(),
-          updateAt: null, // 처음 생성이므로 null로 설정
-          title: titleController.text,
-          introductionText: introductionTextController.text,
-          testerRequest: int.parse(testerRequestController.text),
-          testerParticipation: 0,
-          appImagesUrl: appImagesUrl,
-          iconImageUrl: iconImageUrl,
-          githubUrl: githubUrlController.text,
-          appSetupUrl: appSetupUrlController.text,
-          language: selectedLanguages,
-          rquestProfileName: []);
+        docid: '', // Firestore에서 자동 생성되는 값이므로 비워둠
+        isApproval: false,
+        isDeploy: false,
+        createUid: userUid.toString(), // 현재 사용자의 UID로 설정
+        developer: _authController.userData?['profileName'],
+        createAt: DateTime.now(),
+        updateAt: null, // 처음 생성이므로 null로 설정
+        title: titleController.text,
+        introductionText: introductionTextController.text,
+        testerRequest: int.parse(testerRequestController.text),
+        testerParticipation: 0,
+        appImagesUrl: appImagesUrl,
+        iconImageUrl: iconImageUrl,
+        githubUrl: githubUrlController.text,
+        appSetupUrl: appSetupUrlController.text,
+        language: selectedLanguages,
+        rquestProfileName: [],
+      );
       try {
         await _boardFirebaseController.addBoard(newPost);
         String _uid = _authController.userData!['uid'];
         int value =
             ++_authController.userData!['testerRequest']; // 전위 증가 연산자 사용
+        int savepoint =
+            int.parse(_authController.userData!['point'].toString()) -
+                int.parse(testerRequestController.text);
 
         // 업데이트할 데이터
         Map<String, dynamic> _userNewData = {
           "testerRequest": value,
+          "point": savepoint
         };
         // 사용자 데이터 업데이트
         _authController.updateUserData(_uid, _userNewData);
@@ -251,8 +271,27 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                       );
                     }).toList(),
                   ),
+                  const SizedBox(height: 10),
+                  // 선택된 언어가 없으면 에러 메시지를 표시합니다.
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  selectedLanguages.isEmpty
+                      ? const Text(
+                          "Please select at least one language",
+                          style: TextStyle(color: Colors.red),
+                        ).tr()
+                      : Text(
+                          selectedLanguages
+                              .map((language) => tr(language))
+                              .join(', '),
+                          style: const TextStyle(color: Colors.blue),
+                        ),
+                ],
+              ),
+              const SizedBox(height: 6),
               TextFormField(
                 controller: introductionTextController,
                 maxLines: 3,
@@ -270,6 +309,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: testerRequestController,
                 keyboardType: TextInputType.number,
@@ -287,8 +327,57 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                       int.tryParse(value) == null) {
                     return tr('Please enter a valid number');
                   }
+
+                  int requestedTesters = int.parse(value);
+                  int availablePoints =
+                      int.parse(_authController.userData!['point'].toString());
+
+                  if (requestedTesters > availablePoints) {
+                    return tr("Insufficient points.");
+                  }
+
                   return null;
                 },
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      const SizedBox(width: 40),
+                      Obx(() {
+                        String _point =
+                            _authController.userData!['point'].toString();
+                        return Text(
+                          "( You can request recruitment of up to {} testers currently. )",
+                          style:
+                              TextStyle(color: colors.textColor, fontSize: 10),
+                        ).tr(args: [_point]);
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 30),
+                    SizedBox(
+                      width: 330,
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            showRewardAd();
+                          });
+                        },
+                        child:
+                            const Text("Earn points by watching advertisements")
+                                .tr(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               TextFormField(
                   keyboardType: TextInputType.emailAddress,
@@ -359,7 +448,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               ),
               const SizedBox(height: 20),
               pickedImages.isEmpty ? Container() : multiImageListView(),
-              SizedBox(height: 20), // Expanded 위젯 제거 후 간격 조절 위젯 추가
+              const SizedBox(height: 20), // Expanded 위젯 제거 후 간격 조절 위젯 추가
               Align(alignment: Alignment.bottomCenter, child: _saveButton()),
             ],
           ),
@@ -405,7 +494,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                         );
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       color: Colors.white,
                       size: 20,
@@ -448,7 +537,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
               senderUid: "17sgMj5H7qMh7JyZ81SlESYRGV52",
               receiverUid: _authController.userData!['uid'],
               contents:
-                  "The project has been registered\nYou can check it in Setting -> My Tester Request Post\nPlease wait momentarily while the administrator reviews and approves the project\n\n프로젝트가 등록되었습니다.\n설정 -> 내 테스터 요청 게시물에서 확인할 수 있습니다.\n관리자가 프로젝트를 검토하고 승인할 때까지 잠시만 기다려 주십시오.\n\nプロジェクトが登録されました。\n設定 -> 私のテスター要求投稿で確認できます。\n管理者がプロジェクトをレビューし、承認するまでしばらくお待ちください。",
+                  "The project has been registered\nYou can check it in Setting -> My Tester Request Post\nPlease wait momentarily while the administrator reviews and approves the project\n\n프로젝트가 등록되었습니다.\n설정 -> 나의 테스터 요청 게시물에서 확인할 수 있습니다.\n관리자가 프로젝트를 검토하고 승인할 때까지 잠시만 기다려 주십시오.\n\nプロジェクトが登録されました。\n設定 -> 私のテスター要求投稿で確認できます。\n管理者がプロジェクトをレビューし、承認するまでしばらくお待ちください。",
               timestamp: DateTime.now());
           _mfirebase.createMessage(message, tr("Admin"));
         },
@@ -460,5 +549,23 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
         ).tr(),
       ),
     );
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      String _uid = _authController.userData!['uid'];
+      int value = ++_authController.userData!['point']; // 전위 증가 연산자 사용
+
+      // 업데이트할 데이터
+      Map<String, dynamic> _userNewData = {
+        "point": value,
+        // 필요한 경우 다른 필드도 추가할 수 있습니다.
+      };
+      // 사용자 데이터 업데이트
+      _authController.updateUserData(_uid, _userNewData);
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 }
