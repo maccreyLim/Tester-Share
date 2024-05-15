@@ -192,6 +192,8 @@
   "'My tester request post' -> 'Send blue icon' under 'In progress' -> Click 'Send blue icon' next to the test application profile name to automatically send a download address with a message." : "'나의 테스터 요청 게시물' -> '진행 중' 아래 '파란 아이콘 보내기' -> 테스트 애플리케이션 프로필 이름 옆의 '파란 아이콘 보내기'를 클릭하여 메시지와 함께 다운로드 주소를 자동으로 보냅니다.",
   "Insufficient points." : "포인트가 부족합니다.",
   "Earn points by watching advertisements" : "광고보고 포인트 얻기",
-  "Please select at least one language" : "적어도 한 가지 언어를 선택해주세요"
+  "Please select at least one language" : "적어도 한 가지 언어를 선택해주세요",
+  "Please wait a moment!!" : "잠시만 기다려 주세요!!",
+  "An advertisement will be shown soon." : "곧 광고가 나옵니다."
   }
   

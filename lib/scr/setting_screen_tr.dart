@@ -325,8 +325,12 @@ class SettingScreen extends StatelessWidget {
     Get.dialog(
       AlertDialog(
         backgroundColor: Colors.black, // 배경색을 회색으로 변경
-        title: Text("잠시만 기다려 주세요!!", style: TextStyle(color: colors.iconColor)),
-        content: Text("곧 광고가 나옵니다.", style: TextStyle(color: colors.iconColor)),
+        title: Text("Please wait a moment!!",
+                style: TextStyle(color: colors.iconColor))
+            .tr(),
+        content: Text("An advertisement will be shown soon.",
+                style: TextStyle(color: colors.iconColor))
+            .tr(),
         actions: [
           TextButton(
             onPressed: () {
