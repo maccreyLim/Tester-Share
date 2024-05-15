@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -250,6 +252,8 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 10),
                   TextButton(
                     onPressed: () {
+                      //안내문
+                      _showLoadingDialog();
                       // 리워드광고
                       showRewardAd();
                     },
@@ -314,6 +318,30 @@ class SettingScreen extends StatelessWidget {
       _authController.updateUserData(_uid, _userNewData);
       // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
       // 예: 기부하기 또는 다른 작업 수행
+    });
+  }
+
+  void _showLoadingDialog() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.black, // 배경색을 회색으로 변경
+        title: Text("잠시만 기다려 주세요!!", style: TextStyle(color: colors.iconColor)),
+        content: Text("곧 광고가 나옵니다.", style: TextStyle(color: colors.iconColor)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("확인"),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+    // 3초 후에 다이얼로그를 닫습니다.
+    // 3초 후에 다이얼로그를 닫습니다.
+    Timer(Duration(seconds: 3), () {
+      Get.back();
     });
   }
 }

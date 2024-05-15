@@ -346,11 +346,11 @@ class DetailBoardScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 50,
-                    width: 310,
+                    width: 280,
                     child: TextField(
                       style: const TextStyle(
                         color: Colors.white, // 입력된 글자의 색상을 파란색으로 지정
@@ -389,8 +389,8 @@ class DetailBoardScreen extends StatelessWidget {
 
                         _massageFirebaseController.createMessage(
                             MessageModel(
-                                senderUid: boards.createUid,
-                                receiverUid: _authController.userData!['uid'],
+                                senderUid: _authController.userData!['uid'],
+                                receiverUid: boards.createUid,
                                 contents:
                                     "We have received a bug report from ${_authController.userData!['profileName']}. Please check it on BugTodo.\n\n ${_authController.userData!['profileName']}님으로 부터 버그리포트를 받았습니다.BugTodo에서 확인해주세요.\n\n${_authController.userData!['profileName']}さんからバグレポートを受け取りました。BugTodoで確認してください。",
                                 timestamp: DateTime.now()),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -358,15 +359,18 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     const SizedBox(width: 30),
                     SizedBox(
-                      width: 330,
+                      width: 300,
                       height: 30,
                       child: ElevatedButton(
                         onPressed: () {
+                          //안내문
+                          _showLoadingDialog();
                           setState(() {
                             showRewardAd();
                           });
@@ -566,6 +570,30 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
       _authController.updateUserData(_uid, _userNewData);
       // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
       // 예: 기부하기 또는 다른 작업 수행
+    });
+  }
+
+  void _showLoadingDialog() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.black, // 배경색을 회색으로 변경
+        title: Text("잠시만 기다려 주세요!!", style: TextStyle(color: colors.iconColor)),
+        content: Text("곧 광고가 나옵니다.", style: TextStyle(color: colors.iconColor)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("확인"),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+    // 3초 후에 다이얼로그를 닫습니다.
+    // 3초 후에 다이얼로그를 닫습니다.
+    Timer(Duration(seconds: 3), () {
+      Get.back();
     });
   }
 }

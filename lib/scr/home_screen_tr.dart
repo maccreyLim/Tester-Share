@@ -176,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           const SizedBox(height: 10),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               boards[index].iconImageUrl == ""
                                   ? Image.asset(
@@ -198,7 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
                                       20),
                                 ],
-                              )
+                              ),
+                              //Todo: 테스터 신청 구현
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.end,
+                              //   children: [
+                              //     SizedBox(width: 10),
+                              //     IconButton(
+                              //         onPressed: () {},
+                              //         icon: const Icon(Icons.add)),
+                              //   ],
+                              // )
                             ],
                           ),
                           SizedBox(
