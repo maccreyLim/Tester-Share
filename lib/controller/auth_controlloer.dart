@@ -19,8 +19,8 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
 
   RxInt messageCount = 0.obs;
-  bool isLogin = false; //로그인 상태 확인
-  bool isInput = false; // E-Mail 검증 완료여부
+  bool isLogin = false; // 로그인 상태 확인
+  bool isInput = false; // E-Mail 검증 완료 여부
 
   late Rx<User?> _user;
   late Rx<Map<String, dynamic>?> _userData;
@@ -66,19 +66,14 @@ class AuthController extends GetxController {
             } else {
               print("사용자 정보가 없습니다.");
             }
+          } else {
+            // 사용자 데이터가 없으면 로그인 화면으로 이동
+            Get.off(() => const LoginScreen());
           }
         });
       } catch (e) {
         print('사용자 데이터 스트림 구독 중 오류 발생: $e');
       }
-    }
-  }
-
-  void _moveToPage(User? user) async {
-    if (user == null) {
-      Get.off(() => const LoginScreen());
-    } else {
-      _updateUserData(user);
     }
   }
 
