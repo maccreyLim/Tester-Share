@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/bugtodo_firebase_controller.dart';
 import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
+import 'package:tester_share_app/scr/bugtodo_reply_message_Screen.dart';
 import 'package:tester_share_app/scr/create_bugtodos_screen.dart';
 import 'package:tester_share_app/scr/update_bugtodos_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
@@ -194,16 +195,41 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
                                                   : colors.textColor,
                                             ),
                                           ).tr(),
-                                          Text(
-                                            " : ${bugTodo.reportprofileName}",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: bugTodo.isDone
-                                                  ? const Color.fromARGB(
-                                                      255, 47, 47, 47)
-                                                  : colors.textColor,
-                                            ),
-                                          ),
+                                          TextButton(
+                                              onPressed: () {
+                                                //Todo: 버그리포팅한 사람에게 메시지 보내기
+
+                                                Get.to(
+                                                    BugtodoReplyMessageScreen(
+                                                  receiverUid:
+                                                      bugTodo.createUid,
+                                                  senderUid: _authController
+                                                      .userData!['uid'],
+                                                  reportProfile: bugTodo
+                                                      .reportprofileName
+                                                      .toString(),
+                                                ));
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    " : ${bugTodo.reportprofileName}",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: bugTodo.isDone
+                                                          ? const Color
+                                                              .fromARGB(
+                                                              255, 47, 47, 47)
+                                                          : colors.textColor,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 6),
+                                                  const Icon(
+                                                    Icons.send,
+                                                    color: Colors.blue,
+                                                  )
+                                                ],
+                                              )),
                                         ],
                                       )
                                     : Container(),

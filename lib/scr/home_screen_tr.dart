@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
@@ -9,6 +10,7 @@ import 'package:tester_share_app/model/user_firebase_model.dart';
 import 'package:tester_share_app/scr/bugtodos_screen.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
+import 'package:tester_share_app/scr/developer_message_create_screen_tr.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/scr/send_registration_message.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
@@ -200,18 +202,66 @@ class _HomeScreenState extends State<HomeScreen> {
                                       20),
                                 ],
                               ),
-                              //Todo: 테스터 신청 구현
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.end,
-                              //   children: [
-                              //     SizedBox(width: 10),
-                              //     IconButton(
-                              //         onPressed: () {},
-                              //         icon: const Icon(Icons.add)),
-                              //   ],
-                              // )
+                              Expanded(
+                                child: Container(),
+                              ),
+                              // Todo: 테스터 신청 구현
+                              boards[index].rquestProfileName == true
+                                  ? IconButton(
+                                      onPressed: () {
+                                        String testApplyMessage =
+                                            "아래의 메일 주소로 테스터를 신청합니다.\n 프로젝트 관리자분은 구글콘솔에서 테스터 등록후 '등록되었습니다.'라고 신청하신 유저에게 답장을 주세요!! \n\nI am applying as a tester to the email address below. \nProject administrators, please reply to the user who applied with 'You have been registered.' after registering as a tester in the Google Console!!\n\n以下のメールアドレスにテスターとして申し込みます。\nプロジェクト管理者は、Googleコンソールでテスターに登録した後、'登録されました'と申請したユーザーに返信してください！!\n\n";
+                                        // 테스터 신청 이메일 메시지를 구성합니다.
+                                        String emailMessage =
+                                            "$testApplyMessage\n${_authController.userData!['email']}";
+                                        //테스터 신청
+                                        Get.to(DeveloperMessageCreateScreen(
+                                          receiverUid: boards[index].createUid,
+                                          developer: boards[index].developer,
+                                          message: emailMessage,
+                                          boards: boards[index],
+                                          func: true,
+                                        ));
+                                      },
+                                      icon: const Icon(
+                                        Icons.person,
+                                        color: Colors.amberAccent,
+                                      ),
+                                    )
+                                  : IconButton(
+                                      onPressed: () {
+                                        Get.dialog(
+                                          AlertDialog(
+                                            backgroundColor: Colors.black,
+                                            title: const Text(""),
+                                            content: const Text(
+                                                'You have already joined this project',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                )).tr(),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child:
+                                                    const Text('Confirmation',
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                        )).tr(),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.how_to_reg,
+                                        color: Colors.grey,
+                                      ),
+                                    )
                             ],
                           ),
+                          //작성일 표시 부분
                           SizedBox(
                             width: double.infinity,
                             child: Column(
@@ -264,6 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: colors.textColor,
                                   fontSize: 20)), // 표시할 최대 라인 수),
                           const SizedBox(height: 10),
+                          //진행중,완료,출시 표시 부분
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -300,31 +300,38 @@ class DetailBoardScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  '-  App Image  -',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ).tr(),
+                boards.appImagesUrl.isNotEmpty
+                    ? const Text(
+                        '-  App Image  -',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ).tr()
+                    : Container(),
               ],
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                height: 300,
-                width: 150,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: boards.appImagesUrl.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network(boards.appImagesUrl[index],
-                          width: 150, height: 300, fit: BoxFit.fill),
-                    );
-                  },
-                ),
-              ),
-            ),
+            boards.appImagesUrl.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SizedBox(
+                      height: 300,
+                      width: 150,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: boards.appImagesUrl.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.network(
+                                boards.appImagesUrl[index],
+                                width: 150,
+                                height: 300,
+                                fit: BoxFit.fill,
+                              ));
+                        },
+                      ),
+                    ),
+                  )
+                : Container(),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
