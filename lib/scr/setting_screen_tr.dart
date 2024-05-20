@@ -260,7 +260,7 @@ class SettingScreen extends StatelessWidget {
                     child: Text(
                       "Earn points by watching \nadvertisements",
                       style: TextStyle(
-                        color: colors.textColor,
+                        color: Colors.yellow,
                         fontSize: _fontSizeCollection.settingFontSize,
                       ),
                     ).tr(),
