@@ -179,7 +179,7 @@
     "P r i o r i t y" : "P r i o r i t y",
     "Update Todo" : "Update Todo",
     "The person who reported the bug" : "The person who reported the bug",
-    "Report has been filed" : "Report has been filed",
+    "Bug Report" : "A bug has been reported to {}",
     "Please report the bug" : "Please report the bug",
     "Unapproval" : "Unapproval",
     "Send Registration Message to Tester Applicants" : "Send Registration Message to Tester Applicants",
@@ -193,5 +193,8 @@
     "Please select at least one language" : "Please select at least one language",
     "Please wait a moment!!" : "Please wait a moment!!",
     "An advertisement will be shown soon." : "An advertisement will be shown soon.",
-    "You have already joined this project" : "You have already joined this project"
+    "You have already joined this project" : "You have already joined this project",
+    "When should I use my real AdMob ID?" : "When should I use my real AdMob ID?",
+    "AdMob ID" : "You should use your real AdMob ID when you are ready to publish your app to the App Store or Google Play. \nUsing a test AdMob ID during development is perfectly fine, but you must replace it with your real ID before submitting your app for review.",
+    "Please note that the number of testers cannot be changed later, so please be careful." : "Please note that the number of testers cannot be changed later, so please be careful."
 }

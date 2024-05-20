@@ -356,18 +356,19 @@ class DetailBoardScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    height: 50,
+                    // height: 60,
                     width: 280,
                     child: TextField(
                       style: const TextStyle(
-                        color: Colors.white, // 입력된 글자의 색상을 파란색으로 지정
-                      ),
+                          color: Colors.white,
+                          fontSize: 14 // 입력된 글자의 색상을 파란색으로 지정
+                          ),
                       decoration: InputDecoration(
                         hintText: tr('Please report the bug'), // 입력창에 힌트 텍스트 표시
                         labelText: tr('Please report the bug'), // 입력창 옆에 라벨 표시
-
                         border: const OutlineInputBorder(), // 입력창에 테두리 추가
                       ),
+                      maxLines: null, // null 또는 기본값으로 설정하면 여러 줄을 입력할 수 있습니다.
                       onChanged: (text) {
                         // 입력값이 변경될 때마다 호출되는 콜백 함수
                         print('Entered text: $text');
@@ -378,7 +379,8 @@ class DetailBoardScreen extends StatelessWidget {
                   ),
                   IconButton(
                       onPressed: () {
-                        String _m = tr("Report has been filed");
+                        String _developer = boards.developer;
+                        String _m = tr("Bug Report", args: [_developer]);
                         _bugTodoFirebaseController.createBugTodo(
                             boards.createUid,
                             boards.title,

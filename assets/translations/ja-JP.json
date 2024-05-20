@@ -182,7 +182,7 @@
     "P r i o r i t y" : "優     先     度",
     "Update Todo" : "タスクを更新",
     "The person who reported the bug" : "バグを報告された方",
-    "Report has been filed" : "レポートが報告されました",
+    "Bug Report" : "{}さんにバグが報告されました",
     "Please report the bug" : "バグを報告してください",
     "Unapproval" : "未 承 認",
     "Send Registration Message to Tester Applicants" : "テスター申請者に登録メッセージを送る",
@@ -196,5 +196,8 @@
     "Please select at least one language" : "少なくとも1つの言語を選択してください",
     "Please wait a moment!!" : "ちょっと待ってください！",
     "An advertisement will be shown soon." : "すぐに広告が表示されます。",
-    "You have already joined this project" : "あなたはすでにこのプロジェクトに参加しています"
+    "You have already joined this project" : "あなたはすでにこのプロジェクトに参加しています",
+    "When should I use my real AdMob ID?" : "いつ実際の AdMob ID を使用する必要がありますか？",
+    "AdMob ID" : "アプリを App Store または Google Play に公開する準備ができたとき に、実際の AdMob ID を使用する必要があります。\n開発中はテスト AdMob ID を使用しても問題ありませんが、アプリを審査に出す前に実際の ID に置き換える必要があります。",
+    "Please note that the number of testers cannot be changed later, so please be careful." : "テスターの人数は後から変更できないので、ご注意ください。"
     }

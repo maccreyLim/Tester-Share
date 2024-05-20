@@ -246,10 +246,23 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               ExpansionTile(
-                title: Text("Supported Languages",
-                        style: TextStyle(color: colors.textColor))
-                    .tr(),
+                title: Row(
+                  children: [
+                    Text("Supported Languages",
+                            style: TextStyle(color: colors.textColor))
+                        .tr(),
+                    const SizedBox(width: 20),
+                    selectedLanguages.isEmpty
+                        ? const Text(
+                            "Please select at least one language",
+                            style:
+                                TextStyle(color: Colors.yellow, fontSize: 10),
+                          ).tr()
+                        : Container(),
+                  ],
+                ),
                 children: [
                   Column(
                     children: availableLanguages.map((language) {
@@ -268,31 +281,32 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                           });
                         },
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                            horizontal: 30, vertical: 0),
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   // 선택된 언어가 없으면 에러 메시지를 표시합니다.
                 ],
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  selectedLanguages.isEmpty
-                      ? const Text(
-                          "Please select at least one language",
-                          style: TextStyle(color: Colors.red),
-                        ).tr()
-                      : Text(
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 18, 0),
+                    child: Column(
+                      children: [
+                        Text(
                           selectedLanguages
                               .map((language) => tr(language))
-                              .join(', '),
+                              .join('  ,  '),
                           style: const TextStyle(color: Colors.blue),
                         ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 6),
               TextFormField(
                 controller: introductionTextController,
                 maxLines: 3,
@@ -366,8 +380,11 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                     const SizedBox(width: 30),
                     SizedBox(
                       width: 300,
-                      height: 30,
+                      height: 26,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green, // 버튼의 배경색
+                        ),
                         onPressed: () {
                           //안내문
                           _showLoadingDialog();
@@ -375,14 +392,27 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                             showRewardAd();
                           });
                         },
-                        child:
-                            const Text("Earn points by watching advertisements")
-                                .tr(),
+                        child: Column(
+                          children: [
+                            const Text(
+                              "Earn points by watching advertisements",
+                              style: TextStyle(color: Colors.white),
+                            ).tr(),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                child: const Text(
+                  "Please note that the number of testers cannot be changed later, so please be careful.",
+                  style: TextStyle(color: Colors.yellow),
+                ).tr(),
+              ),
+              SizedBox(height: 20),
               TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: githubUrlController,

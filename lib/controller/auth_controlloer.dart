@@ -62,6 +62,8 @@ class AuthController extends GetxController {
             Map<String, dynamic>? userData = await _getUserData(user.uid);
             if (userData != null) {
               _userData.value = userData;
+              // _user 값 직접 업데이트
+              _user.value = user;
               update();
             } else {
               print("사용자 정보가 없습니다.");

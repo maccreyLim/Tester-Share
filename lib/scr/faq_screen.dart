@@ -48,6 +48,10 @@ class FAQScreen extends StatelessWidget {
           tr("Could you explain the deployment process on Tester Share?"),
       'answer': tr("deployment process")
     },
+    {
+      'question': tr("When should I use my real AdMob ID?"),
+      'answer': tr("AdMob ID")
+    },
 
     // 다른 질문과 답변들을 여기에 추가할 수 있습니다.
   ];

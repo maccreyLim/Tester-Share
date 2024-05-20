@@ -181,7 +181,7 @@
   "P r i o r i t y" : "우  선   순   위",
   "Update Todo" : "수    정",
   "The person who reported the bug" : "리포팅 하신 분",
-  "Report has been filed" : "리포트가 보고되었습니다",
+  "Bug Report" : "{}님에게 버그가 리포팅되었습니다",
   "Please report the bug" : "버그를 리포트해주세요",
   "Unapproval" : "미 승 인",
   "Send Registration Message to Tester Applicants" : "테스터신청자에게 등록메시지 보내기",
@@ -195,6 +195,9 @@
   "Please select at least one language" : "적어도 한 가지 언어를 선택해주세요",
   "Please wait a moment!!" : "잠시만 기다려 주세요!!",
   "An advertisement will be shown soon." : "곧 광고가 나옵니다.",
-  "You have already joined this project" : "이미 참여한 프로젝트입니다"
+  "You have already joined this project" : "이미 참여한 프로젝트입니다",
+  "When should I use my real AdMob ID?" : "언제 실제 AdMob ID를 사용해야 합니까?",
+  "AdMob ID" : "앱을 App Store나 Google Play에 출시할 준비가 되었을 때 실제 AdMob ID를 사용해야 합니다. \n개발 중에는 테스트 AdMob ID를 사용해도 문제 없지만, 앱을 제출하기 전에 실제 ID로 교체해야 합니다.",
+  "Please note that the number of testers cannot be changed later, so please be careful." : "테스터 인원은 나중에 변경이 불가능하므로 신중하세요."
   }
   
