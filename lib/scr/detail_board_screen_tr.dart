@@ -418,60 +418,65 @@ class DetailBoardScreen extends StatelessWidget {
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: boards.isDeploy == true
-                  ? ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.yellow),
-                      ),
-                      onPressed: () => Get.back(),
-                      child: Text(
-                        'Release completed',
-                        style: TextStyle(fontSize: 16, color: colors.iconColor),
-                      ).tr(),
-                    )
-                  : !boards.rquestProfileName
-                          .contains(_authController.userData!['profileName'])
+              child: boards.testerRequest - boards.testerParticipation <= 0
+                  ? Container()
+                  : boards.isDeploy == true
                       ? ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
+                                MaterialStateProperty.all<Color>(Colors.yellow),
                           ),
-                          onPressed: () {
-                            String testApplyMessage =
-                                "아래의 메일 주소로 테스터를 신청합니다.\n 프로젝트 관리자분은 구글콘솔에서 테스터 등록후 '등록되었습니다.'라고 신청하신 유저에게 답장을 주세요!! \n\nI am applying as a tester to the email address below. \nProject administrators, please reply to the user who applied with 'You have been registered.' after registering as a tester in the Google Console!!\n\n以下のメールアドレスにテスターとして申し込みます。\nプロジェクト管理者は、Googleコンソールでテスターに登録した後、'登録されました'と申請したユーザーに返信してください！!\n\n";
-                            // 테스터 신청 이메일 메시지를 구성합니다.
-                            String emailMessage =
-                                "$testApplyMessage\n${_authController.userData!['email']}";
-                            //테스터 신청
-                            Get.to(DeveloperMessageCreateScreen(
-                              receiverUid: boards.createUid,
-                              developer: boards.developer,
-                              message: emailMessage,
-                              boards: boards,
-                              func: true,
-                            ));
-                          },
+                          onPressed: () => Get.back(),
                           child: Text(
-                            'Apply to be a Tester',
+                            'Release completed',
                             style: TextStyle(
                                 fontSize: 16, color: colors.iconColor),
                           ).tr(),
                         )
-                      : ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.grey),
-                          ),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          child: Text(
-                            "Already participated as a tester",
-                            style: TextStyle(
-                                fontSize: 16, color: colors.iconColor),
-                          ).tr(),
-                        ),
+                      : !boards.rquestProfileName.contains(
+                              _authController.userData!['profileName'])
+                          ? ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                              ),
+                              onPressed: () {
+                                String testApplyMessage =
+                                    "아래의 메일 주소로 테스터를 신청합니다.\n 프로젝트 관리자분은 구글콘솔에서 테스터 등록후 '등록되었습니다.'라고 신청하신 유저에게 답장을 주세요!! \n\nI am applying as a tester to the email address below. \nProject administrators, please reply to the user who applied with 'You have been registered.' after registering as a tester in the Google Console!!\n\n以下のメールアドレスにテスターとして申し込みます。\nプロジェクト管理者は、Googleコンソールでテスターに登録した後、'登録されました'と申請したユーザーに返信してください！!\n\n";
+                                // 테스터 신청 이메일 메시지를 구성합니다.
+                                String emailMessage =
+                                    "$testApplyMessage\n${_authController.userData!['email']}";
+                                //테스터 신청
+                                Get.to(DeveloperMessageCreateScreen(
+                                  receiverUid: boards.createUid,
+                                  developer: boards.developer,
+                                  message: emailMessage,
+                                  boards: boards,
+                                  func: true,
+                                ));
+                              },
+                              child: Text(
+                                'Apply to be a Tester',
+                                style: TextStyle(
+                                    fontSize: 16, color: colors.iconColor),
+                              ).tr(),
+                            )
+                          : ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.grey),
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text(
+                                "Already participated as a tester",
+                                style: TextStyle(
+                                    fontSize: 16, color: colors.iconColor),
+                              ).tr(),
+                            ),
             ),
           ],
         ),

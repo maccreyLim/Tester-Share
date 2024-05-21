@@ -196,5 +196,7 @@
     "You have already joined this project" : "You have already joined this project",
     "When should I use my real AdMob ID?" : "When should I use my real AdMob ID?",
     "AdMob ID" : "You should use your real AdMob ID when you are ready to publish your app to the App Store or Google Play. \nUsing a test AdMob ID during development is perfectly fine, but you must replace it with your real ID before submitting your app for review.",
-    "Please note that the number of testers cannot be changed later, so please be careful." : "Please note that the number of testers cannot be changed later, so please be careful."
+    "Please note that the number of testers cannot be changed later, so please be careful." : "Please note that the number of testers cannot be changed later, so please be careful.",
+    "My app is displayed as a beta test on the Play Store" : "My app is displayed as a beta test on the Play Store",
+    "Beta test response" :"This method updates the test app to remove beta features and release it as a production version.\nThis will automatically update the test app on the user's device to the production app.\n\nOption 1: Update the test app to the production version and release it to the production track. This will automatically replace the test app on users' devices with the production app.\n\nOption 2: Release the production app to the production track. This will make the production app available for users to download and install. Once users install the production app, the test app will be automatically uninstalled."
 }

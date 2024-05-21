@@ -198,6 +198,8 @@
   "You have already joined this project" : "이미 참여한 프로젝트입니다",
   "When should I use my real AdMob ID?" : "언제 실제 AdMob ID를 사용해야 합니까?",
   "AdMob ID" : "앱을 App Store나 Google Play에 출시할 준비가 되었을 때 실제 AdMob ID를 사용해야 합니다. \n개발 중에는 테스트 AdMob ID를 사용해도 문제 없지만, 앱을 제출하기 전에 실제 ID로 교체해야 합니다.",
-  "Please note that the number of testers cannot be changed later, so please be careful." : "테스터 인원은 나중에 변경이 불가능하므로 신중하세요."
+  "Please note that the number of testers cannot be changed later, so please be careful." : "테스터 인원은 나중에 변경이 불가능하므로 신중하세요.",
+  "My app is displayed as a beta test on the Play Store" : "플레이스토어에서 내 앱이 베타테스트로 표시됩니다",
+  "Beta test response" : "테스트 앱을 업데이트하여 베타 버전 기능을 삭제하고, 정식 버전으로 출시합니다.\n이렇게 하면 사용자 디바이스의 테스트 앱이 자동으로 정식 앱으로 업데이트됩니다.\n\n옵션 1: 테스트 앱을 정식 버전으로 업데이트하고, 이를 정식 트랙에 출시합니다. 이렇게 하면 사용자의 디바이스에 있는 테스트 앱이 자동으로 정식 앱으로 대체됩니다.\n\n옵션 2: 정식 앱을 정식 트랙에 출시합니다. 이렇게 하면 사용자가 정식 앱을 다운로드하고 설치할 수 있게 됩니다. 사용자가 정식 앱을 설치하면, 테스트 앱은 자동으로 삭제됩니다."
   }
   

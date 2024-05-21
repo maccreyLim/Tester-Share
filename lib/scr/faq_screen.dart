@@ -52,6 +52,10 @@ class FAQScreen extends StatelessWidget {
       'question': tr("When should I use my real AdMob ID?"),
       'answer': tr("AdMob ID")
     },
+    {
+      'question': tr("My app is displayed as a beta test on the Play Store"),
+      'answer': tr("Beta test response")
+    },
 
     // 다른 질문과 답변들을 여기에 추가할 수 있습니다.
   ];
