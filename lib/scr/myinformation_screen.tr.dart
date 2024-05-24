@@ -76,7 +76,7 @@ class _MyInformationScreenState extends State<MyInformationScreen> {
             Obx(() => _textForm(
                 'testerParticipation', tr('Number of Tester Participation'))),
             const SizedBox(height: 20),
-            Obx(() => _textForm('point', 'point')),
+            Obx(() => _textForm('point', tr('Point'))),
             const SizedBox(height: 10),
             Obx(() {
               maxTester = _authController.userData!['point'] ?? 0;
@@ -90,8 +90,15 @@ class _MyInformationScreenState extends State<MyInformationScreen> {
                 onPressed: () {
                   showRewardAd();
                 },
-                child: const Text("Earn points by watching \nadvertisements")
-                    .tr()),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.yellow, // 버튼 텍스트 색상 설정
+                  minimumSize: const Size(200, 30),
+                ),
+                child: const Text(
+                  "Earn points by watching \nadvertisements",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ).tr()),
             Expanded(child: Container()),
             changePasswordButton(),
           ],

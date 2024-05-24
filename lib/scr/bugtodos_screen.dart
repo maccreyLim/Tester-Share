@@ -6,6 +6,7 @@ import 'package:tester_share_app/controller/bugtodo_firebase_controller.dart';
 import 'package:tester_share_app/model/bugtodo_firebase_model.dart';
 import 'package:tester_share_app/scr/bugtodo_reply_message_Screen.dart';
 import 'package:tester_share_app/scr/create_bugtodos_screen.dart';
+import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/update_bugtodos_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
@@ -44,7 +45,8 @@ class _BugTodosScreenState extends State<BugTodosScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.back();
+              // Get.back();
+              Get.offAll(() => const HomeScreen());
             },
             icon: Icon(
               Icons.close,

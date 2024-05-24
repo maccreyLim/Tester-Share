@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/door_screen_tr.dart';
+import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.tr.dart';
 import 'package:tester_share_app/scr/notice_screen_tr.dart';
@@ -38,7 +39,8 @@ class SettingScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Get.back();
+                // Get.back();
+                Get.offAll(() => const HomeScreen());
               },
               icon: Icon(
                 Icons.close,
@@ -58,67 +60,67 @@ class SettingScreen extends StatelessWidget {
                   fontSize: _fontSizeCollection.subjectFontSize,
                 ),
               ).tr(),
-              SizedBox(height: 30),
-              Row(
-                children: [
-                  Icon(
-                    Icons.question_mark,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(DoorScreen());
-                      },
-                      child: Text(
-                        "Tester Share is?",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      ).tr()),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.question_answer,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(() => FAQScreen());
-                      },
-                      child: Text(
-                        "FAQ",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      ).tr()),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.announcement,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(() => NoticeScreen());
-                      },
-                      child: Text(
-                        "Notice",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      ).tr()),
-                ],
-              ),
+              const SizedBox(height: 30),
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.question_mark,
+              //       color: colors.iconColor,
+              //     ),
+              //     const SizedBox(width: 10),
+              //     TextButton(
+              //         onPressed: () {
+              //           Get.to(DoorScreen());
+              //         },
+              //         child: Text(
+              //           "Tester Share is?",
+              //           style: TextStyle(
+              //               color: colors.textColor,
+              //               fontSize: _fontSizeCollection.settingFontSize),
+              //         ).tr()),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.question_answer,
+              //       color: colors.iconColor,
+              //     ),
+              //     const SizedBox(width: 10),
+              //     TextButton(
+              //         onPressed: () {
+              //           Get.to(() => FAQScreen());
+              //         },
+              //         child: Text(
+              //           "FAQ",
+              //           style: TextStyle(
+              //               color: colors.textColor,
+              //               fontSize: _fontSizeCollection.settingFontSize),
+              //         ).tr()),
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.announcement,
+              //       color: colors.iconColor,
+              //     ),
+              //     const SizedBox(width: 10),
+              //     TextButton(
+              //         onPressed: () {
+              //           Get.to(() => NoticeScreen());
+              //         },
+              //         child: Text(
+              //           "Notice",
+              //           style: TextStyle(
+              //               color: colors.textColor,
+              //               fontSize: _fontSizeCollection.settingFontSize),
+              //         ).tr()),
+              //   ],
+              // ),
               Row(
                 children: [
                   Icon(
@@ -180,7 +182,7 @@ class SettingScreen extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.mail,
+                    Icons.handshake,
                     color: colors.iconColor,
                   ),
                   const SizedBox(width: 10),

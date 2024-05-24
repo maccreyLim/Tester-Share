@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/board_firebase_controller.dart';
 import 'package:tester_share_app/controller/message_firebase_controller.dart';
@@ -11,13 +14,20 @@ import 'package:tester_share_app/scr/bugtodos_screen.dart';
 import 'package:tester_share_app/scr/create_board_screen_tr.dart';
 import 'package:tester_share_app/scr/detail_board_screen_tr.dart';
 import 'package:tester_share_app/scr/developer_message_create_screen_tr.dart';
+import 'package:tester_share_app/scr/door_screen_tr.dart';
+import 'package:tester_share_app/scr/faq_screen.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
+import 'package:tester_share_app/scr/notice_screen_tr.dart';
+import 'package:tester_share_app/scr/post_screen.dart';
 import 'package:tester_share_app/scr/send_registration_message.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
+import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
+import 'package:tester_share_app/widget/w.RewardAdManager.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:icon_badge/icon_badge.dart';
 import 'package:tester_share_app/widget/w.fcm.dart';
+import 'package:tester_share_app/widget/w.font_size_collection.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
 import 'package:tester_share_app/widget/w.request_permission.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -30,6 +40,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final InAppReview inAppReview = InAppReview.instance;
+  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
   final BoardFirebaseController _board = BoardFirebaseController();
   final AuthController _authController = AuthController.instance;
@@ -37,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
       MassageFirebaseController();
   var messageString = "";
   int previousCount = 0;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -75,23 +89,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // ScaffoldKey를 설정합니다.
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.grey), // 원하는 색상으로 변경
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer(); // 햄버거 메뉴를 누르면 드로어가 열리도록 설정
+          },
+        ),
         title: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            // "메시지 내용: $messageString",
-            "${_authController.userData?['profileName']}",
-            style: TextStyle(color: colors.textColor, fontSize: 16),
+            "Tester Share",
+            style: TextStyle(color: colors.textColor, fontSize: 14),
           ),
         ),
-        automaticallyImplyLeading: false,
         backgroundColor: colors.background,
         actions: [
           Obx(() => IconBadge(
                 icon: const Icon(Icons.notifications, color: Colors.lightBlue),
-                itemCount:
-                    _authController.messageCount.value, // itemCount를 변수로 설정
-
+                itemCount: _authController.messageCount.value,
                 badgeColor: Colors.redAccent,
                 itemColor: Colors.white,
                 maxCount: 99,
@@ -124,6 +141,220 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
               )),
         ],
+      ),
+      drawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 35, 35, 35),
+                borderRadius: BorderRadius.only(
+                    // bottomLeft: Radius.circular(20), // 좌하단 코너를 둥글게 만듭니다.
+                    bottomRight: Radius.circular(40), // 우하단 코너를 둥글게 만듭니다.
+                    // topLeft: Radius.circular(20),
+                    topRight: Radius.circular(40)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${_authController.userData?['profileName']}",
+                    style: TextStyle(color: colors.textColor, fontSize: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Number of App Launch Experiences',
+                            style: TextStyle(
+                                color: colors.textColor, fontSize: 12),
+                          ).tr(),
+                          Text(
+                            'Number of Tester Requests',
+                            style: TextStyle(
+                                color: colors.textColor, fontSize: 12),
+                          ).tr(),
+                          Text(
+                            'Tester Participation Count',
+                            style: TextStyle(
+                                color: colors.textColor, fontSize: 12),
+                          ).tr(),
+                          Text(
+                            'Point',
+                            style: TextStyle(
+                                color: colors.textColor, fontSize: 12),
+                          ).tr(),
+                        ],
+                      ),
+                      const SizedBox(width: 40),
+                      Obx(() => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _authController.userData!['deployed']
+                                    .toString(),
+                                style: TextStyle(
+                                    color: colors.textColor, fontSize: 12),
+                              ),
+                              Text(
+                                _authController.userData!['testerRequest']
+                                    .toString(),
+                                style: TextStyle(
+                                    color: colors.textColor, fontSize: 12),
+                              ),
+                              Text(
+                                _authController.userData!['testerParticipation']
+                                    .toString(),
+                                style: TextStyle(
+                                    color: colors.textColor, fontSize: 12),
+                              ),
+                              Text(
+                                _authController.userData!['point'].toString(),
+                                style: TextStyle(
+                                    color: colors.importantMessage,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          )),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.question_mark,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Tester Share is?",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                Get.to(DoorScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.announcement,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Notice",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                Get.to(() => NoticeScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.bug_report,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Bug Report Todo",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                Get.to(() => const BugTodosScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.question_answer,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "FAQ",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                Get.to(() => FAQScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.library_books,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Terms and Privacy",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                Get.to(() => const TermsAndPrivacyScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.handshake,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Inquiries and Partnerships",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () {
+                _sendEmail();
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.reviews,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Leave a review on Google Play Store",
+                style: TextStyle(
+                    color: colors.textColor,
+                    fontSize: _fontSizeCollection.settingFontSize),
+              ).tr(),
+              onTap: () async {
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.openStoreListing();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.tv,
+                color: colors.iconColor,
+              ),
+              title: Text(
+                "Earn points by watching \nadvertisements",
+                style: TextStyle(
+                  color: Colors.yellow,
+                  fontSize: _fontSizeCollection.settingFontSize,
+                ),
+              ).tr(),
+              onTap: () {
+                //안내문
+                _showLoadingDialog();
+                // 리워드광고
+                showRewardAd();
+              },
+            ),
+          ],
+        ),
       ),
       backgroundColor: colors.background,
       body: Padding(
@@ -196,11 +427,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  cardText(boards[index].title, 20),
+                                  cardText(boards[index].title, 18),
                                   const SizedBox(width: 10),
                                   cardText(
                                       '[${boards[index].testerParticipation}/${boards[index].testerRequest}]',
-                                      20),
+                                      16),
                                 ],
                               ),
                               Expanded(
@@ -282,13 +513,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       "Creation date",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           color: colors.textColor),
                                     ).tr(),
                                     Text(
                                       ': ${_formattedDate(boards[index].createAt)}',
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           color: colors.textColor),
                                     ),
                                   ],
@@ -300,13 +531,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         "Modification date",
                                         style: TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             color: colors.textColor),
                                       ).tr(),
                                       Text(
                                         ': ${_formattedDate(boards[index].updateAt!)}',
                                         style: TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             color: colors.textColor),
                                       ),
                                     ],
@@ -321,7 +552,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               maxLines: 1,
                               style: TextStyle(
                                   color: colors.textColor,
-                                  fontSize: 20)), // 표시할 최대 라인 수),
+                                  fontSize: 16)), // 표시할 최대 라인 수),
                           const SizedBox(height: 10),
                           //진행중,완료,출시 표시 부분
                           Row(
@@ -533,5 +764,78 @@ class _HomeScreenState extends State<HomeScreen> {
         style: TextStyle(color: Colors.purple[300]),
       ).tr(args: [buttontext]),
     );
+  }
+
+  void _sendEmail() async {
+    var _body = tr(
+        "Please provide the following information for assistance.\nID:\nOS Version:\nDevice Modle:\nPlease write ypur inquiry below.\n");
+    var _subject = tr('Inquiry and Partnership Inquiry Regarding Tester Share');
+    final Email email = Email(
+        body: _body,
+        subject: _subject,
+        recipients: ['maccrey@naver.com'],
+        cc: ['m01071630214@gmail.com'],
+        isHTML: false);
+
+    try {
+      await FlutterEmailSender.send(email);
+    } catch (e) {
+      String title = tr(
+          "Since I cannot use the default mail app,\nit is difficult to send inquiries directly through the app.\n\nPlease use your preferred email\nand send inquiries to maccrey@naver.com. Thank you.");
+      ;
+      Get.defaultDialog(
+        title: tr("Guidance"),
+        content: Text(title),
+        textConfirm: tr("Confirmation"),
+        confirmTextColor: Colors.white54,
+        onConfirm: Get.back,
+      );
+    }
+  }
+
+  void _showLoadingDialog() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.black, // 배경색을 회색으로 변경
+        title: Text("Please wait a moment!!",
+                style: TextStyle(color: colors.iconColor))
+            .tr(),
+        content: Text("An advertisement will be shown soon.",
+                style: TextStyle(color: colors.iconColor))
+            .tr(),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("확인"),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+    // 3초 후에 다이얼로그를 닫습니다.
+    // 3초 후에 다이얼로그를 닫습니다.
+    Timer(Duration(seconds: 3), () {
+      Get.back();
+    });
+  }
+
+  void showRewardAd() {
+    final RewardAdManager _rewardAd = RewardAdManager();
+    _rewardAd.showRewardFullBanner(() {
+      String _uid = _authController.userData!['uid'];
+      int value = ++_authController.userData!['point']; // 전위 증가 연산자 사용
+
+      // 업데이트할 데이터
+      Map<String, dynamic> _userNewData = {
+        "point": value,
+        // 필요한 경우 다른 필드도 추가할 수 있습니다.
+      };
+      // 사용자 데이터 업데이트
+      _authController.updateUserData(_uid, _userNewData);
+      // 광고를 보고 사용자가 리워드를 얻었을 때 실행할 로직
+      // 예: 기부하기 또는 다른 작업 수행
+    });
   }
 }

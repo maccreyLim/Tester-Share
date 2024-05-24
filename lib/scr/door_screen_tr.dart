@@ -19,7 +19,7 @@ class DoorScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.off(() => HomeScreen());
+              Get.back();
             },
             icon: Icon(
               Icons.close,

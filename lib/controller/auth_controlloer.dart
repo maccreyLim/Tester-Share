@@ -40,8 +40,12 @@ class AuthController extends GetxController {
 
     // 사용자 데이터에 대한 Firestore 스트림 구독
     _user.stream.listen((user) {
-      if (user != null && user.emailVerified) {
-        _updateUserData(user);
+      if (user != null) {
+        if (user.emailVerified) {
+          _updateUserData(user);
+        } else {
+          Get.off(() => const WellcomeJoinMessageScreen());
+        }
       } else {
         Get.off(() => const LoginScreen());
       }

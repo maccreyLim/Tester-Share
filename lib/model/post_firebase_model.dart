@@ -24,18 +24,18 @@ class PostFirebaseModel {
   });
 
   // Firebase에서 데이터를 가져올 때 사용할 생성자
-  PostFirebaseModel.fromMap(Map<String, Object?> map)
+  PostFirebaseModel.fromMap(Map<String, dynamic> map)
       : id = map['id'] as String? ?? '',
         userId = map['userId'] as String? ?? '',
         title = map['title'] as String? ?? '',
         content = map['content'] as String? ?? '',
         images = (map['images'] as List<Object?>?)?.cast<String>(),
         code = map['code'] as String?,
-        createdAt = (map['createdAt'] as Timestamp).toDate(),
+        createdAt = (map['createdAt'] as Timestamp).toDate(), // 변경 필요
         updatedAt = (map['updatedAt'] as Timestamp?)?.toDate(),
         comments = (map['comments'] as List<Object?>?)
                 ?.map((comment) =>
-                    Comment.fromMap(comment as Map<String, Object?>))
+                    Comment.fromMap(comment as Map<String, dynamic>))
                 .toList() ??
             [];
 

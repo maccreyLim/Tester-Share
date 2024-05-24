@@ -251,50 +251,50 @@ class DetailBoardScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Column(
               children: [
-                const Text(
-                  '-  Github URL  -',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ).tr(),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    color: colors.boxColor,
-                    child: TextButton(
-                      onPressed: boards.githubUrl != null
-                          ? () {
-                              try {
-                                final inputUrl = boards.githubUrl!;
+                if (boards.githubUrl != null &&
+                    boards.githubUrl!.isNotEmpty) ...[
+                  const Text(
+                    '-  Github URL  -',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ).tr(),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      color: colors.boxColor,
+                      child: TextButton(
+                        onPressed: () {
+                          try {
+                            final inputUrl = boards.githubUrl!;
 
-                                // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
-                                final hasProtocol =
-                                    inputUrl.startsWith('http://') ||
-                                        inputUrl.startsWith('https://');
+                            // 입력된 URL이 이미 'http://' 또는 'https://'로 시작하는지 확인
+                            final hasProtocol =
+                                inputUrl.startsWith('http://') ||
+                                    inputUrl.startsWith('https://');
 
-                                // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
-                                final urlWithProtocol = hasProtocol
-                                    ? inputUrl
-                                    : 'https://$inputUrl';
+                            // 프로토콜이 없는 경우 'https://'를 추가하여 안전하게 URL 생성
+                            final urlWithProtocol =
+                                hasProtocol ? inputUrl : 'https://$inputUrl';
 
-                                // URL을 Uri 객체로 변환
-                                final url = Uri.parse(urlWithProtocol);
+                            // URL을 Uri 객체로 변환
+                            final url = Uri.parse(urlWithProtocol);
 
-                                // 생성된 Uri를 사용하여 브라우저 열기
-                                launchUrl(url);
-                              } catch (e) {
-                                // URL이 유효하지 않거나 열 수 없는 경우 처리
-                                print('URL 열기 오류: $e');
-                              }
-                            }
-                          : null,
-                      style: TextButton.styleFrom(
-                        backgroundColor: colors.boxColor,
-                        elevation: 8,
+                            // 생성된 Uri를 사용하여 브라우저 열기
+                            launchUrl(url);
+                          } catch (e) {
+                            // URL이 유효하지 않거나 열 수 없는 경우 처리
+                            print('URL 열기 오류: $e');
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: colors.boxColor,
+                          elevation: 8,
+                        ),
+                        child: cardText(boards.githubUrl ?? '', 20),
                       ),
-                      child: cardText(boards.githubUrl ?? '', 20),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40),
+                  const SizedBox(height: 40),
+                ],
               ],
             ),
             Row(
