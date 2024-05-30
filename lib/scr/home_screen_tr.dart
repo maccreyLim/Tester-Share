@@ -1,7 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -18,7 +18,6 @@ import 'package:tester_share_app/scr/door_screen_tr.dart';
 import 'package:tester_share_app/scr/faq_screen.dart';
 import 'package:tester_share_app/scr/message_state_screen_tr.dart';
 import 'package:tester_share_app/scr/notice_screen_tr.dart';
-import 'package:tester_share_app/scr/post_screen.dart';
 import 'package:tester_share_app/scr/send_registration_message.dart';
 import 'package:tester_share_app/scr/setting_screen_tr.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
@@ -96,13 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             _scaffoldKey.currentState?.openDrawer(); // 햄버거 메뉴를 누르면 드로어가 열리도록 설정
           },
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(
-            "Tester Share",
-            style: TextStyle(color: colors.textColor, fontSize: 14),
-          ),
         ),
         backgroundColor: colors.background,
         actions: [

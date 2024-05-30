@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
-import 'package:tester_share_app/scr/door_screen_tr.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.tr.dart';
-import 'package:tester_share_app/scr/notice_screen_tr.dart';
-import 'package:tester_share_app/scr/faq_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.RewardAdManager.dart';
@@ -70,51 +67,10 @@ class SettingScreen extends StatelessWidget {
               //     const SizedBox(width: 10),
               //     TextButton(
               //         onPressed: () {
-              //           Get.to(DoorScreen());
+              //           Get.to(ReWellcomeMessageScreen());
               //         },
               //         child: Text(
-              //           "Tester Share is?",
-              //           style: TextStyle(
-              //               color: colors.textColor,
-              //               fontSize: _fontSizeCollection.settingFontSize),
-              //         ).tr()),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Icon(
-              //       Icons.question_answer,
-              //       color: colors.iconColor,
-              //     ),
-              //     const SizedBox(width: 10),
-              //     TextButton(
-              //         onPressed: () {
-              //           Get.to(() => FAQScreen());
-              //         },
-              //         child: Text(
-              //           "FAQ",
-              //           style: TextStyle(
-              //               color: colors.textColor,
-              //               fontSize: _fontSizeCollection.settingFontSize),
-              //         ).tr()),
-              //   ],
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // Row(
-              //   children: [
-              //     Icon(
-              //       Icons.announcement,
-              //       color: colors.iconColor,
-              //     ),
-              //     const SizedBox(width: 10),
-              //     TextButton(
-              //         onPressed: () {
-              //           Get.to(() => NoticeScreen());
-              //         },
-              //         child: Text(
-              //           "Notice",
+              //           "테스트",
               //           style: TextStyle(
               //               color: colors.textColor,
               //               fontSize: _fontSizeCollection.settingFontSize),

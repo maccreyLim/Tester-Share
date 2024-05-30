@@ -51,6 +51,18 @@ class LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  ClipOval(
+                    child: Image.asset(
+                      "assets/images/TesterShare_Logo.png",
+                      width: 120.0, // 원하는 너비로 설정
+                      height: 120.0, // 원하는 높이로 설정
+                      fit: BoxFit.cover, // 이미지가 컨테이너를 채우도록 설정
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const SizedBox(height: 50),
                   EmailInput(controller: _emailController, colors: colors),
                   const SizedBox(height: 20),
                   PasswordInput(
@@ -74,7 +86,7 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 220),
+                  const SizedBox(height: 100),
                   LogInButton(
                     onPressed: () async {
                       // 로그아웃 및 로그인 페이지로 이동

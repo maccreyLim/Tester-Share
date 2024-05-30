@@ -8,7 +8,6 @@ import 'package:tester_share_app/scr/create_post_screen.dart';
 import 'package:tester_share_app/scr/detail_post_screen.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
-import 'package:tester_share_app/widget/w.font_size_collection.dart';
 // UpdatePostScreen 임포트
 
 class PostScreen extends StatefulWidget {
@@ -21,7 +20,6 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   final PostFirebaseController _postController = PostFirebaseController();
   final ColorsCollection colors = ColorsCollection();
-  final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final AuthController authController = AuthController.instance;
 
   @override

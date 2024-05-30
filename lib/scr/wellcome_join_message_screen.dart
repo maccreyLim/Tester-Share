@@ -68,7 +68,7 @@ class WellcomeJoinMessageScreen extends StatelessWidget {
               ),
             ).tr(),
             const SizedBox(
-              height: 118,
+              height: 100,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,

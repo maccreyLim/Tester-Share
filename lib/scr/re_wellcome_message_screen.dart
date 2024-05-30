@@ -67,7 +67,7 @@ class ReWellcomeMessageScreen extends StatelessWidget {
                 height: 2,
               ),
             ),
-            const SizedBox(height: 76),
+            const SizedBox(height: 60),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
