@@ -35,7 +35,7 @@
     "GitHub repository URL": "GitHub repository URL",
     "Please enter GitHub repository URL": "Please enter GitHub repository URL",
     "TestApp Address": "TestApp Address",
-    "Web participation link": "Web participation link",
+    "Web participation link": "Please add 'participate in the web' URL",
     "Please enter the download address of the Test App": "Please enter the download address of the Test App",
     "Please register the app image": "Please register the app image",
     "Create Post": "Create Post",
@@ -202,5 +202,7 @@
     "No posts available" : "No posts available",
     "Comments" : "Comments",
     "Bug Report Todo" : "Bug Report Todo",
-    "Point" :
+    "Point" :"Point",
+    "Community" : "Community",
+    "Please register the image" : "Please register the image"
 }

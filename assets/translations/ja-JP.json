@@ -36,7 +36,7 @@
     "GitHub repository URL": "GitHubリポジトリのURL",
     "Please enter GitHub repository URL" : "GitHubリポジトリのURLを入力してください",
     "TestApp Address" : "テストアプリのダウンロードアドレス",
-    "Web participation link" : "Web参加リンク",
+    "Web participation link" : "必ず『ウェブ参加』URLを入れてください",
     "Please enter the download address of the Test App" : "テストアプリのダウンロードアドレスを入力してください",
     "Please register the app image" : "アプリの画像を登録してください",
     "Create Post": "投稿する",
@@ -205,6 +205,8 @@
     "No posts available" : "投稿がありません。",
     "Comments" : "コメント",
     "Bug Report Todo" : "バグレポートのやること",
-    "Point" : "ポイント"
+    "Point" : "ポイント",
+    "Community" : "コミュニティ",
+    "Please register the image" : "イメージを登録してください。"
 
     }

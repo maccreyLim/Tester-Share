@@ -38,7 +38,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final InAppReview inAppReview = InAppReview.instance;
   final FontSizeCollection _fontSizeCollection = FontSizeCollection();
   final ColorsCollection colors = ColorsCollection();
@@ -58,7 +58,22 @@ class _HomeScreenState extends State<HomeScreen> {
     //FCM 초기화
     FcmManager.initialize();
     super.initState();
-    setState(() {});
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      // 앱이 다시 활성화될 때 처리할 작업
+      setState(() {});
+    }
   }
 
   Future<void> _checkPermissions() async {

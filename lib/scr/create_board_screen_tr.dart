@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'dart:io';
 
@@ -60,7 +62,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
   List<String> selectedLanguages = [];
   File? pickedImage; //이미지를 담는 변수
   List<XFile?> pickedImages = []; // 이미지 File을 저장할 리스트
-  int point = 0;
+  int point = 10;
 
   @override
   void initState() {
@@ -412,7 +414,7 @@ class _CreateBoardScreenState extends State<CreateBoardScreen> {
                   style: TextStyle(color: Colors.yellow),
                 ).tr(),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: githubUrlController,

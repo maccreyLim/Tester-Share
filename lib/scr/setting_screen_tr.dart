@@ -8,6 +8,7 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.tr.dart';
+import 'package:tester_share_app/scr/post_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.RewardAdManager.dart';
@@ -58,25 +59,25 @@ class SettingScreen extends StatelessWidget {
                 ),
               ).tr(),
               const SizedBox(height: 30),
-              // Row(
-              //   children: [
-              //     Icon(
-              //       Icons.question_mark,
-              //       color: colors.iconColor,
-              //     ),
-              //     const SizedBox(width: 10),
-              //     TextButton(
-              //         onPressed: () {
-              //           Get.to(ReWellcomeMessageScreen());
-              //         },
-              //         child: Text(
-              //           "테스트",
-              //           style: TextStyle(
-              //               color: colors.textColor,
-              //               fontSize: _fontSizeCollection.settingFontSize),
-              //         ).tr()),
-              //   ],
-              // ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.question_mark,
+                    color: colors.iconColor,
+                  ),
+                  const SizedBox(width: 10),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(PostScreen());
+                      },
+                      child: Text(
+                        "테스트",
+                        style: TextStyle(
+                            color: colors.textColor,
+                            fontSize: _fontSizeCollection.settingFontSize),
+                      ).tr()),
+                ],
+              ),
               Row(
                 children: [
                   Icon(

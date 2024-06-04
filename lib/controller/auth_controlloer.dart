@@ -47,7 +47,10 @@ class AuthController extends GetxController {
           Get.off(() => const WellcomeJoinMessageScreen());
         }
       } else {
-        Get.off(() => const LoginScreen());
+        // 로그아웃 처리할 때 한번 더 확인
+        if (authentication.currentUser == null) {
+          Get.off(() => const LoginScreen());
+        }
       }
     });
   }
@@ -62,13 +65,14 @@ class AuthController extends GetxController {
             .snapshots()
             .listen((snapshot) async {
           if (snapshot.exists) {
-            // 스트림에서 데이터가 변경되었을 때 _getUserData 호출하여 업데이트
             Map<String, dynamic>? userData = await _getUserData(user.uid);
             if (userData != null) {
               _userData.value = userData;
-              // _user 값 직접 업데이트
-              _user.value = user;
-              update();
+              // 기존 사용자 데이터와 비교하여 변경 사항이 있는 경우에만 업데이트
+              if (_user.value != user) {
+                _user.value = user;
+                update();
+              }
             } else {
               print("사용자 정보가 없습니다.");
             }

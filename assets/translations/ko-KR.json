@@ -36,7 +36,7 @@
   "GitHub repository URL": "GitHub 리포지토리 URL",
   "Please enter GitHub repository URL" : "GitHub URL을 입력해 주세요",
   "TestApp Address" : "테스트 앱 다운로드 주소",
-  "Web participation link" : "웹 참여 다운로드 주소",
+  "Web participation link" : "반드시 '웹 참여'URL를 넣어주세요" ,
   "Please enter the download address of the Test App" : "Test App 다운로드 주소를 입력해 주세요",
   "Please register the app image" : "App 이미지를 등록해주세요",
   "Create Post": "게시물 작성",
@@ -204,6 +204,8 @@
   "No posts available" : "게시물이 없습니다.",
   "Comments" : "댓 글",
   "Bug Report Todo" : "버그리포트 할일",
-  "Point" : "포인트"
+  "Point" : "포인트",
+  "Community" : "커뮤니티",
+  "Please register the image" : "이미지를 등록해주세요"
   }
   
