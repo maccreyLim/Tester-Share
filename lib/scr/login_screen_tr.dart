@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/find_password_secreen_tr.dart';
 import 'package:tester_share_app/scr/join_screen_tr.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -114,6 +115,10 @@ class LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+        ),
+        bottomNavigationBar: SizedBox(
+          width: double.infinity,
+          child: BannerAD(),
         ),
       ),
     );

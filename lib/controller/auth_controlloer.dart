@@ -48,7 +48,9 @@ class AuthController extends GetxController {
         }
       } else {
         // 로그아웃 처리할 때 한번 더 확인
+
         if (authentication.currentUser == null) {
+          _updateUserData(user);
           Get.off(() => const LoginScreen());
         }
       }

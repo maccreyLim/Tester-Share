@@ -4,12 +4,14 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/controller/post_firebase_controller.dart';
 import 'package:tester_share_app/controller/post_multi_image_firebase_controller.dart';
 import 'package:tester_share_app/model/post_firebase_model.dart';
+import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 import 'package:tester_share_app/widget/w.font_size_collection.dart';
 
@@ -30,6 +32,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   final PostMultiImageFirebaseController _postMultiImageFirebaseController =
       PostMultiImageFirebaseController();
   final AuthController _authController = AuthController.instance;
+  List<String> appImagesUrl = [];
 
   List<XFile?> pickedImages = []; // 이미지 File을 저장할 리스트
 
@@ -37,6 +40,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     if (_titleController.text.isEmpty || _contentController.text.isEmpty) {
       Get.snackbar('Error', 'Title and content cannot be empty');
       return;
+    }
+
+    if (pickedImages.isNotEmpty) {
+      appImagesUrl = await _postMultiImageFirebaseController
+          .uploadMultiImages(pickedImages);
     }
 
     final newPost = PostFirebaseModel(
@@ -47,6 +55,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       code: _codeController.text,
       createdAt: DateTime.now(),
       comments: [],
+      images: appImagesUrl,
     );
 
     try {
@@ -93,6 +102,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   labelStyle: TextStyle(color: _colors.iconColor),
                   border: const OutlineInputBorder(),
                 ),
+                style: TextStyle(
+                  color: _colors.iconColor, // 입력받은 글씨의 색을 설정
+                ),
               ),
               const SizedBox(height: 16.0),
               TextField(
@@ -103,6 +115,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 8,
+                style: TextStyle(
+                  color: _colors.iconColor, // 입력받은 글씨의 색을 설정
+                ),
               ),
               const SizedBox(height: 16.0),
               TextField(
@@ -113,34 +128,36 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 8,
+                style: TextStyle(
+                  color: _colors.importantMessage, // 입력받은 글씨의 색을 설정
+                ),
               ),
               const SizedBox(height: 20),
+              IconButton(
+                onPressed: () async {
+                  // 이미지 가져오기
+                  List<XFile?>? images = await _postMultiImageFirebaseController
+                      .pickMultiImage(pickedImages);
+                  if (images.isNotEmpty) {
+                    setState(() {
+                      pickedImages = images;
+                    });
+                  }
+                },
+                icon: Icon(
+                  Icons.camera_alt,
+                  size: 60,
+                  color: _colors.textColor,
+                ),
+              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: IconButton(
-                      onPressed: () async {
-                        // 이미지 가져오기
-                        List<XFile?>? images =
-                            await _postMultiImageFirebaseController
-                                .pickMultiImage(pickedImages);
-                        if (images.isNotEmpty) {
-                          setState(() {
-                            pickedImages = images;
-                          });
-                        }
-                      },
-                      icon: Icon(
-                        Icons.camera_alt,
-                        size: 60,
-                        color: _colors.textColor,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 50,
                   ),
-                  const SizedBox(width: 20),
                   pickedImages.isEmpty
                       ? Container()
                       : Flexible(
@@ -167,6 +184,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: BannerAD(),
       ),
     );
   }

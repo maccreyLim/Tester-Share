@@ -72,7 +72,7 @@ class PostMultiImageFirebaseController {
           // Firebase Storage 참조
           Reference ref = FirebaseStorage.instance
               .ref()
-              .child('boards_Images')
+              .child(boardImagesCollection.path)
               .child(
                   '$now _${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
@@ -110,7 +110,7 @@ class PostMultiImageFirebaseController {
             // Firebase Storage 참조
             Reference ref = FirebaseStorage.instance
                 .ref()
-                .child('boards_Images')
+                .child(boardImagesCollection.path)
                 .child(
                     '$now _${DateTime.now().hour}:${DateTime.now().minute}_App_${imageFile.path.split('/').last}');
 
