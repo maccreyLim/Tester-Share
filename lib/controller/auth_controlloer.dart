@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,88 +24,108 @@ class AuthController extends GetxController {
   bool isInput = false; // E-Mail 검증 완료 여부
 
   late Rx<User?> _user;
-  late Rx<Map<String, dynamic>?> _userData;
+  late Rx<Map<String, dynamic>?> _userData = Rx<Map<String, dynamic>?>(null);
 
   User? get currentUser => _user.value;
   Map<String, dynamic>? get userData => _userData.value;
 
   RxBool isReleaseFirebase = false.obs;
 
+  // StreamController for user data updates
+  final StreamController<Map<String, dynamic>?> _userDataStreamController =
+      StreamController<Map<String, dynamic>?>.broadcast();
+
+  // Stream for listening to user data updates
+  Stream<Map<String, dynamic>?> get userDataStream =>
+      _userDataStreamController.stream;
+
   @override
   void onReady() {
     super.onReady();
     _user = Rx<User?>(authentication.currentUser);
-    _userData = Rx<Map<String, dynamic>?>(null);
+    _userData = Rx<Map<String, dynamic>?>(null); // 초기화
 
-    _user.bindStream(authentication.userChanges());
+    ever(_user, _initialScreen);
 
-    // 사용자 데이터에 대한 Firestore 스트림 구독
-    _user.stream.listen((user) {
-      if (user != null) {
-        if (user.emailVerified) {
-          _updateUserData(user);
-        } else {
-          Get.off(() => const WellcomeJoinMessageScreen());
-        }
-      } else {
-        // 로그아웃 처리할 때 한번 더 확인
+    _user.bindStream(authentication.authStateChanges());
 
-        if (authentication.currentUser == null) {
-          _updateUserData(user);
-          Get.off(() => const LoginScreen());
-        }
-      }
-    });
+    // 주기적으로 토큰 갱신
+    Timer.periodic(Duration(minutes: 55), (_) => refreshToken());
   }
 
-  void _updateUserData(User? user) async {
+  @override
+  void onClose() {
+    _userDataStreamController.close();
+    super.onClose();
+  }
+
+  _initialScreen(User? user) async {
+    if (user == null) {
+      Get.offAll(() => LoginScreen());
+    } else {
+      await refreshToken(); // 앱 시작 시 토큰 갱신
+      if (user.emailVerified) {
+        _updateUserData(user);
+        Get.offAll(() => HomeScreen());
+      } else {
+        Get.offAll(() => WellcomeJoinMessageScreen());
+      }
+    }
+  }
+
+  Future<void> _updateUserData(User? user) async {
     if (user != null) {
       try {
-        // Firestore에서 사용자 데이터 스트림 구독
         _firestore
             .collection('users')
             .doc(user.uid)
             .snapshots()
-            .listen((snapshot) async {
+            .listen((snapshot) {
           if (snapshot.exists) {
-            Map<String, dynamic>? userData = await _getUserData(user.uid);
+            Map<String, dynamic>? userData =
+                snapshot.data() as Map<String, dynamic>?;
             if (userData != null) {
               _userData.value = userData;
-              // 기존 사용자 데이터와 비교하여 변경 사항이 있는 경우에만 업데이트
-              if (_user.value != user) {
-                _user.value = user;
-                update();
-              }
+              _userDataStreamController.add(userData);
+              update();
             } else {
               print("사용자 정보가 없습니다.");
             }
           } else {
-            // 사용자 데이터가 없으면 로그인 화면으로 이동
-            Get.off(() => const LoginScreen());
+            print("사용자 문서가 존재하지 않습니다.");
+            signOut(); // 사용자 문서가 없으면 로그아웃
           }
         });
       } catch (e) {
-        print('사용자 데이터 스트림 구독 중 오류 발생: $e');
+        print('사용자 데이터 업데이트 중 오류 발생: $e');
+        signOut(); // 오류 발생 시 로그아웃
       }
+    }
+  }
+
+  //토큰 갱신 메서드
+  Future<void> refreshToken() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      IdTokenResult tokenResult = await user.getIdTokenResult(true);
+      String? newToken = tokenResult.token;
+      print("Token refreshed: $newToken");
     }
   }
 
   // 사용자 데이터 가져오기
   Future<Map<String, dynamic>?> _getUserData(String userId) async {
     try {
-      // Firestore에서 사용자 데이터 가져오기
       DocumentSnapshot userSnapshot =
           await _firestore.collection('users').doc(userId).get();
 
-      // 사용자 데이터가 존재하면 Map으로 변환하여 반환
-      if (userSnapshot.exists) {
+      if (userSnapshot.exists && userSnapshot.data() != null) {
         return userSnapshot.data() as Map<String, dynamic>?;
       } else {
-        // 사용자 데이터가 없는 경우 null 반환
+        print('사용자 데이터가 없습니다.');
         return null;
       }
     } catch (e) {
-      // 사용자 데이터를 가져오는 중에 오류 발생 시
       print('사용자 데이터를 가져오는 중 오류 발생: $e');
       return null;
     }
@@ -165,40 +186,47 @@ class AuthController extends GetxController {
       ),
       barrierDismissible: false, // 사용자가 다이얼로그 외부를 탭하여 닫을 수 없도록 설정
     );
-    _userData = Rx<Map<String, dynamic>?>(null);
+
     try {
-      await authentication.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await authentication.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      User? user = authentication.currentUser;
+      User? user = userCredential.user;
+
+      if (user == null) {
+        Get.back();
+        print("로그인 중 사용자 정보가 null입니다.");
+        showToast("로그인 중 사용자 정보가 null입니다.", 2);
+        return;
+      }
 
       print("로그인이 되어 user정보를 받음 $user");
-      if (user != null && user.emailVerified == false) {
-        // 인증 이메일 보내기
+
+      if (!user.emailVerified) {
         await user.sendEmailVerification();
-        // 이메일이 인증되지 않았다면 인증 안내페이지로 이동
-        Get.to(() => ReWellcomeMessageScreen);
+        Get.to(() => ReWellcomeMessageScreen());
       } else {
-        // Firestore에서 사용자 정보 가져오기
-        Map<String, dynamic>? userData = await _getUserData(user!.uid);
+        Map<String, dynamic>? userData = await _getUserData(user.uid);
 
         if (userData != null) {
-          // 사용자 정보가 존재하는 경우
           loginChange();
           _userData.value = userData;
-          // 사용자 정보가 로드되면 홈 화면으로 이동
           Get.off(() => HomeScreen());
         } else {
-          // 사용자 정보가 없는 경우
           Get.back();
           print("사용자 정보가 없습니다.");
+          showToast("사용자 정보가 없습니다.", 2);
         }
       }
     } on FirebaseAuthException catch (e) {
-      // FirebaseAuthException에서 발생한 특정 오류 처리
       handleAuthException(e);
+    } catch (e) {
+      Get.back();
+      print("로그인 중 오류 발생: $e");
+      showToast("로그인 중 오류 발생: $e", 2);
     }
   }
 

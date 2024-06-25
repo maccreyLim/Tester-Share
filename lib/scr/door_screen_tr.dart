@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
 

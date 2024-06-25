@@ -59,25 +59,25 @@ class SettingScreen extends StatelessWidget {
                 ),
               ).tr(),
               const SizedBox(height: 30),
-              Row(
-                children: [
-                  Icon(
-                    Icons.question_mark,
-                    color: colors.iconColor,
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(PostScreen());
-                      },
-                      child: Text(
-                        "테스트",
-                        style: TextStyle(
-                            color: colors.textColor,
-                            fontSize: _fontSizeCollection.settingFontSize),
-                      ).tr()),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.question_mark,
+              //       color: colors.iconColor,
+              //     ),
+              //     const SizedBox(width: 10),
+              //     TextButton(
+              //         onPressed: () {
+              //           Get.to(PostScreen());
+              //         },
+              //         child: Text(
+              //           "테스트",
+              //           style: TextStyle(
+              //               color: colors.textColor,
+              //               fontSize: _fontSizeCollection.settingFontSize),
+              //         ).tr()),
+              //   ],
+              // ),
               Row(
                 children: [
                   Icon(
