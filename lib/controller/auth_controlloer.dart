@@ -66,6 +66,7 @@ class AuthController extends GetxController {
       await refreshToken(); // 앱 시작 시 토큰 갱신
       if (user.emailVerified) {
         _updateUserData(user);
+        Duration(milliseconds: 10);
         Get.offAll(() => HomeScreen());
       } else {
         Get.offAll(() => WellcomeJoinMessageScreen());
@@ -214,7 +215,7 @@ class AuthController extends GetxController {
         if (userData != null) {
           loginChange();
           _userData.value = userData;
-          Get.off(() => HomeScreen());
+          // Get.off(() => HomeScreen());
         } else {
           Get.back();
           print("사용자 정보가 없습니다.");
