@@ -206,6 +206,11 @@
   "Bug Report Todo" : "버그리포트 할일",
   "Point" : "포인트",
   "Community" : "커뮤니티",
-  "Please register the image" : "이미지를 등록해주세요"
+  "Please register the image" : "이미지를 등록해주세요",
+  "Current Project" : "현재 진행중인 프로젝트",
+  "Tester Recruitment Completed" : "테스터 모집 완료",
+  "Tester Recruitment In Progress" : "테스터 모집중",
+  "Membership registration or login is required." : "회원가입 또는 로그인이 필요합니다.",
+  "Go to Login" : "로그인하러 가기"
   }
   

@@ -87,7 +87,7 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 60),
                   LogInButton(
                     onPressed: () async {
                       // 로그아웃 및 로그인 페이지로 이동
@@ -219,7 +219,7 @@ class LogInButton extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color?>(Colors.blue),
+            backgroundColor: WidgetStateProperty.all<Color?>(Colors.blue),
           ),
           onPressed: onPressed,
           child: Text(
@@ -250,7 +250,7 @@ class CreateButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey),
+          backgroundColor: WidgetStateProperty.all<Color?>(Colors.grey),
         ),
         onPressed: onPressed,
         child: Text(

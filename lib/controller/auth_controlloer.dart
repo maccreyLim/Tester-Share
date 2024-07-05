@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tester_share_app/model/user_firebase_model.dart';
+import 'package:tester_share_app/scr/first_screen.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/login_screen_tr.dart';
 import 'package:tester_share_app/scr/re_wellcome_message_screen.dart';
@@ -61,7 +62,7 @@ class AuthController extends GetxController {
 
   _initialScreen(User? user) async {
     if (user == null) {
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => FirstScreen());
     } else {
       await refreshToken(); // 앱 시작 시 토큰 갱신
       if (user.emailVerified) {
@@ -166,7 +167,7 @@ class AuthController extends GetxController {
         'testerParticipation': 0,
         'testerRequest': 0,
         'createAt': DateTime.now(),
-        'point': 10,
+        'point': 5,
       });
     } on FirebaseAuthException catch (e) {
       // FirebaseAuthException에서 발생한 특정 오류 처리

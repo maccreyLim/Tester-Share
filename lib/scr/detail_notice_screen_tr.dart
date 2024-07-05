@@ -104,7 +104,7 @@ class DetailNoticeScreen extends StatelessWidget {
           Get.to(() => UpdateNoticeScreen(notice: notice));
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(colors.stateIsIng),
+          backgroundColor: WidgetStateProperty.all<Color>(colors.stateIsIng),
         ),
         child: Text(
           "Update",

@@ -62,8 +62,7 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color?>(Colors.blue),
+                  backgroundColor: WidgetStateProperty.all<Color?>(Colors.blue),
                 ),
                 onPressed: () async {
                   // 비밀번호 찾기 실행

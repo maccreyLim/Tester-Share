@@ -126,7 +126,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               email, _currentPassword.text, _newPassword.text);
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(_colors.stateIsIng),
+          backgroundColor: WidgetStateProperty.all<Color>(_colors.stateIsIng),
         ),
         child: Text(
           "Change Password Confirm",

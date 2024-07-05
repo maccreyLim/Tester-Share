@@ -478,7 +478,7 @@ class _UpdateBoardScreenState extends State<UpdateBoardScreen> {
       height: _fontSizeCollection.buttonSize,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
         ),
         onPressed: () {
           adController.loadAndShowAd();

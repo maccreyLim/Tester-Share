@@ -49,9 +49,9 @@ Widget contentBox(BuildContext context, String message) {
             },
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.red), // 버튼 배경색
+                  WidgetStateProperty.all<Color>(Colors.red), // 버튼 배경색
               minimumSize:
-                  MaterialStateProperty.all<Size>(Size(200, 40)), // 버튼 최소 크기
+                  WidgetStateProperty.all<Size>(Size(200, 40)), // 버튼 최소 크기
             ),
             child: Text(
               'Go My Tester Request Post',
@@ -63,10 +63,10 @@ Widget contentBox(BuildContext context, String message) {
               Get.back();
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  _colors.buttonColor), // 버튼 배경색
+              backgroundColor:
+                  WidgetStateProperty.all<Color>(_colors.buttonColor), // 버튼 배경색
               minimumSize:
-                  MaterialStateProperty.all<Size>(Size(232, 40)), // 버튼 최소 크기
+                  WidgetStateProperty.all<Size>(Size(232, 40)), // 버튼 최소 크기
             ),
             child: Text(
               "Close",

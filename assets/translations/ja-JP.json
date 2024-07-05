@@ -207,6 +207,11 @@
     "Bug Report Todo" : "バグレポートのやること",
     "Point" : "ポイント",
     "Community" : "コミュニティ",
-    "Please register the image" : "イメージを登録してください。"
-
+    "Please register the image" : "イメージを登録してください。",
+    "Current Project" : "現在進行中のプロジェクト",
+    "Tester Recruitment Completed" : "テスター募集完了",
+    "Tester Recruitment In Progress" : "テスター募集中",
+    "Membership registration or login is required." : "会員登録またはログインが必要です。",
+    "Go to Login" : "ログインに行く"
+ 
     }

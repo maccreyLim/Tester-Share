@@ -182,7 +182,7 @@ class _MyTesterRequestPostScreenState extends State<MyTesterRequestPostScreen> {
                                 child: ElevatedButton(
                                     style: ButtonStyle(
                                       // 버튼의 배경색을 상태에 따라 동적으로 변경하는 설정입니다.
-                                      backgroundColor: MaterialStateProperty
+                                      backgroundColor: WidgetStateProperty
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
@@ -272,8 +272,8 @@ class _MyTesterRequestPostScreenState extends State<MyTesterRequestPostScreen> {
                                       ? ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.red),
+                                                WidgetStateProperty.all<Color>(
+                                                    Colors.red),
                                           ),
                                           onPressed: () async {
                                             //리워드광고

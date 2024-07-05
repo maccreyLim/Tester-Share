@@ -571,7 +571,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                 child: ElevatedButton(
                                     style: ButtonStyle(
                                       // 버튼의 배경색을 상태에 따라 동적으로 변경하는 설정입니다.
-                                      backgroundColor: MaterialStateProperty
+                                      backgroundColor: WidgetStateProperty
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.

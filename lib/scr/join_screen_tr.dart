@@ -295,7 +295,7 @@ class SignUpButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.blue),
+          backgroundColor: WidgetStateProperty.all<Color?>(Colors.blue),
         ),
         onPressed: onPressed,
         child: Text(

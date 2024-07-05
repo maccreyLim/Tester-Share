@@ -76,7 +76,7 @@ class ReWellcomeMessageScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color?>(Colors.blue),
+                          WidgetStateProperty.all<Color?>(Colors.blue),
                     ),
                     onPressed: () {
                       //로그아웃

@@ -424,7 +424,7 @@ class DetailBoardScreen extends StatelessWidget {
                       ? ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.yellow),
+                                WidgetStateProperty.all<Color>(Colors.yellow),
                           ),
                           onPressed: () => Get.back(),
                           child: Text(
@@ -438,8 +438,7 @@ class DetailBoardScreen extends StatelessWidget {
                           ? ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blue),
+                                    WidgetStateProperty.all<Color>(Colors.blue),
                               ),
                               onPressed: () {
                                 String testApplyMessage =
@@ -465,8 +464,7 @@ class DetailBoardScreen extends StatelessWidget {
                           : ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.grey),
+                                    WidgetStateProperty.all<Color>(Colors.grey),
                               ),
                               onPressed: () {
                                 Get.back();

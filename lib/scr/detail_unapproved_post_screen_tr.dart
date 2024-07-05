@@ -340,8 +340,8 @@ class _DetailUnapprovedPostScreenState
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: widget.boards.isApproval
-                      ? MaterialStateProperty.all<Color>(Colors.grey)
-                      : MaterialStateProperty.all<Color>(Colors.red),
+                      ? WidgetStateProperty.all<Color>(Colors.grey)
+                      : WidgetStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () {
                   adController.loadAndShowAd();

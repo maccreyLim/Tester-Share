@@ -165,7 +165,7 @@ class _MyInformationScreenState extends State<MyInformationScreen> {
           // _authController.changePassword(email, currentPassword, newPassword)
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(colors.stateIsIng),
+          backgroundColor: WidgetStateProperty.all<Color>(colors.stateIsIng),
         ),
         child: Text(
           "Change Password",

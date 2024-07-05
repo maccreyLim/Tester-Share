@@ -321,7 +321,7 @@ class MyTestDetailBoardScreen extends StatelessWidget {
                   ? ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue),
+                            WidgetStateProperty.all<Color>(Colors.blue),
                       ),
                       onPressed: () {
                         Get.to(() => UpdateBoardScreen(boards: boards));
