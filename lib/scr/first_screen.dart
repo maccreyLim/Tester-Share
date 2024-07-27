@@ -86,17 +86,24 @@ class _FirstScreenState extends State<FirstScreen> with WidgetsBindingObserver {
             }
 
             List<BoardFirebaseModel> boards = snapshot.data!;
+            // 정렬 로직
             boards.sort((a, b) {
-              if (a.testerRequest > a.testerParticipation &&
-                  b.testerRequest <= b.testerParticipation) {
-                return -1; // a를 b보다 앞으로 배치
-              } else if (a.testerRequest <= a.testerParticipation &&
-                  b.testerRequest > b.testerParticipation) {
-                return 1; // b를 a보다 앞으로 배치
-              } else {
-                // testerRequest와 testerParticipation이 같거나 모두 크거나 작을 경우 createAt으로 비교
-                return b.createAt.compareTo(a.createAt);
+              // 1. 출시 완료 문서 우선 (false before true)
+              if (a.isDeploy != b.isDeploy) {
+                return a.isDeploy ? 1 : -1; // true면 1, false면 -1 반환
               }
+
+              // 2. 테스터 모집 완료 문서 우선 (true before false)
+              bool aIsRecruiting =
+                  a.testerRequest - a.testerParticipation > 0 && !a.isDeploy;
+              bool bIsRecruiting =
+                  b.testerRequest - b.testerParticipation > 0 && !b.isDeploy;
+              if (aIsRecruiting != bIsRecruiting) {
+                return aIsRecruiting ? -1 : 1; // true면 1, false면 -1 반환
+              }
+
+              // 3. 생성일 기준 내림차순 정렬
+              return b.createAt.compareTo(a.createAt);
             });
 
             // 여기에서 boards 리스트를 사용하여 UI를 업데이트하세요.

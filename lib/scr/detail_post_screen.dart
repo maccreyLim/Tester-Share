@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:intl/intl.dart'; // Import for DateFormat
 import 'package:get/get.dart';
-import 'package:tester_share_app/controller/post_firebase_controller.dart';
 import 'package:tester_share_app/model/post_firebase_model.dart';
 import 'package:tester_share_app/widget/w.banner_ad.dart';
 import 'package:tester_share_app/widget/w.colors_collection.dart';
@@ -11,7 +10,7 @@ import 'package:tester_share_app/widget/w.comment_input_dialog.dart';
 
 class DetailPostScreen extends StatelessWidget {
   final PostFirebaseModel post;
-  final PostFirebaseController _postController = PostFirebaseController();
+  // final PostFirebaseController _postController = PostFirebaseController();
   final ColorsCollection _colors = ColorsCollection();
   final DateFormat formatter =
       DateFormat('yyyy-MM-dd HH:mm:ss'); // DateFormat instance

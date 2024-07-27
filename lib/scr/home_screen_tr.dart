@@ -386,19 +386,25 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             }
 
             List<BoardFirebaseModel> boards = snapshot.data!;
+            // 정렬 로직
             boards.sort((a, b) {
-              if (a.testerRequest > a.testerParticipation &&
-                  b.testerRequest <= b.testerParticipation) {
-                return -1; // a를 b보다 앞으로 배치
-              } else if (a.testerRequest <= a.testerParticipation &&
-                  b.testerRequest > b.testerParticipation) {
-                return 1; // b를 a보다 앞으로 배치
-              } else {
-                // testerRequest와 testerParticipation이 같거나 모두 크거나 작을 경우 createAt으로 비교
-                return b.createAt.compareTo(a.createAt);
+              // 1. 출시 완료 문서 우선 (false before true)
+              if (a.isDeploy != b.isDeploy) {
+                return a.isDeploy ? 1 : -1; // true면 1, false면 -1 반환
               }
-            });
 
+              // 2. 테스터 모집 완료 문서 우선 (true before false)
+              bool aIsRecruiting =
+                  a.testerRequest - a.testerParticipation > 0 && !a.isDeploy;
+              bool bIsRecruiting =
+                  b.testerRequest - b.testerParticipation > 0 && !b.isDeploy;
+              if (aIsRecruiting != bIsRecruiting) {
+                return aIsRecruiting ? -1 : 1; // true면 1, false면 -1 반환
+              }
+
+              // 3. 생성일 기준 내림차순 정렬
+              return b.createAt.compareTo(a.createAt);
+            });
             // 여기에서 boards 리스트를 사용하여 UI를 업데이트하세요.
 
             return ListView.builder(
@@ -575,15 +581,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                           // "진행중" 상태에 따라 배경색을 설정합니다.
-                                          if (boards[index].testerRequest >
+                                          if (boards[index].isDeploy == true) {
+                                            return colors
+                                                .Deploymentcompleted; // 배포가 완료된 상태의 배경색
+                                          } else if (boards[index]
+                                                  .testerRequest >
                                               boards[index]
                                                   .testerParticipation) {
                                             return colors
                                                 .stateIsIng; // 상태가 "진행중"일 때의 배경색
-                                          } else if (boards[index].isDeploy ==
-                                              true) {
-                                            return colors
-                                                .Deploymentcompleted; // 배포가 완료된 상태의 배경색
                                           } else {
                                             // 완료 상태에는 기본 배경색을 설정합니다.
                                             return colors.stateIsClose;
@@ -597,11 +603,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                           ));
                                     },
                                     child: Text(
-                                      boards[index].testerRequest >
-                                              boards[index].testerParticipation
-                                          ? "In progress"
-                                          : boards[index].isDeploy
-                                              ? "Released"
+                                      boards[index].isDeploy
+                                          ? "Released"
+                                          : boards[index].testerRequest >
+                                                  boards[index]
+                                                      .testerParticipation
+                                              ? "In progress"
                                               : "Completed",
                                       style: TextStyle(
                                           color: colors.iconColor,
@@ -638,10 +645,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                   },
                                   child: Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Send Registration Message to Tester Applicants",
-                                        style:
-                                            TextStyle(color: colors.iconColor),
+                                        style: TextStyle(
+                                            color: Colors.redAccent,
+                                            fontWeight: FontWeight.bold),
                                       ).tr(),
                                       const SizedBox(width: 20),
                                       const Icon(

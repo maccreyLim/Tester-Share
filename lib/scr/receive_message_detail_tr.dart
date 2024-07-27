@@ -113,9 +113,13 @@ class _ReceiveMessageDetailState extends State<ReceiveMessageDetail> {
                           print('URL 열기 오류: $e');
                         }
                       },
-                      child: Text(tr("Click to become a tester")),
+                      child: const Text(
+                        "Click to become a tester",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ).tr(),
                     )
-                  : SizedBox(
+                  : const SizedBox(
                       height:
                           30), // 또는 Container() 대신에 SizedBox.shrink()를 사용하여 아무것도 차지하지 않는 위젯을 반환합니다.
 
