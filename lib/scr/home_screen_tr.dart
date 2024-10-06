@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
 //읽지 않은 메시지를 받아오기
   Future<void> _getUnreadMessageCount() async {
-    await for (int count
+     Timer.periodic(Duration(minutes: 15), (timer) async {await for (int count
         in _massageFirebaseController.getUnreadMessageCountStream()) {
       if (mounted) {
         setState(() {
@@ -98,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         }
       }
     }
-  }
+    
+  });
 
   @override
   Widget build(BuildContext context) {
