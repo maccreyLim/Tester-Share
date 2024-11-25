@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/firebase_options.dart';
 import 'package:tester_share_app/scr/first_screen.dart';
@@ -34,6 +36,11 @@ Future<void> main() async {
   // 3초 후 권한 요청
   Future.delayed(const Duration(seconds: 3),
       FlutterLocalNotification.requestNotificationPermission());
+  // Hive 초기화
+  await Hive.initFlutter();
+  // 필요한 박스 열기 (예: 'settings'라는 박스)
+  await Hive.openBox('message');
+
   //다국어 초기화
   await EasyLocalization.ensureInitialized();
 
