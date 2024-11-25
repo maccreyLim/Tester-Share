@@ -7,6 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tester_share_app/controller/auth_controlloer.dart';
+import 'package:tester_share_app/controller/message_firebase_controller.dart';
 import 'package:tester_share_app/firebase_options.dart';
 import 'package:tester_share_app/scr/first_screen.dart';
 import 'package:tester_share_app/widget/w.notification.dart';
@@ -38,6 +39,7 @@ Future<void> main() async {
       FlutterLocalNotification.requestNotificationPermission());
   // Hive 초기화
   await Hive.initFlutter();
+  await MassageFirebaseController().initHive();
   // 필요한 박스 열기 (예: 'settings'라는 박스)
   await Hive.openBox('message');
 
