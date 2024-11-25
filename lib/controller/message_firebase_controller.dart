@@ -173,4 +173,65 @@ class MassageFirebaseController {
       print('메시지 읽음 처리 오류: $e');
     }
   }
+
+  //상대방을 닉네임로 검색
+  Future<Map<String, Map<String, dynamic>>> getUserByNickname(
+      String partialNickname) async {
+    CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
+    try {
+      final querySnapshot = await usersCollection
+          .where('profileName', isGreaterThanOrEqualTo: partialNickname)
+          .where('profileName', isLessThan: partialNickname + 'z')
+          .get();
+
+      final userData = <String, Map<String, dynamic>>{};
+
+      for (final document in querySnapshot.docs) {
+        final userDataFromDoc = document.data() as Map<String, dynamic>;
+        final uid = userDataFromDoc['uid'];
+        final profileName = userDataFromDoc['profileName'];
+        final occupation = userDataFromDoc['occupation'];
+        final workspace = userDataFromDoc['workspace'];
+        final photoUrl = userDataFromDoc['photoUrl'];
+        final parters = userDataFromDoc['parters'];
+
+        if (uid != null && profileName != null) {
+          userData[uid] = {
+            'profileName': profileName,
+            'photoUrl': photoUrl,
+            'uid': uid,
+            'occupation': occupation,
+            'workspace': workspace,
+            'parters': parters,
+          };
+        }
+      }
+      return userData;
+    } catch (e) {
+      print('사용자 검색 중 오류 발생: $e');
+      return {}; // 예외 발생 시 빈 맵 반환
+    }
+  }
+
+  //메시지 갯수를 스트림으로 확인
+  Stream<int> getUnreadMessageCountStream() {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    try {
+      Stream<QuerySnapshot> snapshots = _firestore
+          .collection('messages')
+          .where('isRead', isEqualTo: false)
+          .where('receiverUid', isEqualTo: _authController.userData!['uid'])
+          .snapshots();
+
+      return snapshots.map((QuerySnapshot querySnapshot) {
+        return querySnapshot.size;
+      });
+    } catch (e) {
+      print('오류 발생: $e');
+      // 오류 처리 코드를 추가하거나 throw로 예외를 다시 던질 수 있습니다.
+      throw e;
+    }
+  }
 }
