@@ -21,22 +21,30 @@ final supportedLocales = [
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   //애드몹 초기화
   MobileAds.instance.initialize();
+
   //세로방향으로 제한
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   //파이어베이스 초기화
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => Get.put(AuthController()));
+
   //Local Notification 초기화
   await FlutterLocalNotification.init();
   // 3초 후 권한 요청
-  Future.delayed(const Duration(seconds: 3),
-      FlutterLocalNotification.requestNotificationPermission());
+  Future.delayed(
+    const Duration(seconds: 3),
+    FlutterLocalNotification.requestNotificationPermission,
+  );
+  FlutterLocalNotification.setListeners();
+
   // Hive 초기화
   await Hive.initFlutter();
   await MassageFirebaseController().initHive();

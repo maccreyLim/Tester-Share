@@ -8,7 +8,6 @@ import 'package:tester_share_app/controller/auth_controlloer.dart';
 import 'package:tester_share_app/scr/home_screen_tr.dart';
 import 'package:tester_share_app/scr/my_tester_request_post_tr.dart';
 import 'package:tester_share_app/scr/myinformation_screen.tr.dart';
-import 'package:tester_share_app/scr/post_screen.dart';
 import 'package:tester_share_app/scr/terms_and_privacy_screen.dart';
 import 'package:tester_share_app/scr/unapproved_post_screen_tr.dart';
 import 'package:tester_share_app/widget/w.RewardAdManager.dart';

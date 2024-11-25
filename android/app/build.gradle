@@ -12,15 +12,8 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode', '1')
+def flutterVersionName = localProperties.getProperty('flutter.versionName', '1.0')
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -31,56 +24,44 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.maccrey.tester_share_release"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
-
-
-    aaptOptions {
-        useNewCruncher false
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
 
     kotlinOptions {
         jvmTarget = '1.8'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.maccrey.tester_share_release"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
     }
+
     signingConfigs {
         release {
-        keyAlias keystoreProperties['keyAlias']
-        keyPassword keystoreProperties['keyPassword']
-        storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-        storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
     }
-}
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -89,8 +70,14 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Kotlin 버전 명시
+    implementation 'androidx.multidex:multidex:2.0.1' // MultiDex 지원
+
+    // Firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:32.8.1')
     implementation "com.google.firebase:firebase-analytics"
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Google ReCAPTCHA
     implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
 }

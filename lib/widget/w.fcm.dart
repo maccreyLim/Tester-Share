@@ -19,7 +19,8 @@ class FcmManager {
         return;
       }
       FlutterLocalNotification.showNotification(
-          message.notification!.title, message.notification!.body);
+          message.notification!.title.toString(),
+          message.notification!.body.toString());
     });
 
     //Background
