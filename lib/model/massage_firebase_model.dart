@@ -1,14 +1,35 @@
+import 'package:hive/hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+part 'massage_firebase_model.g.dart'; // build_runner로 생성될 파일
+
+@HiveType(typeId: 1)
 class MessageModel {
+  @HiveField(0)
   String id; // File명
+
+  @HiveField(1)
   String senderUid; // 발신자 UID
+
+  @HiveField(2)
   String receiverUid; // 수신자 UID
+
+  @HiveField(3)
   String contents; // 쪽지 내용
+
+  @HiveField(4)
   DateTime timestamp; // 쪽지 작성 시간
-  bool isRead; //읽음여부
+
+  @HiveField(5)
+  bool isRead; // 읽음 여부
+
+  @HiveField(6)
   String senderNickname;
+
+  @HiveField(7)
   String receiverNickname;
+
+  @HiveField(8)
   String? appUrl;
 
   MessageModel({
@@ -23,6 +44,22 @@ class MessageModel {
     this.appUrl,
   });
 
+  // Firestore로 데이터를 저장하기 위한 메서드
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'senderUid': senderUid,
+      'receiverUid': receiverUid,
+      'contents': contents,
+      'timestamp': timestamp,
+      'isRead': isRead,
+      'senderNickname': senderNickname,
+      'receiverNickname': receiverNickname,
+      'appUrl': appUrl,
+    };
+  }
+
+  // Firestore에서 가져온 데이터를 기반으로 객체 생성
   factory MessageModel.fromMap(Map<String, dynamic> data, String id) {
     return MessageModel(
       id: id,
@@ -31,43 +68,9 @@ class MessageModel {
       contents: data['contents'],
       timestamp: (data['timestamp'] as Timestamp).toDate(),
       isRead: data['isRead'],
+      senderNickname: data['senderNickname'],
+      receiverNickname: data['receiverNickname'],
       appUrl: data['appUrl'],
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'senderUid': senderUid,
-      'receiverUid': receiverUid,
-      'contents': contents,
-      'timestamp': timestamp,
-      'isRead': false,
-      'appUrl': appUrl
-    };
-  }
-
-  // fromJson 메서드: JSON을 객체로 역직렬화
-  factory MessageModel.fromJson(Map<String, dynamic> json) {
-    return MessageModel(
-      id: json['id'],
-      senderUid: json['senderUid'],
-      receiverUid: json['receiverUid'],
-      contents: json['contents'],
-      timestamp: DateTime.parse(json['timestamp']), // 문자열을 DateTime으로 역직렬화
-      isRead: json['isRead'],
-      appUrl: json['appUrl'],
-    );
-  }
-
-  // toJson 메서드: 객체를 JSON으로 직렬화
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'senderUid': senderUid,
-      'receiverUid': receiverUid,
-      'contents': contents,
-      'timestamp': timestamp.toIso8601String(), // DateTime을 문자열로 직렬화
-      'isRead': isRead,
-    };
   }
 }
